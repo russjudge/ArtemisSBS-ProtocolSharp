@@ -22,3 +22,6 @@ For this reason, the following rules are set:
 3. Any UI projects must have a minimum of code--the bulk of the logic process is to be in the libraries that are cross-platform.
 4. Code that processes the ArtemisSBS protocol will need to be written to handle cases where ArtemsSBS transmits data that is contradictory to the reverse-engineered documentation for the protocol, whether it simply ignores the data, logs it, or some other action--it is not to crash the application that uses this library.
 5. Extensions to the protocol for the purpose of providing functionality not available in Artemis SBS are never to be transmitted to Artemis SBS to avoid the unpredictable results, other than for further reverse-engineering of the protocol itself.
+
+
+At this time we are not taking on new contributers.  However, if you are interested, please feel free to leave a note with a link to a sample of some code you have developed.  If we are in need of some extra hands, we may contact you.
