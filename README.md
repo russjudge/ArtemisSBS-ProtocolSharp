@@ -5,7 +5,7 @@ Libraries and applications for utilizing the TCP/IP protocol used by Artemis SBS
 
 Artemis SBS (Artemis Spaceship Bridge Simulator) can be found at http://www.artemis.eochu.com.
 
-The library is based on the reverse-engineered documentation found at https://github.com/rjwut/ArtClientLib/wiki/Artemis-Packet-Protocol.
+The library is based on the reverse-engineered documentation found at https://github.com/rjwut/ArtClientLib/wiki/Artemis-Packet-Protocol.  It is written both to make use of existing functionality provided by the protocol, and to provide a means for extending that functionality.
 
 The following assumptions are made for this project:
 
