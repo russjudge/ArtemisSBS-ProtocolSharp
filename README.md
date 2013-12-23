@@ -25,3 +25,7 @@ For this reason, the following rules are set:
 
 
 At this time we are not taking on new contributers.  However, if you are interested, please feel free to leave a note with a link to a sample of some code you have developed.  If we are in need of some extra hands, we may contact you.
+
+Also, the disclaimer for ArtClientLib, which is a java-based API for working with the Artemis SBS protocol, is here: https://github.com/rjwut/ArtClientLib/wiki/Disclaimer.
+
+So, for the disclaimer for this project, all I can say is, "Ditto."
