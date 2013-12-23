@@ -17,6 +17,7 @@ The following assumptions are made for this project:
 Just because this project is written in C# does not mean it will work only on Windows.  The intention is to have the bulk of the code in this project compile in Mono (http://mono-project.com), so that the resulting application is truly cross-platform.
 
 For this reason, the following rules are set:
+
 1. The .NET 4.0 is to be targetted.
 2. Only the UI itself may make use of functionality not available in Mono, such as the WPF Framework.  All other code should compile in Mono, as well as within Microsoft's .NET framework.  See the Mono Project for notes on incompatibilities.
 3. Any UI projects must have a minimum of code--the bulk of the logic process is to be in the libraries that are cross-platform.
