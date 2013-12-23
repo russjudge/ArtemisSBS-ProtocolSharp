@@ -1,7 +1,7 @@
 ArtemisSBS-ProtocolSharp
 ========================
 
-Libraries and applications for utilizing the TCP/IP protocol used by Artemis SBS
+Libraries and applications for utilizing the TCP/IP protocol used by Artemis SBS, written in C#.
 
 Artemis SBS (Artemis Spaceship Bridge Simulator) can be found at http://www.artemis.eochu.com.
 
