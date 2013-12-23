@@ -24,7 +24,7 @@ For this reason, the following rules are set:
 5. Extensions to the protocol for the purpose of providing functionality not available in Artemis SBS are never to be transmitted to Artemis SBS to avoid the unpredictable results, other than for further reverse-engineering of the protocol itself.
 
 
-At this time we are not taking on new contributers.  However, if you are interested, please feel free to leave a note with a link to a sample of some code you have developed.  If we are in need of some extra hands, we may contact you.
+At this time we are not taking on new contributors.  However, if you are interested, please feel free to leave a note with a link to a sample of some code you have developed.  If we are in need of some extra hands, we may contact you.
 
 Also, the disclaimer for ArtClientLib, which is a java-based API for working with the Artemis SBS protocol, is here: https://github.com/rjwut/ArtClientLib/wiki/Disclaimer.
 
