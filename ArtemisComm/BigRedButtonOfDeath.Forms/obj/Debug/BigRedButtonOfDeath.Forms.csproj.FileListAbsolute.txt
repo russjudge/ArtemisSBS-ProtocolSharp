@@ -1,0 +1,13 @@
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Forms\obj\Debug\BigRedButtonOfDeath.Forms.csprojResolveAssemblyReference.cache
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Forms\obj\Debug\BigRedButtonOfDeath.Forms.Form1.resources
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Forms\obj\Debug\BigRedButtonOfDeath.Forms.Properties.Resources.resources
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Forms\obj\Debug\BigRedButtonOfDeath.Forms.csproj.GenerateResource.Cache
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Forms\bin\Debug\BigRedButtonOfDeath.Forms.exe
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Forms\bin\Debug\BigRedButtonOfDeath.Forms.pdb
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Forms\bin\Debug\ArtemisComm.dll
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Forms\bin\Debug\BigRedButtonOfDeath.Library.dll
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Forms\bin\Debug\log4net.dll
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Forms\bin\Debug\ArtemisComm.pdb
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Forms\bin\Debug\BigRedButtonOfDeath.Library.pdb
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Forms\obj\Debug\BigRedButtonOfDeath.Forms.exe
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Forms\obj\Debug\BigRedButtonOfDeath.Forms.pdb

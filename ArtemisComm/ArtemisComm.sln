@@ -3,6 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArtemisComm", "ArtemisComm\ArtemisComm.csproj", "{656B27BD-31B0-43BB-ABB5-BC9B847F9D85}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReferencedFiles", "ReferencedFiles", "{6804BE47-1D56-445D-9529-F751D7D62BD5}"
+	ProjectSection(SolutionItems) = preProject
+		ReferencedFiles\log4net.dll = ReferencedFiles\log4net.dll
+		ReferencedFiles\Russ.ruleset = ReferencedFiles\Russ.ruleset
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox", "Sandbox\Sandbox.csproj", "{2C511667-0ABF-4DA0-BC18-BBA3125B8CB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigRedButtonOfDeath.Library", "BigRedButtonOfDeath.Library\BigRedButtonOfDeath.Library.csproj", "{BC09007E-11B5-4EB2-A5B1-9941386B29FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigRedButtonOfDeath.Forms", "BigRedButtonOfDeath.Forms\BigRedButtonOfDeath.Forms.csproj", "{2CD91FFD-BA28-444A-BFE1-2CF9CFCE8B16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigRedButtonOfDeath.WPF", "BigRedButtonOfDeath.WPF\BigRedButtonOfDeath.WPF.csproj", "{7ECF301C-0198-469A-AFC8-BA91F8E04379}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +27,22 @@ Global
 		{656B27BD-31B0-43BB-ABB5-BC9B847F9D85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{656B27BD-31B0-43BB-ABB5-BC9B847F9D85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{656B27BD-31B0-43BB-ABB5-BC9B847F9D85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C511667-0ABF-4DA0-BC18-BBA3125B8CB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C511667-0ABF-4DA0-BC18-BBA3125B8CB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C511667-0ABF-4DA0-BC18-BBA3125B8CB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C511667-0ABF-4DA0-BC18-BBA3125B8CB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC09007E-11B5-4EB2-A5B1-9941386B29FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC09007E-11B5-4EB2-A5B1-9941386B29FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC09007E-11B5-4EB2-A5B1-9941386B29FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC09007E-11B5-4EB2-A5B1-9941386B29FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CD91FFD-BA28-444A-BFE1-2CF9CFCE8B16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CD91FFD-BA28-444A-BFE1-2CF9CFCE8B16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CD91FFD-BA28-444A-BFE1-2CF9CFCE8B16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CD91FFD-BA28-444A-BFE1-2CF9CFCE8B16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7ECF301C-0198-469A-AFC8-BA91F8E04379}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ECF301C-0198-469A-AFC8-BA91F8E04379}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ECF301C-0198-469A-AFC8-BA91F8E04379}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ECF301C-0198-469A-AFC8-BA91F8E04379}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

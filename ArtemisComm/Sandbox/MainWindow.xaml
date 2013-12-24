@@ -1,0 +1,298 @@
+﻿<Window x:Class="Sandbox.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Name="uc"
+        Title="Artemis Comms Protocol Sandbox"
+        Width="1540"
+        Height="800"
+        Closed="OnClosed">
+    <Window.Background>
+        <RadialGradientBrush>
+            <GradientStop Color="#FFD11E02" />
+            <GradientStop Offset="0.887" Color="#FFF7ECA6" />
+        </RadialGradientBrush>
+    </Window.Background>
+    <DockPanel>
+        <TextBlock DockPanel.Dock="Top"
+                   FontStyle="Italic"
+                   Text="The intent of this application is for reverse-engineering the TCP/IP protocol for Artemis SBS" />
+        <GroupBox DockPanel.Dock="Top">
+            <GroupBox.Header>
+                <TextBlock FontWeight="Bold" Text="Server Connection" />
+            </GroupBox.Header>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="32" />
+                    <RowDefinition Height="32" />
+                    <RowDefinition Height="32" />
+
+
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0"
+                       Grid.Column="0"
+                       Content="Host:" />
+                <TextBox Grid.Row="0"
+                         Grid.Column="1"
+                         Text="{Binding Path=Host,
+                                        Mode=TwoWay,
+                                        ElementName=uc}" />
+                <Label Grid.Row="1"
+                       Grid.Column="0"
+                       Content="Port:" />
+                <TextBox Grid.Row="1"
+                         Grid.Column="1"
+                         Text="{Binding Path=Port,
+                                        Mode=TwoWay,
+                                        ElementName=uc}">
+                    <TextBox.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform />
+                            <SkewTransform />
+                            <RotateTransform Angle="0.103" />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </TextBox.RenderTransform>
+                </TextBox>
+
+                <Button Name="btnStopServer"
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Click="OnStopServer"
+                        Content="Stop"
+                        Visibility="Collapsed" />
+                <Button Name="btnStartServer"
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Click="OnStartServer"
+                        Content="Start Server Connection" />
+
+
+
+
+
+            </Grid>
+        </GroupBox>
+        <GroupBox DockPanel.Dock="Top">
+            <GroupBox.Header>
+                <TextBlock FontWeight="Bold" Text="Bit Converter" />
+            </GroupBox.Header>
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Hex Value (as from Wireshark):" />
+                    <TextBox MinWidth="180"
+                             MaxWidth="180"
+                             Text="{Binding Path=BitConverterValue,
+                                            Mode=TwoWay,
+                                            ElementName=uc}" />
+                    <Button Click="OnBitConvert" Content="Convert" />
+                    <TextBox MinWidth="180" Text="{Binding BitConverterResult, Mode=OneWay, ElementName=uc}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton Margin="4,0,4,0"
+                                 Content="int"
+                                 GroupName="bitConvert"
+                                 IsChecked="{Binding Path=IntConvert,
+                                                     Mode=TwoWay,
+                                                     ElementName=uc}" />
+                    <RadioButton Margin="4,0,4,0"
+                                 Content="short"
+                                 GroupName="bitConvert"
+                                 IsChecked="{Binding Path=ShortConvert,
+                                                     Mode=TwoWay,
+                                                     ElementName=uc}" />
+                    <RadioButton Margin="4,0,4,0"
+                                 Content="uint"
+                                 GroupName="bitConvert"
+                                 IsChecked="{Binding Path=UIntConvert,
+                                                     Mode=TwoWay,
+                                                     ElementName=uc}" />
+                    <RadioButton Margin="4,0,4,0"
+                                 Content="ushort"
+                                 GroupName="bitConvert"
+                                 IsChecked="{Binding Path=UShortConvert,
+                                                     Mode=TwoWay}" />
+                    <RadioButton Margin="4,0,4,0"
+                                 Content="float"
+                                 GroupName="bitConvert"
+                                 IsChecked="{Binding Path=FloatConvert,
+                                                     Mode=TwoWay,
+                                                     ElementName=uc}" />
+                    <RadioButton Margin="4,0,4,0"
+                                 Content="byte"
+                                 GroupName="bitConvert"
+                                 IsChecked="{Binding Path=ByteConvert,
+                                                     Mode=TwoWay,
+                                                     ElementName=uc}" />
+                    <RadioButton Margin="4,0,4,0"
+                                 Content="string"
+                                 GroupName="bitConvert"
+                                 IsChecked="{Binding Path=StringConvert,
+                                                     Mode=TwoWay,
+                                                     ElementName=uc}" />
+
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox DockPanel.Dock="Top">
+            <GroupBox.Header>
+                <TextBlock FontWeight="Bold" Text="Data Conversion" />
+            </GroupBox.Header>
+            <DockPanel>
+                <Grid DockPanel.Dock="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5*" />
+                        <ColumnDefinition Width="53*" />
+                        <ColumnDefinition Width="58*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+
+                        <RowDefinition Height="70" />
+                        <RowDefinition Height="32" />
+
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2">
+                        <TextBlock Text="Raw packet:" />
+                        <TextBlock FontStyle="Italic" Text="(cut-and-paste Hex values directly from Wireshark)" />
+                        <TextBlock Text="Please note that currently this won't handle partial packets--and Wireshark may show packets as split--you will need to combine packets" />
+                        <DockPanel>
+                            <Button HorizontalAlignment="Right"
+                                    Click="OnClear"
+                                    Content="Clear Result Data"
+                                    DockPanel.Dock="Right" />
+                            <CheckBox Margin="4,0,8,0"
+                                      VerticalAlignment="Center"
+                                      Content="Exclude KeepAlive packets"
+                                      IsChecked="{Binding Path=FilterPackets,
+                                                          Mode=TwoWay,
+                                                          ElementName=uc}" />
+
+                        </DockPanel>
+                    </StackPanel>
+                    <TextBox Grid.Row="0"
+                             Grid.Column="2"
+                             Text="{Binding Path=RawData,
+                                            Mode=TwoWay,
+                                            ElementName=uc}"
+                             TextWrapping="Wrap" />
+                    <Button Grid.Row="1"
+                            Grid.Column="2"
+                            Click="OnConvert"
+                            Content="Convert" />
+
+
+
+
+
+                </Grid>
+
+
+            </DockPanel>
+        </GroupBox>
+        <ListView Name="ResultList"
+                  Grid.Row="5"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="2"
+                  VerticalAlignment="Stretch"
+                  DockPanel.Dock="Top"
+                  ItemsSource="{Binding Result,
+                                        Mode=OneWay,
+                                        ElementName=uc}">
+
+            <ListView.View>
+
+                <GridView>
+                    <GridViewColumn Width="400">
+
+                        <GridViewColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock VerticalAlignment="Center"
+                                           FontWeight="Bold"
+                                           Text="Property" />
+                            </DataTemplate>
+
+                        </GridViewColumn.HeaderTemplate>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="2"
+                                               VerticalAlignment="Center"
+                                               Text="{Binding PropertyName}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="260">
+
+                        <GridViewColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock VerticalAlignment="Center"
+                                           FontWeight="Bold"
+                                           Text="Value" />
+                            </DataTemplate>
+
+                        </GridViewColumn.HeaderTemplate>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="2"
+                                               VerticalAlignment="Center"
+                                               Text="{Binding Value}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Width="620">
+
+                        <GridViewColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock VerticalAlignment="Center"
+                                           FontWeight="Bold"
+                                           Text="Type" />
+                            </DataTemplate>
+
+                        </GridViewColumn.HeaderTemplate>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="2"
+                                               VerticalAlignment="Center"
+                                               Text="{Binding ObjectType}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+
+                    <GridViewColumn Width="170">
+
+                        <GridViewColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock VerticalAlignment="Center"
+                                           FontWeight="Bold"
+                                           Text="Hex Value" />
+                            </DataTemplate>
+
+                        </GridViewColumn.HeaderTemplate>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox Margin="2"
+                                             VerticalAlignment="Center"
+                                             Text="{Binding HexValue}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </DockPanel>
+</Window>

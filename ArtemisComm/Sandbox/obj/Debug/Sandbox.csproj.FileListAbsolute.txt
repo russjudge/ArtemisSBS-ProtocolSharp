@@ -1,0 +1,15 @@
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\obj\Debug\Sandbox.csprojResolveAssemblyReference.cache
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\obj\Debug\MainWindow.baml
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\obj\Debug\MainWindow.g.cs
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\obj\Debug\App.g.cs
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\obj\Debug\Sandbox_MarkupCompile.cache
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\obj\Debug\Sandbox.g.resources
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\obj\Debug\Sandbox.Properties.Resources.resources
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\obj\Debug\Sandbox.csproj.GenerateResource.Cache
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\bin\Debug\Sandbox.exe
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\bin\Debug\Sandbox.pdb
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\bin\Debug\ArtemisComm.dll
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\bin\Debug\log4net.dll
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\bin\Debug\ArtemisComm.pdb
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\obj\Debug\Sandbox.exe
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\obj\Debug\Sandbox.pdb

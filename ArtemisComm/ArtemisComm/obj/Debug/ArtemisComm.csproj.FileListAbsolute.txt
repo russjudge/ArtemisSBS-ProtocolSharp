@@ -1,0 +1,8 @@
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\ArtemisComm\obj\Debug\ArtemisComm.csprojResolveAssemblyReference.cache
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\ArtemisComm\bin\Debug\ArtemisComm.dll
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\ArtemisComm\bin\Debug\ArtemisComm.pdb
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\ArtemisComm\bin\Debug\log4net.dll
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\ArtemisComm\obj\Debug\ArtemisComm.dll
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\ArtemisComm\obj\Debug\ArtemisComm.pdb
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\ArtemisComm\bin\Debug\ArtemisComm.dll.CodeAnalysisLog.xml
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\ArtemisComm\bin\Debug\ArtemisComm.dll.lastcodeanalysissucceeded

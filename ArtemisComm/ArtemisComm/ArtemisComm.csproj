@@ -20,6 +20,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\ReferencedFiles\Russ.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\ReferencedFiles\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,8 +45,111 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="ArtemisString.cs" />
+    <Compile Include="ArtemisTypeAttribute.cs" />
+    <Compile Include="AudioCommandPacket.cs" />
+    <Compile Include="AudioModes.cs" />
+    <Compile Include="BasePacket.cs" />
+    <Compile Include="BridgeStationStatuses.cs" />
+    <Compile Include="BytesReceivedEventArgs.cs" />
+    <Compile Include="CommsIncomingPacket.cs" />
+    <Compile Include="CommsOutgoingPacket.cs" />
+    <Compile Include="ConnectionEventArgs.cs" />
+    <Compile Include="Connector.cs" />
+    <Compile Include="DamComStatus.cs" />
+    <Compile Include="DestroyObjectPacket.cs" />
+    <Compile Include="DriveTypes.cs" />
+    <Compile Include="EngGridUpdatePacket.cs" />
+    <Compile Include="ExceptionEventArgs.cs" />
+    <Compile Include="GameMessagePacket.cs" />
+    <Compile Include="GameMessageSubPackets\AllShipSettingsSubPacket.cs" />
+    <Compile Include="GameMessageSubPackets\EndSimulationSubPacket.cs" />
+    <Compile Include="GameMessageSubPackets\GameEndSubPacket.cs" />
+    <Compile Include="GameMessageSubPackets\GameMessageSubPacketTypes.cs" />
+    <Compile Include="GameMessageSubPackets\GameTextMessageSubPacket.cs" />
+    <Compile Include="GameMessageSubPackets\GameTypeSubPacket.cs" />
+    <Compile Include="GameMessageSubPackets\JumpCompleteSubPacket.cs" />
+    <Compile Include="GameMessageSubPackets\JumpStartSubPacket.cs" />
+    <Compile Include="GameMessageSubPackets\KeepAliveSubPacket.cs" />
+    <Compile Include="GameStartPacket.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="IncomingAudioPacket.cs" />
+    <Compile Include="IntelPacket.cs" />
+    <Compile Include="InvalidPacketException.cs" />
+    <Compile Include="IPackage.cs" />
+    <Compile Include="ObjectStatusUpdatePacket.cs" />
+    <Compile Include="ObjectStatusUpdateSubPackets\AnomalyUpdateSubPacket.cs" />
+    <Compile Include="ObjectStatusUpdateSubPackets\AsteroidUpdateSubPacket.cs" />
+    <Compile Include="ObjectStatusUpdateSubPackets\BlackHoleUpdateSubPacket.cs" />
+    <Compile Include="ObjectStatusUpdateSubPackets\DroneUpdateSubPacket.cs" />
+    <Compile Include="ObjectStatusUpdateSubPackets\EngPlayerUpdateSubPacket.cs" />
+    <Compile Include="ObjectStatusUpdateSubPackets\GenericMeshSubPacket.cs" />
+    <Compile Include="ObjectStatusUpdateSubPackets\MainPlayerUpdateSubPacket.cs" />
+    <Compile Include="ObjectStatusUpdateSubPackets\MineUpdateSubPacket.cs" />
+    <Compile Include="ObjectStatusUpdateSubPackets\MonsterUpdateSubPacket.cs" />
+    <Compile Include="ObjectStatusUpdateSubPackets\NebulaUpdateSubPacket.cs" />
+    <Compile Include="ObjectStatusUpdateSubPackets\NpcUpdateSubPacket.cs" />
+    <Compile Include="ObjectStatusUpdateSubPackets\ObjectStatusUpdateSubPacketTypes.cs" />
+    <Compile Include="ObjectStatusUpdateSubPackets\StationSubPacket.cs" />
+    <Compile Include="ObjectStatusUpdateSubPackets\TorpedoUpdateSubPacket.cs" />
+    <Compile Include="ObjectStatusUpdateSubPackets\UnknownSubPacket.cs" />
+    <Compile Include="ObjectStatusUpdateSubPackets\WeapPlayerUpdateSubPacket.cs" />
+    <Compile Include="ObjectStatusUpdateSubPackets\WhaleUpdateSubPacket.cs" />
+    <Compile Include="ObjectTypes.cs" />
+    <Compile Include="OrdinanceTypes.cs" />
+    <Compile Include="OriginType.cs" />
+    <Compile Include="PackageEventArgs.cs" />
+    <Compile Include="Packet.cs" />
+    <Compile Include="PacketProcessing.cs" />
+    <Compile Include="PacketTypes.cs" />
+    <Compile Include="PlayerShip.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShipAction2Packet.cs" />
+    <Compile Include="ShipAction2SubPackets\ConvertTorpedoSubPacket.cs" />
+    <Compile Include="ShipAction2SubPackets\EngSendDamconSubPacket.cs" />
+    <Compile Include="ShipAction2SubPackets\EngSetCoolantSubPacket.cs" />
+    <Compile Include="ShipAction2SubPackets\LoadTubeSubPacket.cs" />
+    <Compile Include="ShipAction2SubPackets\ShipAction2SubPacketTypes.cs" />
+    <Compile Include="ShipAction3Packet.cs" />
+    <Compile Include="ShipAction3SubPackets\EngSetEnergySubPacket.cs" />
+    <Compile Include="ShipAction3SubPackets\HelmJumpSubPacket.cs" />
+    <Compile Include="ShipAction3SubPackets\HelmSetImpulseSubPacket.cs" />
+    <Compile Include="ShipAction3SubPackets\HelmSetSteeringSubPacket.cs" />
+    <Compile Include="ShipAction3SubPackets\ShipAction3SubPacketTypes.cs" />
+    <Compile Include="ShipActionPacket.cs" />
+    <Compile Include="ShipActionSubPackets\CaptainSelectSubPacket.cs" />
+    <Compile Include="ShipActionSubPackets\DiveRiseSubPacket.cs" />
+    <Compile Include="ShipActionSubPackets\EngSetAutoDamconSubPacket.cs" />
+    <Compile Include="ShipActionSubPackets\FireTubeSubPacket.cs" />
+    <Compile Include="ShipActionSubPackets\HelmRequestDockSubPacket.cs" />
+    <Compile Include="ShipActionSubPackets\HelmSetWarpSubPacket.cs" />
+    <Compile Include="ShipActionSubPackets\HelmToggleReverseSubPacket.cs" />
+    <Compile Include="ShipActionSubPackets\Ready2SubPacket.cs" />
+    <Compile Include="ShipActionSubPackets\ReadySubPacket.cs" />
+    <Compile Include="ShipActionSubPackets\SciScanSubPacket.cs" />
+    <Compile Include="ShipActionSubPackets\SciSelectSubPacket.cs" />
+    <Compile Include="ShipActionSubPackets\SetBeamFreqSubPacket.cs" />
+    <Compile Include="ShipActionSubPackets\SetMainScreenSubPacket.cs" />
+    <Compile Include="ShipActionSubPackets\SetShipSettingsSubPacket.cs" />
+    <Compile Include="ShipActionSubPackets\SetShipSubPacket.cs" />
+    <Compile Include="ShipActionSubPackets\SetStationSubPacket.cs" />
+    <Compile Include="ShipActionSubPackets\SetWeaponsTargetSubPacket.cs" />
+    <Compile Include="ShipActionSubPackets\ShipAction.cs" />
+    <Compile Include="ShipActionSubPackets\ShipActionSubPacketTypes.cs" />
+    <Compile Include="ShipActionSubPackets\ToggleAutoBeamsSubPacket.cs" />
+    <Compile Include="ShipActionSubPackets\TogglePerspectiveSubPacket.cs" />
+    <Compile Include="ShipActionSubPackets\ToggleRedAlertSubPacket.cs" />
+    <Compile Include="ShipActionSubPackets\ToggleShieldsSubPacket.cs" />
+    <Compile Include="ShipActionSubPackets\UnloadTubeSubPacket.cs" />
+    <Compile Include="ShipSystem.cs" />
+    <Compile Include="StationStatusPacket.cs" />
+    <Compile Include="StationTypes.cs" />
+    <Compile Include="SystemNode.cs" />
+    <Compile Include="Unknown2Packet.cs" />
+    <Compile Include="Utility.cs" />
+    <Compile Include="VariablePackage.cs" />
+    <Compile Include="VersionPacket.cs" />
+    <Compile Include="WelcomePacket.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
