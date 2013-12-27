@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Artemissbs-protocolsharp by russjudge</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Artemissbs-protocolsharp</h1>
+        <p>Libraries for utilizing the TCP/IP protocol used by Artemis SBS</p>
+
+        <p class="view"><a href="https://github.com/russjudge/ArtemisSBS-ProtocolSharp">View the Project on GitHub <small>russjudge/ArtemisSBS-ProtocolSharp</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/russjudge/ArtemisSBS-ProtocolSharp/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/russjudge/ArtemisSBS-ProtocolSharp/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/russjudge/ArtemisSBS-ProtocolSharp">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="artemissbs-protocolsharp" class="anchor" href="#artemissbs-protocolsharp"><span class="octicon octicon-link"></span></a>ArtemisSBS-ProtocolSharp</h1>
+
+<h1>
+<a name="" class="anchor" href="#"><span class="octicon octicon-link"></span></a>========================</h1>
+
+<p>Libraries and applications for utilizing the TCP/IP protocol used by Artemis SBS, written in C#.</p>
+
+<p>Artemis SBS (Artemis Spaceship Bridge Simulator) can be found at <a href="http://www.artemis.eochu.com">http://www.artemis.eochu.com</a>.</p>
+
+<p>The library is based on the reverse-engineered documentation found at <a href="https://github.com/rjwut/ArtClientLib/wiki/Artemis-Packet-Protocol">https://github.com/rjwut/ArtClientLib/wiki/Artemis-Packet-Protocol</a>.  It is written both to make use of existing functionality provided by the protocol, and to provide a means for extending that functionality.</p>
+
+<p>The following assumptions are made for this project:</p>
+
+<ol>
+<li>The protocol is designed for use exclusively by Artemis SBS.  Use outside of Artemis SBS was never intended, but is the intent of this project.</li>
+<li>The base protocol is out of the control of this project.  The protocol is defined by the developer of the Artemis SBS game, so no modifications can be made to the base protocol.  Since it is uncertain how Artemis SBS will behave with any variance to the protocol, it is assumed that any variance could cause unpredictable results, up to and including crashing the game, and possibly causing buffer overruns or underruns, and as such, the protocol is not to be modified.</li>
+<li>Since the protocol itself is reverse-engineered, it is expected that some of the data transmitted from Artemis SBS might not be data that matches the known documentation, and could in some cases actually contradict the documented protocol.<br>
+</li>
+</ol><p>Just because this project is written in C# does not mean it will work only on Windows.  The intention is to have the bulk of the code in this project compile in <a href="http://mono-project.com">Mono</a>, so that the resulting application is truly cross-platform.</p>
+
+<p>For this reason, the following rules are set:</p>
+
+<ol>
+<li>The .NET 4.0 is to be targetted.</li>
+<li>Only the UI itself may make use of functionality not available in Mono, such as the WPF Framework.  All other code should compile in Mono, as well as within Microsoft's .NET framework.  See the Mono Project for notes on incompatibilities.</li>
+<li>Any UI projects must have a minimum of code--the bulk of the logic process is to be in the libraries that are cross-platform.</li>
+<li>Code that processes the ArtemisSBS protocol will need to be written to handle cases where ArtemsSBS transmits data that is contradictory to the reverse-engineered documentation for the protocol, whether it simply ignores the data, logs it, or some other action--it is not to crash the application that uses this library.</li>
+<li>Extensions to the protocol for the purpose of providing functionality not available in Artemis SBS are never to be transmitted to Artemis SBS to avoid the unpredictable results, other than for further reverse-engineering of the protocol itself.</li>
+</ol><p>At this time we are not taking on new contributors.  However, if you are interested, please feel free to leave a note with a link to a sample of some code you have developed.  If we are in need of some extra hands, we may contact you.</p>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+
+<h2>
+<a name="authors" class="anchor" href="#authors"><span class="octicon octicon-link"></span></a>Authors</h2>
+
+<p>Russ Judge</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/russjudge">russjudge</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
