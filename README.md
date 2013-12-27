@@ -26,6 +26,13 @@ For this reason, the following rules are set:
 
 At this time we are not taking on new contributors.  However, if you are interested, please feel free to leave a note with a link to a sample of some code you have developed.  If we are in need of some extra hands, we may contact you.
 
-Also, the disclaimer for ArtClientLib, which is a java-based API for working with the Artemis SBS protocol, is here: https://github.com/rjwut/ArtClientLib/wiki/Disclaimer.
+License
 
-So, for the disclaimer for this project, all I can say is, "Ditto."
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Authors
+Russ Judge
