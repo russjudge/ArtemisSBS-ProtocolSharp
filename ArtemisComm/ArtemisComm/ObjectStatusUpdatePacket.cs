@@ -1,85 +1,53 @@
 ﻿using ArtemisComm.ObjectStatusUpdateSubPackets;
-using log4net;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Reflection;
-using System.Text;
 
 namespace ArtemisComm
 {
-    public class ObjectStatusUpdatePacket : IPackage
+    public class ObjectStatusUpdatePacket : BasePacket
     {
-        static readonly ILog _log = LogManager.GetLogger(typeof(ObjectStatusUpdatePacket));
-        public ObjectStatusUpdatePacket()
+        public ObjectStatusUpdatePacket(Stream stream, int index) : base()
         {
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Starting {0}", MethodBase.GetCurrentMethod().ToString()); }
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Ending {0}", MethodBase.GetCurrentMethod().ToString()); }   
-
-        }
-
-        public ObjectStatusUpdatePacket(byte[] byteArray)
-        {
-         
-            if (byteArray != null)
+            if (stream != null)
             {
-                if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--bytes in: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(byteArray)); }
-                if (byteArray.Length > 1)
+                try
                 {
-                    SubPacketType = (ObjectStatusUpdateSubPacketTypes)byteArray[0];   //BitConverter.ToInt32(byteArray, 0);
-                    if (_log.IsInfoEnabled)
+                    if (stream.Length > index + 1)
                     {
-                        _log.InfoFormat("SubPacketType={0}", SubPacketType.ToString());
+                        SubPacketType = (ObjectStatusUpdateSubPacketType)Convert.ToByte(stream.ReadByte());
+                    }
+                    SubPacketData = stream.GetMemoryStream(index + 1);
+
+                    if (SubPacketData != null)
+                    {
+                        _subPacket = GetSubPacket(SubPacketData);
                     }
                 }
-
-
-                List<byte> bytes = new List<byte>();
-                for (int i = 1; i < byteArray.Length; i++)
+                catch (Exception ex)
                 {
-                    bytes.Add(byteArray[i]);
+                    AddError(ex);
                 }
-                SubPacketData = bytes.ToArray();
-                _subPacket = GetSubPacket(SubPacketData);
-                //if (byteArray.Length > 4)
-                //{
-                //    List<byte> bytes = new List<byte>();
-                //    for (int i = 4; i < byteArray.Length; i++)
-                //    {
-                //        bytes.Add(byteArray[i]);
-                //    }
-                //    SubPacketData = bytes.ToArray();
-                //    _subPacket = GetSubPacket(SubPacketData);
-                //}
-                //else
-                //{
-                //    _subPacket = null;
-                //    SubPacketData = null;
-                //}
-                if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--Result bytes: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(this.GetBytes())); }
             }
-            
         }
-        IPackage GetSubPacket(byte[] byteArray)
+        IPackage GetSubPacket(Stream stream)
         {
             IPackage retVal = null;
-            object[] parms = { byteArray };
-            Type[] constructorSignature = { typeof(byte[]) };
-
-            Type t = Type.GetType(typeof(ObjectStatusUpdateSubPacketTypes).Namespace + "." + this.SubPacketType.ToString());
-
-
+            object[] parms = { stream, 0 };
+            Type[] constructorSignature = { typeof(Stream), typeof(int) };
+            Type t = Type.GetType(typeof(ObjectStatusUpdateSubPacketType).Namespace + "." + this.SubPacketType.ToString());
             if (t != null)
             {
                 ConstructorInfo constructor = t.GetConstructor(constructorSignature);
                 object obj = constructor.Invoke(parms);
                 retVal = obj as IPackage;
             }
-
             return retVal;
         }
 
-        public ObjectStatusUpdateSubPacketTypes SubPacketType { get; set; }
+        public ObjectStatusUpdateSubPacketType SubPacketType { get; set; }
 
         IPackage _subPacket = null;
 
@@ -91,46 +59,25 @@ namespace ArtemisComm
                 _subPacket = value;
                 if (value != null)
                 {
-                    SubPacketData = _subPacket.GetBytes();
+                    SubPacketData = _subPacket.GetRawData();
                     string tp = _subPacket.GetType().Name;
-                    SubPacketType = (ObjectStatusUpdateSubPacketTypes)Enum.Parse(typeof(ObjectStatusUpdateSubPacketTypes), tp);
+                    SubPacketType = (ObjectStatusUpdateSubPacketType)Enum.Parse(typeof(ObjectStatusUpdateSubPacketType), tp);
                 }
                 else
                 {
-                    SubPacketData = new byte[0];
-                    SubPacketType = (ObjectStatusUpdateSubPacketTypes)byte.MaxValue;
+                    SubPacketData = new MemoryStream();
+                    SubPacketType = (ObjectStatusUpdateSubPacketType)byte.MaxValue;
                 }
-
-
-
             }
         }
 
-        //Message type (int)
-        public byte[] SubPacketData { get; set; }
+        [ArtemisExcluded]
+        public MemoryStream SubPacketData { get; private set; }
 
-
-        
-        
-        public byte[] GetBytes()
+        public override OriginType GetValidOrigin()
         {
-            List<byte> retVal = new List<byte>();
-
-            //retVal.AddRange(BitConverter.GetBytes((int)SubPacketType));
-            retVal.Add((byte)SubPacketType);
-            if (_log.IsInfoEnabled)
-            {
-                _log.InfoFormat("~~~~SubPacketType added to bytes: {0}", Utility.BytesToDebugString(retVal.ToArray()));
-            }
-            if (SubPacketData != null)
-            {
-                retVal.AddRange(SubPacketData);
-                if (_log.IsInfoEnabled)
-                {
-                    _log.InfoFormat("~~~~####SubPacketData added to bytes: {0}", Utility.BytesToDebugString(retVal.ToArray()));
-                }
-            }
-            return retVal.ToArray();
+            return OriginType.Server;
         }
+       
     }
 }

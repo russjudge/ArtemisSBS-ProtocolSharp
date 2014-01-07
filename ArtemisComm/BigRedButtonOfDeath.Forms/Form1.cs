@@ -2,6 +2,7 @@
 using BigRedButtonOfDeath.Library;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -57,27 +58,30 @@ namespace BigRedButtonOfDeath.Forms
             }
             else
             {
-                MessageBox.Show(message);
+                MessageBox.Show(message, "Big Red Button of Death!", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
             }
         }
 
-        public void PromptShips(List<PlayerShip> ships)
+        public void PromptShips(Collection<PlayerShip> ships)
         {
-            lstShips.Items.Clear();
-            foreach (PlayerShip ship in ships)
+            if (ships != null)
             {
-                lstShips.Items.Add(ship.Name);
+                lstShips.Items.Clear();
+                foreach (PlayerShip ship in ships)
+                {
+                    lstShips.Items.Add(ship.Name);
+                }
             }
             this.AcceptButton = btnShip;
         }
         public void GetShipSelection(ArtemisComm.PlayerShip[] shipList)
         {
             SetVisible(false, true, false, false, false);
-            List<PlayerShip> shps = new List<PlayerShip>(shipList);
+            Collection<PlayerShip> shps = new Collection<PlayerShip>(shipList);
             if (this.InvokeRequired)
             {
 
-                this.BeginInvoke(new Action<List<PlayerShip>>(PromptShips), shps);
+                this.BeginInvoke(new Action<Collection<PlayerShip>>(PromptShips), shps);
             }
             else
             {
@@ -111,7 +115,7 @@ namespace BigRedButtonOfDeath.Forms
             else
             {
                 this.TopMost = false;
-                MessageBox.Show("Unable to connect to server.", "The Big Red Button of Death!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Unable to connect to server.", "The Big Red Button of Death!", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
                 SetForConnection();
                 this.TopMost = true;
             }
@@ -127,7 +131,7 @@ namespace BigRedButtonOfDeath.Forms
             else
             {
                 this.TopMost = false;
-                MessageBox.Show("Connection to server was lost.", "The Big Red Button of Death!",  MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Connection to server was lost.", "The Big Red Button of Death!", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
                 SetForConnection();
                 this.TopMost = true;
                
@@ -223,7 +227,7 @@ namespace BigRedButtonOfDeath.Forms
                 ShipSelected(this, e);
             }
         }
-        bool GameInProgress = false;
+  
         System.Media.SoundPlayer plyr = new System.Media.SoundPlayer(Properties.Resources.alert);
        
         public event EventHandler DisposeRequested;
@@ -235,15 +239,6 @@ namespace BigRedButtonOfDeath.Forms
             }
         }
 
-        private void OnReset(object sender, EventArgs e)
-        {
-            if (DisconnectRequested != null)
-            {
-                DisconnectRequested(this, e);
-
-            }
-            SetForConnection();
-        }
-
+      
     }
 }

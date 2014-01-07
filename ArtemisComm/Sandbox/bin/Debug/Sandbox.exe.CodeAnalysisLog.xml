@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="c:\program files (x86)\microsoft visual studio 11.0\team tools\static analysis tools\fxcop\Xml\CodeAnalysisReport.xsl"?>
+<FxCopReport Version="11.0">
+ <Targets>
+  <Target Name="E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\bin\Debug\Sandbox.exe">
+   <Modules>
+    <Module Name="sandbox.exe">
+     <Namespaces>
+      <Namespace Name="Sandbox">
+       <Types>
+        <Type Name="MainWindow" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#OnBitConvert(System.Object,System.Windows.RoutedEventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Windows.MessageBox.Show(System.String,System.String,System.Windows.MessageBoxButton,System.Windows.MessageBoxImage)" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2014-01-04 02:51:26Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="MainWindow.xaml.cs" Line="875">Method 'MainWindow.OnBitConvert(object, RoutedEventArgs)' passes a literal string as parameter 'caption' of a call to 'MessageBox.Show(string, string, MessageBoxButton, MessageBoxImage)'. Retrieve the following string(s) from a resource table instead: "BitConverter Error".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="MainWindow.xaml.cs" Line="899">Method 'MainWindow.OnBitConvert(object, RoutedEventArgs)' passes a literal string as parameter 'caption' of a call to 'MessageBox.Show(string, string, MessageBoxButton, MessageBoxImage)'. Retrieve the following string(s) from a resource table instead: "BitConverter Error".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="MainWindow.xaml.cs" Line="911">Method 'MainWindow.OnBitConvert(object, RoutedEventArgs)' passes a literal string as parameter 'caption' of a call to 'MessageBox.Show(string, string, MessageBoxButton, MessageBoxImage)'. Retrieve the following string(s) from a resource table instead: "BitConverter Error".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="MainWindow.xaml.cs" Line="923">Method 'MainWindow.OnBitConvert(object, RoutedEventArgs)' passes a literal string as parameter 'caption' of a call to 'MessageBox.Show(string, string, MessageBoxButton, MessageBoxImage)'. Retrieve the following string(s) from a resource table instead: "BitConverter Error".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="MainWindow.xaml.cs" Line="935">Method 'MainWindow.OnBitConvert(object, RoutedEventArgs)' passes a literal string as parameter 'caption' of a call to 'MessageBox.Show(string, string, MessageBoxButton, MessageBoxImage)'. Retrieve the following string(s) from a resource table instead: "BitConverter Error".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="MainWindow.xaml.cs" Line="943">Method 'MainWindow.OnBitConvert(object, RoutedEventArgs)' passes a literal string as parameter 'caption' of a call to 'MessageBox.Show(string, string, MessageBoxButton, MessageBoxImage)'. Retrieve the following string(s) from a resource table instead: "BitConverter Error".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="MainWindow.xaml.cs" Line="951">Method 'MainWindow.OnBitConvert(object, RoutedEventArgs)' passes a literal string as parameter 'caption' of a call to 'MessageBox.Show(string, string, MessageBoxButton, MessageBoxImage)'. Retrieve the following string(s) from a resource table instead: "BitConverter Error".</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+     </Namespaces>
+    </Module>
+   </Modules>
+  </Target>
+ </Targets>
+ <Rules>
+  <Rule TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303">
+   <Name>Do not pass literals as localized parameters</Name>
+   <Description>Literal strings that are embedded in source code are difficult to localize. Avoid passing literal strings as arguments in circumstances where a localized string is generally expected.</Description>
+   <Resolution Name="KnownValue">Method {0} passes a literal string as parameter '{1}' of a call to {2}. Retrieve the following string(s) from a resource table instead: {3}.</Resolution>
+   <Owner>RuleOwner</Owner>
+   <Url>http://msdn.microsoft.com/library/ms182187(VS.100).aspx</Url>
+   <Email />
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="dataflowrules.dll" Version="11.0.0.0" />
+  </Rule>
+ </Rules>
+ <Localized>
+  <String Key="Category">Category</String>
+  <String Key="Certainty">Certainty</String>
+  <String Key="CollapseAll">Collapse All</String>
+  <String Key="CheckId">Check Id</String>
+  <String Key="Error">Error</String>
+  <String Key="Errors">error(s)</String>
+  <String Key="ExpandAll">Expand All</String>
+  <String Key="Help">Help</String>
+  <String Key="Line">Line</String>
+  <String Key="Messages">message(s)</String>
+  <String Key="LocationNotStoredInPdb">[Location not stored in Pdb]</String>
+  <String Key="Project">Project</String>
+  <String Key="Resolution">Resolution</String>
+  <String Key="Rule">Rule</String>
+  <String Key="RuleFile">Rule File</String>
+  <String Key="RuleDescription">Rule Description</String>
+  <String Key="Source">Source</String>
+  <String Key="Status">Status</String>
+  <String Key="Target">Target</String>
+  <String Key="Warning">Warning</String>
+  <String Key="Warnings">warning(s)</String>
+  <String Key="ReportTitle">Code Analysis Report</String>
+ </Localized>
+</FxCopReport>

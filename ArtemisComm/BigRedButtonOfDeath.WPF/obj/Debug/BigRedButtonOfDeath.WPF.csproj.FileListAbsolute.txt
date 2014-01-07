@@ -2,7 +2,6 @@ E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButton
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.WPF\bin\Debug\BigRedButtonOfDeath.WPF.pdb
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.WPF\bin\Debug\ArtemisComm.dll
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.WPF\bin\Debug\BigRedButtonOfDeath.Library.dll
-E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.WPF\bin\Debug\log4net.dll
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.WPF\bin\Debug\ArtemisComm.pdb
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.WPF\bin\Debug\BigRedButtonOfDeath.Library.pdb
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.WPF\obj\Debug\BigRedButtonOfDeath.WPF.csprojResolveAssemblyReference.cache
@@ -21,3 +20,5 @@ E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButton
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.WPF\obj\Debug\BigRedButtonOfDeath.WPF.pdb
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.WPF\obj\Debug\App.baml
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.WPF\bin\Debug\BigRedButtonOfDeath.WPF.exe.config
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.WPF\bin\Debug\BigRedButtonOfDeath.WPF.exe.CodeAnalysisLog.xml
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.WPF\bin\Debug\BigRedButtonOfDeath.WPF.exe.lastcodeanalysissucceeded

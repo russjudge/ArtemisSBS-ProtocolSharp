@@ -220,11 +220,11 @@
                         </GridViewColumn.HeaderTemplate>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Margin="2"
-                                               VerticalAlignment="Center"
-                                               Text="{Binding PropertyName}" />
-                                </StackPanel>
+
+                                <TextBlock Margin="2"
+                                           VerticalAlignment="Center"
+                                           Text="{Binding PropertyName}" />
+
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -240,11 +240,12 @@
                         </GridViewColumn.HeaderTemplate>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
+                                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+
                                     <TextBlock Margin="2"
                                                VerticalAlignment="Center"
                                                Text="{Binding Value}" />
-                                </StackPanel>
+                                </ScrollViewer>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -283,11 +284,10 @@
                         </GridViewColumn.HeaderTemplate>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBox Margin="2"
-                                             VerticalAlignment="Center"
-                                             Text="{Binding HexValue}" />
-                                </StackPanel>
+
+                                <TextBox VerticalAlignment="Center"
+                                         HorizontalScrollBarVisibility="Auto"
+                                         Text="{Binding HexValue}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

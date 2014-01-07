@@ -24,5 +24,14 @@ namespace BigRedButtonOfDeath.WPF
                     "The Big Red Button of Death!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        public static string AppDataPath
+        {
+            get
+            {
+                return System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Russ Judge", "BigRedButtonOfDeath");
+                //return new System.IO.FileInfo(System.Reflection.Assembly.GetEntryAssembly().Location).DirectoryName;
+            }
+        }
+            
     }
 }

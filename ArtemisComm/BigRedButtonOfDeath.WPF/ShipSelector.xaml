@@ -16,7 +16,7 @@
             <TextBlock FontWeight="Bold" Text="Select Ship" />
         </GroupBox.Header>
         <StackPanel>
-            <ListBox Name="lstShips"
+            <ListBox MouseDoubleClick="lstShips_MouseDoubleClick" Name="lstShips"
                      Background="Transparent"
                      ItemsSource="{Binding Ships,
                                            Mode=OneWay,

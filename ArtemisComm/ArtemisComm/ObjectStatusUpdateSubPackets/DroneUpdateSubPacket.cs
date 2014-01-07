@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -7,12 +8,8 @@ namespace ArtemisComm.ObjectStatusUpdateSubPackets
 {
     public class DroneUpdateSubPacket : VariablePackage
     {
-        public DroneUpdateSubPacket() : base()
-        {
-
-        }
-        public DroneUpdateSubPacket(byte[] byteArray)
-            : base(byteArray)
+        public DroneUpdateSubPacket(Stream stream, int index)
+            : base(stream, index)
         {
 
         }

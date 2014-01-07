@@ -1,45 +1,35 @@
-﻿using log4net;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 
 namespace ArtemisComm.ShipAction3SubPackets
 {
-    public class HelmSetSteeringSubPacket : IPackage
+    public class HelmSetSteeringSubPacket : BasePacket
     {
-        static readonly ILog _log = LogManager.GetLogger(typeof(HelmSetImpulseSubPacket));
-        public HelmSetSteeringSubPacket()
+        public static Packet GetPacket(float turnValue)
         {
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Starting {0}", MethodBase.GetCurrentMethod().ToString()); }
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Ending {0}", MethodBase.GetCurrentMethod().ToString()); }   
+            HelmSetSteeringSubPacket escsp = new HelmSetSteeringSubPacket(turnValue);
+            ShipAction3Packet sap2 = new ShipAction3Packet(escsp);
+            return new Packet(sap2);
         }
-        public HelmSetSteeringSubPacket(byte[] byteArray)
+        public HelmSetSteeringSubPacket(float turnValue)
         {
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Starting {0}", MethodBase.GetCurrentMethod().ToString()); }
+            TurnValue = turnValue;
+        }
+        public HelmSetSteeringSubPacket(Stream stream, int index)
+            : base(stream, index)
+        {
 
-            if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--bytes in: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(byteArray)); }
-
-
-            TurnValue = BitConverter.ToSingle(byteArray, 0);
-          
-
-
-            if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--Result bytes: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(this.GetBytes())); }
-
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Ending {0}", MethodBase.GetCurrentMethod().ToString()); }   
         }
         public float TurnValue { get; set; }
-       
-        
 
-        public byte[] GetBytes()
+        public override OriginType GetValidOrigin()
         {
-            List<byte> retVal = new List<byte>();
-            retVal.AddRange(BitConverter.GetBytes(TurnValue));
-            
-            return retVal.ToArray();
+            return OriginType.Client;
         }
+        
     }
 }

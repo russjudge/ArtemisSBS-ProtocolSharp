@@ -1,35 +1,40 @@
-﻿using log4net;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 
 namespace ArtemisComm
 {
-    public class AudioCommandPacket : IPackage
+    public class AudioCommandPacket : BasePacket
     {
-         static readonly ILog _log = LogManager.GetLogger(typeof(AudioCommandPacket));
-        public AudioCommandPacket()
+        public static Packet GetPacket(int id, int playOrDismiss)
         {
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Starting {0}", MethodBase.GetCurrentMethod().ToString()); }
-           
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Ending {0}", MethodBase.GetCurrentMethod().ToString()); }   
-
+            return new Packet(new AudioCommandPacket(id, playOrDismiss));
         }
-        public AudioCommandPacket(byte[] byteArray)
+        public AudioCommandPacket(int id, int playOrDismiss) : base()
         {
-            if (byteArray != null)
-            {
-                if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--bytes in: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(byteArray)); }
-
-                ID = BitConverter.ToInt32(byteArray, 0);
-                PlayOrDismiss = BitConverter.ToInt32(byteArray, 4);
-
-             
-                if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--Result bytes: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(this.GetBytes())); }
-            }
+            ID = id;
+            PlayOrDismiss = playOrDismiss;
         }
+        public AudioCommandPacket(Stream stream, int index) : base(stream, index) { }
+        
+        //public AudioCommandPacket(byte[] byteArray)
+        //{
+        //    if (byteArray != null)
+        //    {
+        //        try
+        //        {
+        //            ID = BitConverter.ToInt32(byteArray, 0);
+        //            PlayOrDismiss = BitConverter.ToInt32(byteArray, 4);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            errors.Add(ex);
+        //        }
+        //    }
+        //}
 
         public int ID { get; set; }
         /// <summary>
@@ -40,12 +45,18 @@ namespace ArtemisComm
         /// </value>
         public int PlayOrDismiss { get; set; }
 
-        public byte[] GetBytes()
+        //public byte[] GetBytes()
+        //{
+        //    List<byte> retVal = new List<byte>();
+        //    retVal.AddRange(BitConverter.GetBytes(ID));
+        //    retVal.AddRange(BitConverter.GetBytes(PlayOrDismiss));
+        //    return retVal.ToArray();
+        //}
+
+        public override OriginType GetValidOrigin()
         {
-            List<byte> retVal = new List<byte>();
-            retVal.AddRange(BitConverter.GetBytes(ID));
-            retVal.AddRange(BitConverter.GetBytes(PlayOrDismiss));
-            return retVal.ToArray();
+            return OriginType.Client;
         }
+       
     }
 }

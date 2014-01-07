@@ -1,21 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
 namespace ArtemisComm.ObjectStatusUpdateSubPackets
 {
-    public class TorpedoUpdateSubPacket : MineUpdateSubPacket
+    public class TorpedoUpdateSubPacket : UnnamedObjectUpdate
     {
-        public TorpedoUpdateSubPacket()
-            : base()
+        public TorpedoUpdateSubPacket(Stream stream, int index)
+            : base(stream, index)
         {
 
         }
-        public TorpedoUpdateSubPacket(byte[] byteArray)
-            : base(byteArray)
-        {
 
-        }
     }
 }

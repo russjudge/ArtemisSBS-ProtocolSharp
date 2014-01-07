@@ -1,35 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
 namespace ArtemisComm.ObjectStatusUpdateSubPackets
 {
-    public class UnknownSubPacket : IPackage
+    public class UnknownSubPacket : BasePacket
     {
-        public UnknownSubPacket()
+        public UnknownSubPacket(Stream stream, int index)
+            : base(stream, index)
         {
 
-        }
-        public UnknownSubPacket(byte[] byteArray)
-        {
-            if (byteArray != null)
-            {
-                Unknown1 = byteArray[0];
-                Unknown2 = byteArray[1];
-                Unknown3 = byteArray[2];
-            }
         }
         public byte Unknown1 { get; set; }
         public byte Unknown2 { get; set; }
         public byte Unknown3 { get; set; }
-        public byte[] GetBytes()
+
+
+        public override OriginType GetValidOrigin()
         {
-            List<byte> retVal = new List<byte>();
-            retVal.Add(Unknown1);
-            retVal.Add(Unknown2);
-            retVal.Add(Unknown3);
-            return retVal.ToArray();
+            return OriginType.Server;
         }
+        
     }
 }

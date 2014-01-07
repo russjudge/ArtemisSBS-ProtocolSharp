@@ -1,7 +1,8 @@
 ﻿using ArtemisComm.GameMessageSubPackets;
-using log4net;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -11,13 +12,14 @@ namespace ArtemisComm
     public class GameMessagePacket : IPackage
     {
 
-        //**CONFIRMED
-        static readonly ILog _log = LogManager.GetLogger(typeof(GameMessagePacket));
-        public GameMessagePacket()
+        MemoryStream _rawData = null;
+        public MemoryStream GetRawData()
         {
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Starting {0}", MethodBase.GetCurrentMethod().ToString()); }
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Ending {0}", MethodBase.GetCurrentMethod().ToString()); }   
-
+            if (_rawData == null)
+            {
+                _rawData = this.SetRawData();
+            }
+            return _rawData;
         }
         // GameStartSubPacket = 0,
         //GameOverSubPacket = 6,
@@ -27,55 +29,90 @@ namespace ArtemisComm
         //JumpStartSubPacket = 12,
         //JumpCompleteSubPacket = 13,
         //AllShipSettingsSubPacket = 15,
-        public GameMessagePacket(byte[] byteArray)
+        public GameMessagePacket(Stream stream, int index)
         {
-            if (byteArray != null)
+            try
             {
-                if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--bytes in: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(byteArray)); }
-                if (byteArray.Length > 3)
+                if (stream != null)
                 {
-                    SubPacketType = (GameMessageSubPacketTypes)BitConverter.ToInt32(byteArray, 0);
-                }
-                if (byteArray.Length >= 4)
-                {
-                    List<byte> bytes = new List<byte>();
-                    for (int i = 4; i < byteArray.Length; i++)
+                    if (stream.CanSeek)
                     {
-                        bytes.Add(byteArray[i]);
+                        stream.Position = index;
                     }
-                    SubPacketData = bytes.ToArray();
-                    _subPacket = GetSubPacket(SubPacketData);
+                    if (stream.Length > 3)
+                    {
+                        SubPacketType = (GameMessageSubPacketType)stream.ToInt32();
+                       
+                    }
+                    if (stream.Length >= 4)
+                    {
+                        SubPacketData = stream.GetMemoryStream(index + 4);
+
+                     
+                        _subPacket = GetSubPacket(stream, index + 4);
+                    }
+                    else
+                    {
+                        _subPacket = null;
+                        SubPacketData = null;
+                    }
                 }
-                else
-                {
-                    _subPacket = null;
-                    SubPacketData = null;
-                }
-                if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--Result bytes: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(this.GetBytes())); }
+            }
+            catch (Exception ex)
+            {
+                errors.Add(ex);
             }
         }
-        IPackage GetSubPacket(byte[] byteArray)
+        //IPackage GetSubPacket(byte[] byteArray)
+        //{
+        //    IPackage retVal = null;
+        //    object[] parms = { byteArray };
+        //    Type[] constructorSignature = { typeof(byte[]) };
+
+        //    Type t = Type.GetType(typeof(GameMessageSubPacketType).Namespace + "." + this.SubPacketType.ToString());
+
+
+        //    if (t != null)
+        //    {
+        //        ConstructorInfo constructor = t.GetConstructor(constructorSignature);
+        //        object obj = constructor.Invoke(parms);
+        //        retVal = obj as IPackage;
+        //    }
+
+        //    return retVal;
+        //}
+        IPackage GetSubPacket(Stream stream, int index)
         {
             IPackage retVal = null;
-            object[] parms = { byteArray };
-            Type[] constructorSignature = { typeof(byte[]) };
-
-            Type t = Type.GetType(typeof(GameMessageSubPacketTypes).Namespace + "." + this.SubPacketType.ToString());
-
-
-            if (t != null)
+            try
             {
-                ConstructorInfo constructor = t.GetConstructor(constructorSignature);
-                object obj = constructor.Invoke(parms);
-                retVal = obj as IPackage;
-            }
+                if (stream.CanSeek)
+                {
+                    stream.Position = index;
+                }
 
+                object[] parms = { stream, index };
+                Type[] constructorSignature = { typeof(Stream), typeof(int) };
+
+                Type t = Type.GetType(typeof(GameMessageSubPacketType).Namespace + "." + this.SubPacketType.ToString());
+
+
+                if (t != null)
+                {
+                    ConstructorInfo constructor = t.GetConstructor(constructorSignature);
+                    object obj = constructor.Invoke(parms);
+                    retVal = obj as IPackage;
+                }
+            }
+            catch (Exception ex)
+            {
+                errors.Add(ex);
+            }
             return retVal;
         }
 
 
-
-        public GameMessageSubPacketTypes SubPacketType { get; private set; }
+        public GameMessageSubPacketType SubPacketType { get; private set; }
 
 
         IPackage _subPacket = null;
@@ -88,14 +125,14 @@ namespace ArtemisComm
                 _subPacket = value;
                 if (value != null)
                 {
-                    SubPacketData = _subPacket.GetBytes();
+                    SubPacketData = _subPacket.GetRawData();
                     string tp = _subPacket.GetType().Name;
-                    SubPacketType = (GameMessageSubPacketTypes)Enum.Parse(typeof(GameMessageSubPacketTypes), tp);
+                    SubPacketType = (GameMessageSubPacketType)Enum.Parse(typeof(GameMessageSubPacketType), tp);
                 }
                 else
                 {
-                    SubPacketData = new byte[0];
-                    SubPacketType = (GameMessageSubPacketTypes)int.MaxValue;
+                    SubPacketData = new MemoryStream();
+                    SubPacketType = (GameMessageSubPacketType)int.MaxValue;
                 }
                 
 
@@ -104,18 +141,49 @@ namespace ArtemisComm
         }
 
         //Message type (int)
-        public byte[] SubPacketData { get; set; }
+        public MemoryStream SubPacketData { get; private set; }
 
-        public byte[] GetBytes()
+        //public byte[] GetBytes()
+        //{
+        //    List<byte> retVal = new List<byte>();
+
+        //    retVal.AddRange(BitConverter.GetBytes((int)SubPacketType));
+        //    if (SubPacketData != null)
+        //    {
+        //        retVal.AddRange(SubPacketData);
+        //    }
+        //    return retVal.ToArray();
+        //}
+
+        public OriginType GetValidOrigin()
         {
-            List<byte> retVal = new List<byte>();
-
-            retVal.AddRange(BitConverter.GetBytes((int)SubPacketType));
-            if (SubPacketData != null)
-            {
-                retVal.AddRange(SubPacketData);
-            }
-            return retVal.ToArray();
+            return OriginType.Server;
         }
+        List<Exception> errors = new List<Exception>();
+        public ReadOnlyCollection<Exception> GetErrors()
+        {
+            return new ReadOnlyCollection<Exception>(errors);
+        }
+        #region Dispose
+
+        bool _isDisposed = false;
+        protected virtual void Dispose(bool isDisposing)
+        {
+            if (isDisposing)
+            {
+                if (!_isDisposed)
+                {
+
+                    this.DisposeProperties();
+                    _isDisposed = true;
+                }
+            }
+        }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }

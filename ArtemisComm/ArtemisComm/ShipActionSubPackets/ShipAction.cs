@@ -1,39 +1,33 @@
-﻿using log4net;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 
 namespace ArtemisComm.ShipActionSubPackets
 {
-    public class ShipAction: IPackage
+    public class ShipAction: BasePacket
     {
+
        
-        static readonly ILog _log = LogManager.GetLogger(typeof(ShipAction));
-        public ShipAction()
+        public ShipAction(int value)
         {
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Starting {0}", MethodBase.GetCurrentMethod().ToString()); }
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Ending {0}", MethodBase.GetCurrentMethod().ToString()); }   
+            Value = value;
         }
-        public ShipAction(byte[] byteArray)
+        public ShipAction(Stream stream, int index)
+            : base(stream, index)
         {
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Starting {0}", MethodBase.GetCurrentMethod().ToString()); }
 
-            if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--bytes in: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(byteArray)); }
-
-            Value = BitConverter.ToInt32(byteArray, 0);
-
-            if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--Result bytes: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(this.GetBytes())); }
-
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Ending {0}", MethodBase.GetCurrentMethod().ToString()); }   
         }
         public int Value { get; set; }
-        public byte[] GetBytes()
+
+
+
+        public override OriginType GetValidOrigin()
         {
-            List<byte> retVal = new List<byte>();
-            retVal.AddRange(BitConverter.GetBytes(Value));
-            return retVal.ToArray();
+            return OriginType.Client;
         }
+
     }
 }

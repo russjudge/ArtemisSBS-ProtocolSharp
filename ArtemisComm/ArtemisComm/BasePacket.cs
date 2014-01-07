@@ -1,82 +1,98 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 
 namespace ArtemisComm
 {
+    //This class is intended to be the base class for all packages, so that properties are loaded with Reflection with the LoadProperties method.
+    //  This class is not complete.
     public class BasePacket : IPackage
     {
         public BasePacket()
         {
 
         }
-        public BasePacket(byte[] byteArray)
+        public BasePacket(Stream stream, int index)
         {
-            LoadProperties(byteArray, this, 0);
-
-        }
-        public BasePacket(byte[] byteArray, int index)
-        {
-            LoadProperties(byteArray, this, index);
-
+            LoadProperties(stream, index);
         }
 
-        int LoadProperties(byte[] byteArray, object obj, int index)
+
+        [ArtemisExcluded]
+        public int Length { get; private set; }
+
+
+        #region Errors
+        protected void AddError(Exception ex)
         {
-            int position = index;
-            int retVal = position;
-            foreach (PropertyInfo pi in obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
+            errors.Add(ex);
+        }
+        Collection<Exception> errors = new Collection<Exception>();
+        public System.Collections.ObjectModel.ReadOnlyCollection<Exception> GetErrors()
+        {
+            return new System.Collections.ObjectModel.ReadOnlyCollection<Exception>(errors);
+        }
+        #endregion
+
+
+        #region Load
+
+        private void LoadProperties(Stream stream, int index)
+        {
+
+            _rawData = stream.GetMemoryStream(index);
+
+            Length = Utility.LoadProperties(this, _rawData, 0, errors);
+        
+        }
+
+        #endregion
+
+        public virtual OriginType GetValidOrigin()
+        {
+            return OriginType.Indeterminate;
+        }
+        
+
+        #region RawData
+        MemoryStream _rawData =null;
+
+        public MemoryStream GetRawData()
+        {
+            if (_rawData == null)
             {
-                if (pi.PropertyType == typeof(IPackage) || pi.PropertyType.IsSubclassOf(typeof(VariablePackage)))
+                _rawData = this.SetRawData();
+            }
+            return _rawData;
+        }
+        
+        #endregion
+
+
+        #region Dispose
+        
+        bool _isDisposed = false;
+        protected virtual void Dispose(bool isDisposing)
+        {
+            if (isDisposing)
+            {
+                if (!_isDisposed)
                 {
-                    
-                    object o2 = null;
-                    //TODO: create new object, using bytearray.
-                    retVal = LoadProperties(byteArray, o2, position);
-                    
-                }
-                else
-                {
-                   
-                        if (pi.PropertyType.IsArray)
-                        {
-                            //if (_log.IsInfoEnabled) { _log.InfoFormat("-- property {0} is an array - processing...", pi.Name); }
-                            //GetPropertyInformation(, objx, propertyName.PadLeft(depth, '-') + "." + pi.Name, depth + 1);
-
-                            pi.PropertyType.GetElementType();
-                            //TODO: load each element in array.
-                            
-
-                        }
-                        else
-                        {
-                            //if (_log.IsInfoEnabled) { _log.InfoFormat("-- Adding {0} to list", pi.Name); }
-                            string propType = pi.PropertyType.ToString();
-                            if (pi.PropertyType.IsEnum)
-                            {
-
-                                //TODO: load enum type correctly (enumCast)BitConverter.ToInt32(bytearray, position)
-                                propType += "(" + pi.PropertyType.GetEnumUnderlyingType().ToString() + ")";
-                            }
-                            else
-                            {
-                                //TODO: (CAST)BitConverter.ToInt32(bytearray, position)
-                            }
-                            
-                        }
-                    
+                  
+                    this.DisposeProperties();
+                    _isDisposed = true;
                 }
             }
-            return retVal;
         }
-
-        public byte[] GetBytes()
+        public void Dispose()
         {
-            List<byte> retVal = new List<byte>();
-            //TODO: iterate through properties.
-            return retVal.ToArray();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
+        #endregion
     }
 }

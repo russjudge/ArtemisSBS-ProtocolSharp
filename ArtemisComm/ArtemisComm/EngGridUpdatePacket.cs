@@ -1,6 +1,7 @@
-﻿using log4net;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -9,49 +10,46 @@ namespace ArtemisComm
 {
     public class EngGridUpdatePacket : IPackage
     {
-        static readonly ILog _log = LogManager.GetLogger(typeof(EngGridUpdatePacket));
-        public EngGridUpdatePacket()
-        {
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Starting {0}", MethodBase.GetCurrentMethod().ToString()); }
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Ending {0}", MethodBase.GetCurrentMethod().ToString()); }   
 
-        }
-        public EngGridUpdatePacket(byte[] byteArray)
+
+        public EngGridUpdatePacket(Stream stream, int index)
         {
-            if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--bytes in: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(byteArray)); }
-            Systems = SystemNode.GetNodes(byteArray);
-            int index = 0;
+            Initialize(stream, index);
+        }
+        public void Initialize(Stream stream, int index)
+        {
+            Systems = SystemNode.GetNodes(stream, index);
+            
             foreach (SystemNode node in Systems)
             {
                 index += node.DataLength;
             }
-            
-            DamageControlTeams = DamComStatus.GetDamComTeams(byteArray, ++index);
+            index++;
+            DamageControlTeams = DamComStatus.GetDamComTeams(stream, index);
 
-            if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--Result bytes: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(this.GetBytes())); }
         }
-        public byte[] GetBytes()
-        {
-            List<byte> retVal = new List<byte>();
-            foreach (SystemNode node in Systems)
-            {
-                retVal.AddRange(node.GetBytes());
-            }
-            retVal.Add(0xff);
+        //public byte[] GetBytes()
+        //{
+        //    List<byte> retVal = new List<byte>();
+        //    foreach (SystemNode node in Systems)
+        //    {
+        //        retVal.AddRange(node.GetBytes());
+        //    }
+        //    retVal.Add(0xff);
 
-            foreach (DamComStatus stat in DamageControlTeams)
-            {
-                retVal.AddRange(stat.GetBytes());
-            }
+        //    foreach (DamComStatus stat in DamageControlTeams)
+        //    {
+        //        retVal.AddRange(stat.GetBytes());
+        //    }
 
-            retVal.Add(0xfe);
+        //    retVal.Add(0xfe);
 
-            return retVal.ToArray();
-        }
+        //    return retVal.ToArray();
+        //}
+        public ReadOnlyCollection<SystemNode> Systems { get; private set; }
 
-        public SystemNode[] Systems { get; set; }
-
-        public DamComStatus[] DamageControlTeams { get; set; }
+        public ReadOnlyCollection<DamComStatus> DamageControlTeams { get; private set; }
+        
         
         //System grid status (array)
 
@@ -74,5 +72,58 @@ namespace ArtemisComm
         //Current Z coordinate (int)
         //Progress (float)
         //Number of team members (int)
+
+        public OriginType GetValidOrigin()
+        {
+            return OriginType.Server;
+        }
+        List<Exception> errors = new List<Exception>();
+        public ReadOnlyCollection<Exception> GetErrors()
+        {
+            return new ReadOnlyCollection<Exception>(errors);
+        }
+
+        MemoryStream _rawData = null;
+        public MemoryStream GetRawData()
+        {
+            if (_rawData == null)
+            {
+                _rawData = this.SetRawData();
+            }
+            return _rawData;
+        }
+
+        #region Dispose
+
+        bool _isDisposed = false;
+        protected virtual void Dispose(bool isDisposing)
+        {
+            if (isDisposing)
+            {
+                if (!_isDisposed)
+                {
+                    if (_rawData != null)
+                    {
+                        _rawData.Dispose();
+                    }
+                    //foreach (IDisposable item in Systems)
+                    //{
+                    //    item.Dispose();
+                    //}
+                    foreach (IDisposable item in DamageControlTeams)
+                    {
+                        item.Dispose();
+                    }
+
+                    _isDisposed = true;
+                }
+            }
+        }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }

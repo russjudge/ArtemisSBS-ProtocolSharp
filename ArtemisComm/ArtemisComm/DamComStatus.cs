@@ -3,6 +3,8 @@ using log4net;
 #endif
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -11,77 +13,118 @@ namespace ArtemisComm
 {
     public class DamComStatus : IPackage
     {
-#if LOG4NET
-        static readonly ILog _log = LogManager.GetLogger(typeof(DamComStatus));
-#endif
+
+        #region RawData
+        MemoryStream _rawData = null;
+
+        public MemoryStream GetRawData()
+        {
+            if (_rawData == null)
+            {
+                _rawData = this.SetRawData();
+            }
+            return _rawData;
+        }
+
+        #endregion
+
         const int PacketLength = 33;
-        public static DamComStatus[] GetDamComTeams(byte[] byteArray, int index)
+        public static ReadOnlyCollection<DamComStatus> GetDamComTeams(Stream stream, int index)
         {
             List<DamComStatus> retVal = new List<DamComStatus>();
-            if (byteArray != null)
+            if (stream != null)
             {
                 int position = index;
-                while (position < byteArray.Length && byteArray[position] != 0xfe)
+                stream.Position = position;
+                while (position < stream.Length && Convert.ToByte(stream.ReadByte()) != 0xfe)
                 {
-                    DamComStatus d = new DamComStatus(byteArray, position);
+                    DamComStatus d = new DamComStatus(stream, position);
                     retVal.Add(d);
                     position += PacketLength;
+                    stream.Position = position;
                 }
             }
-            return retVal.ToArray();
+            return new ReadOnlyCollection<DamComStatus>(retVal);
         }
         public DamComStatus()
         {
-#if LOG4NET
 
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Starting {0}", MethodBase.GetCurrentMethod().ToString()); }
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Ending {0}", MethodBase.GetCurrentMethod().ToString()); }   
-#endif
         }
-        void Initialize(byte[] byteArray, int index)
+        void Initialize(Stream stream, int index)
         {
-            if (byteArray != null)
-            {
-#if LOG4NET
 
-                if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--bytes in: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(byteArray)); }
-#endif
-                if (byteArray[index] < 0x0a)
+            
+            if (stream != null && index < stream.Length)
+            {
+                if (stream.CanSeek)
+                {
+                    stream.Position = index;
+                }
+                _rawData = stream.GetMemoryStream(index);
+                if (Convert.ToByte(_rawData.ReadByte()) < 0x0a)
                 {
 
                 }
-                TeamNumber = Convert.ToByte(byteArray[index] - 0x0a);
+                try
+                {
+                    _rawData.Position = index;
+
+                    TeamNumber = Convert.ToByte(_rawData.ReadByte() - 0x0a);
+
+                 
+                    if (_rawData.Position < _rawData.Length - 3)
+                    {
+                        
+                        GoalX = _rawData.ToInt32();
+                    }
+                    if (_rawData.Position < _rawData.Length - 3)
+                    {
+
+                        CurrentX = _rawData.ToInt32();
+                    }
+                    if (_rawData.Position < _rawData.Length - 3)
+                    {
+
+                        GoalY = _rawData.ToInt32();
+                    }
+                    if (_rawData.Position < _rawData.Length - 3)
+                    {
+                        CurrentY = _rawData.ToInt32();
+                    }
+                    if (_rawData.Position < _rawData.Length - 3)
+                    {
+                        GoalZ = _rawData.ToInt32();
+                    }
+                    if (_rawData.Position < _rawData.Length - 3)
+                    {
+                        CurrentZ = _rawData.ToInt32();
+                    }
+                    if (_rawData.Position < _rawData.Length - 3)
+                    {
+                        Progress = _rawData.ToSingle();
+                    }
+                    if (_rawData.Position < _rawData.Length - 3)
+                    {
+
+                        NumberOfTeamMembers = _rawData.ToInt32();
+                    }
+                    _rawData.Position = 0;
+                }
+                catch (Exception ex)
+                {
+                    errors.Add(ex);
+                }
 
 
-                GoalX = BitConverter.ToInt32(byteArray, index + 1);
-
-                CurrentX = BitConverter.ToInt32(byteArray, index + 5);
-
-                GoalY = BitConverter.ToInt32(byteArray, index + 9);
-                CurrentY = BitConverter.ToInt32(byteArray, index + 13);
-
-
-                GoalZ = BitConverter.ToInt32(byteArray, index + 17);
-
-                CurrentZ = BitConverter.ToInt32(byteArray, index + 21);
-
-                Progress = BitConverter.ToSingle(byteArray, index + 25);
-
-                NumberOfTeamMembers = BitConverter.ToInt32(byteArray, index + 29);
-
-#if LOG4NET
-
-                if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--Result bytes: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(this.GetBytes())); }
-#endif
             }
         }
-        public DamComStatus(byte[] byteArray)
+        //public DamComStatus(byte[] byteArray)
+        //{
+        //    Initialize(byteArray, 0);
+        //}
+        public DamComStatus(Stream stream, int index)
         {
-            Initialize(byteArray, 0);
-        }
-        public DamComStatus(byte[] byteArray, int index)
-        {
-            Initialize(byteArray, index);
+            Initialize(stream, index);
         }
         //DAMCON team status (array)
 
@@ -108,27 +151,60 @@ namespace ArtemisComm
         //Progress (float)
         public int NumberOfTeamMembers { get; set; }
         //Number of team members (int)
-        public byte[] GetBytes()
-        {
-            List<byte> retVal = new List<byte>();
-            retVal.Add(Convert.ToByte(TeamNumber + 0x0a));
+        //public byte[] GetBytes()
+        //{
+        //    List<byte> retVal = new List<byte>();
+        //    retVal.Add(Convert.ToByte(TeamNumber + 0x0a));
 
-            retVal.AddRange(BitConverter.GetBytes(GoalX));
+        //    retVal.AddRange(BitConverter.GetBytes(GoalX));
 
-            retVal.AddRange(BitConverter.GetBytes(CurrentX));
+        //    retVal.AddRange(BitConverter.GetBytes(CurrentX));
 
-            retVal.AddRange(BitConverter.GetBytes(GoalY));
+        //    retVal.AddRange(BitConverter.GetBytes(GoalY));
 
-            retVal.AddRange(BitConverter.GetBytes(CurrentY));
+        //    retVal.AddRange(BitConverter.GetBytes(CurrentY));
 
-            retVal.AddRange(BitConverter.GetBytes(GoalZ));
+        //    retVal.AddRange(BitConverter.GetBytes(GoalZ));
 
-            retVal.AddRange(BitConverter.GetBytes(CurrentZ));
+        //    retVal.AddRange(BitConverter.GetBytes(CurrentZ));
 
-            retVal.AddRange(BitConverter.GetBytes(Progress));
-            retVal.AddRange(BitConverter.GetBytes(NumberOfTeamMembers));
+        //    retVal.AddRange(BitConverter.GetBytes(Progress));
+        //    retVal.AddRange(BitConverter.GetBytes(NumberOfTeamMembers));
             
-            return retVal.ToArray();
+        //    return retVal.ToArray();
+        //}
+
+        public OriginType GetValidOrigin()
+        {
+            return OriginType.Server;
         }
+        List<Exception> errors = new List<Exception>();
+        public System.Collections.ObjectModel.ReadOnlyCollection<Exception> GetErrors()
+        {
+            return new System.Collections.ObjectModel.ReadOnlyCollection<Exception>(errors);
+        }
+
+
+
+        #region Dispose
+
+        bool _isDisposed = false;
+        protected virtual void Dispose(bool isDisposing)
+        {
+            if (isDisposing)
+            {
+                if (!_isDisposed)
+                {
+                    this.DisposeProperties();
+                    _isDisposed = true;
+                }
+            }
+        }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }

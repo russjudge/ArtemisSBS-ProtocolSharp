@@ -8,13 +8,13 @@ E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButton
 BigRedButtonOfDeath.WPF
 none
 false
-DEBUG;TRACE
+CODE_ANALYSIS;DEBUG;TRACE
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.WPF\App.xaml
 2-820278314
 
-91292387420
+10-61794665
 15379914634
 MainWindow.xaml;ShipSelector.xaml;
 
-True
+False
 

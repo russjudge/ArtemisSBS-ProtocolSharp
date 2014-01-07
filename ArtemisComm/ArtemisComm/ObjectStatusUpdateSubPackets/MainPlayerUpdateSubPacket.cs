@@ -1,30 +1,17 @@
-﻿using log4net;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
+﻿
 
+using System.IO;
 namespace ArtemisComm.ObjectStatusUpdateSubPackets
 {
     public class MainPlayerUpdateSubPacket : VariablePackage
     {
-        static readonly ILog _log = LogManager.GetLogger(typeof(MainPlayerUpdateSubPacket));
-       public MainPlayerUpdateSubPacket()
-            : base()
+
+        public MainPlayerUpdateSubPacket(Stream stream, int index)
+            : base(stream, index)
         {
 
         }
-        public MainPlayerUpdateSubPacket(byte[] byteArray)
-            : base(byteArray)
-        {
 
-        }
-        public MainPlayerUpdateSubPacket(byte[] byteArray, int index)
-            : base(byteArray, index)
-        {
-
-        }
         public int? Unknown { get; set; }
         public float? Impulse { get; set; }
         public float? Rudder { get; set; }

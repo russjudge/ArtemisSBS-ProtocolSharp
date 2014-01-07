@@ -1,0 +1,9 @@
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.Library\bin\Debug\Proxy.Library.dll
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.Library\bin\Debug\Proxy.Library.pdb
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.Library\bin\Debug\ArtemisComm.dll
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.Library\bin\Debug\ArtemisComm.pdb
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.Library\obj\Debug\Proxy.Library.csprojResolveAssemblyReference.cache
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.Library\obj\Debug\Proxy.Library.dll
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.Library\obj\Debug\Proxy.Library.pdb
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.Library\bin\Debug\Proxy.Library.dll.CodeAnalysisLog.xml
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.Library\bin\Debug\Proxy.Library.dll.lastcodeanalysissucceeded

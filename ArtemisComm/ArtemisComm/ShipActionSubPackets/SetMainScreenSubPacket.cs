@@ -1,19 +1,23 @@
-﻿using log4net;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-
+﻿
+using System.IO;
 namespace ArtemisComm.ShipActionSubPackets
 {
     public class SetMainScreenSubPacket : ShipAction
     {
-        
-        public SetMainScreenSubPacket() : base() { }
 
-        public SetMainScreenSubPacket(byte[] byteArray) : base(byteArray) { }
+        public static Packet GetPacket(int value)
+        {
+            return new Packet(new ShipActionPacket(new SetMainScreenSubPacket(value)));
+        }
 
+        public SetMainScreenSubPacket(int value) : base(value) { }
+
+        public SetMainScreenSubPacket(Stream stream, int index)
+            : base(stream, index)
+        {
+
+        }
+        [ArtemisExcluded]
         public int View
         {
             get

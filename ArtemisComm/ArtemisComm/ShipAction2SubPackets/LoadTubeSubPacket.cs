@@ -1,51 +1,42 @@
-﻿using log4net;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 
 namespace ArtemisComm.ShipAction2SubPackets
 {
-    public class LoadTubeSubPacket : IPackage
+    public class LoadTubeSubPacket : BasePacket 
     {
-        static readonly ILog _log = LogManager.GetLogger(typeof(LoadTubeSubPacket));
-        public LoadTubeSubPacket()
+        public static Packet GetPacket(int tubeIndex, int ordinance)
         {
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Starting {0}", MethodBase.GetCurrentMethod().ToString()); }
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Ending {0}", MethodBase.GetCurrentMethod().ToString()); }   
+            LoadTubeSubPacket ltb = new LoadTubeSubPacket(tubeIndex, ordinance);
+            ShipAction2Packet sap2 = new ShipAction2Packet(ltb);
+            return new Packet(sap2);
         }
-        public LoadTubeSubPacket(byte[] byteArray)
+        
+        public LoadTubeSubPacket(int tubeIndex, int ordinance)
         {
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Starting {0}", MethodBase.GetCurrentMethod().ToString()); }
+            TubeIndex = tubeIndex;
+            Ordinance = ordinance;
+        }
+        public LoadTubeSubPacket(Stream stream, int index)
+            : base(stream, index)
+        {
 
-            if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--bytes in: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(byteArray)); }
-
-
-            TubeIndex = BitConverter.ToInt32(byteArray, 0);
-            Ordinance = BitConverter.ToInt32(byteArray, 4);
-            
-
-
-            if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--Result bytes: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(this.GetBytes())); }
-
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Ending {0}", MethodBase.GetCurrentMethod().ToString()); }   
         }
         public int TubeIndex { get; set; }
-        
-        public int Ordinance
-        {
-            get;
-            set;
-        }
-        
 
-        public byte[] GetBytes()
+        public int Ordinance { get; set; }
+
+
+
+
+        public override OriginType GetValidOrigin()
         {
-            List<byte> retVal = new List<byte>();
-            retVal.AddRange(BitConverter.GetBytes(TubeIndex));
-            retVal.AddRange(BitConverter.GetBytes(Ordinance));
-            return retVal.ToArray();
+            return OriginType.Client;
         }
+        
     }
 }

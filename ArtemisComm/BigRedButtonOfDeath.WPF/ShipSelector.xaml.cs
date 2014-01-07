@@ -22,13 +22,19 @@ namespace BigRedButtonOfDeath.WPF
     {
         public ShipSelector(PlayerShip[] ships)
         {
-            Ships = new ObservableCollection<string>();
-            foreach (PlayerShip ship in ships)
+            if (ships != null)
             {
-                Ships.Add(ship.Name.Value);
+                Ships = new ObservableCollection<string>();
+                foreach (PlayerShip ship in ships)
+                {
+                    Ships.Add(ship.Name.Value);
+                }
             }
             InitializeComponent();
-            lstShips.SelectedIndex = 0;
+            if (lstShips.Items.Count > 0)
+            {
+                lstShips.SelectedIndex = 0;
+            }
         }
 
 
@@ -69,6 +75,13 @@ namespace BigRedButtonOfDeath.WPF
             }
         }
         private void OnSelect(object sender, RoutedEventArgs e)
+        {
+            SelectedShip = lstShips.SelectedIndex;
+            DialogResult = true;
+            this.Close();
+        }
+
+        private void lstShips_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             SelectedShip = lstShips.SelectedIndex;
             DialogResult = true;

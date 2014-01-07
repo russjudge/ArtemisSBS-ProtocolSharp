@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<RuleSet Name="Russ Rules" Description="This ruleset is configured by Russ Judge and is relatively stict, producing compiler errors on serious violations." ToolsVersion="10.0">
+<RuleSet Name="Russ Rules" Description="This ruleset is configured by Russ Judge and is relatively stict, producing compiler errors on serious violations." ToolsVersion="11.0">
   <IncludeAll Action="Warning" />
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
     <Rule Id="CA1001" Action="Error" />
@@ -20,6 +20,7 @@
     <Rule Id="CA2210" Action="None" />
     <Rule Id="CA2213" Action="Error" />
     <Rule Id="CA2215" Action="Error" />
+    <Rule Id="CA2227" Action="Error" />
     <Rule Id="CA2232" Action="Error" />
     <Rule Id="CA2242" Action="Error" />
   </Rules>

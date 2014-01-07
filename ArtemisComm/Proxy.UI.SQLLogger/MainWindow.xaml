@@ -1,0 +1,122 @@
+﻿<Window x:Class="ArtemisComm.Proxy.UI.SQLLogger.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:valueConvert="clr-namespace:ArtemisComm.Proxy.UI.SQLLogger"
+        Name="uc"
+        Title="Artemis SBS Proxy Server--SQL Logging"
+        Closed="OnClosed"
+        SizeToContent="WidthAndHeight">
+    <Window.Resources>
+        <valueConvert:OppositeBooleanConverter x:Key="OppositeBooleanConverter" />
+        <valueConvert:BoolToVisibilityParameterConverter x:Key="BoolToVisibilityParameterConverter" />
+    </Window.Resources>
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0"
+               Content="Server IP:"
+               FontWeight="Bold" />
+        <TextBox Grid.Row="0"
+                 Grid.Column="1"
+                 IsEnabled="{Binding ProxyIsActiveProperty,
+                                     Mode=OneWay,
+                                     ElementName=uc,
+                                     Converter={StaticResource OppositeBooleanConverter}}"
+                 Text="{Binding Path=ServerHost,
+                                Mode=TwoWay,
+                                ElementName=uc,
+                                UpdateSourceTrigger=PropertyChanged}" />
+        <Label Grid.Row="1"
+               Content="Server Port:"
+               FontWeight="Bold" />
+        <TextBox Grid.Row="1"
+                 Grid.Column="1"
+                 IsEnabled="{Binding ProxyIsActiveProperty,
+                                     Mode=OneWay,
+                                     ElementName=uc,
+                                     Converter={StaticResource OppositeBooleanConverter}}"
+                 Text="{Binding Path=ServerPort,
+                                Mode=TwoWay,
+                                ElementName=uc,
+                                UpdateSourceTrigger=PropertyChanged}" />
+        <Label Grid.Row="2"
+               Content="Client Listening Port:"
+               FontWeight="Bold" />
+        <TextBox Grid.Row="2"
+                 Grid.Column="1"
+                 IsEnabled="{Binding ProxyIsActiveProperty,
+                                     Mode=OneWay,
+                                     ElementName=uc,
+                                     Converter={StaticResource OppositeBooleanConverter}}"
+                 Text="{Binding Path=ListeningPort,
+                                Mode=TwoWay,
+                                ElementName=uc,
+                                UpdateSourceTrigger=PropertyChanged}" />
+        <Button Grid.Row="3"
+                VerticalAlignment="Center"
+                VerticalContentAlignment="Center"
+                Click="OnStartProxy"
+                Content="Start Proxy Server"
+                Visibility="{Binding ProxyIsActive,
+                                     Mode=OneWay,
+                                     ElementName=uc,
+                                     Converter={StaticResource BoolToVisibilityParameterConverter},
+                                     ConverterParameter='Collapsed|Visible'}" />
+        <Button Grid.Row="3"
+                VerticalAlignment="Center"
+                VerticalContentAlignment="Center"
+                Click="OnStopProxy"
+                Content="Stop Proxy Server"
+                Visibility="{Binding ProxyIsActive,
+                                     Mode=OneWay,
+                                     ElementName=uc,
+                                     Converter={StaticResource BoolToVisibilityParameterConverter},
+                                     ConverterParameter='Visible|Collapsed'}" />
+
+
+        <CheckBox Grid.Row="3"
+                  Grid.Column="1"
+                  Margin="4,0,0,0"
+                  VerticalAlignment="Center"
+                  VerticalContentAlignment="Center"
+                  Content="Log to SQL Database"
+                  IsChecked="{Binding Path=LogToSQL,
+                                      Mode=TwoWay,
+                                      ElementName=uc}"
+                  IsEnabled="{Binding ProxyIsActiveProperty,
+                                      Mode=OneWay,
+                                      ElementName=uc,
+                                      Converter={StaticResource OppositeBooleanConverter}}" />
+        <TextBlock Grid.Row="4"
+                   Grid.Column="1"
+                   VerticalAlignment="Center"
+                   Text="{Binding ConnectionCount,
+                                  Mode=OneWay,
+                                  ElementName=uc}" />
+
+        <Label Grid.Row="4"
+               Content="Number of Connections:"
+               FontWeight="Bold" />
+
+        <Label Grid.Row="5"
+               Content="ConnectionString to Logging database:"
+               FontWeight="Bold" />
+        <TextBox Grid.Row="5"
+                 Grid.Column="1"
+                 Text="{Binding Path=SQLConnection,
+                                Mode=TwoWay,
+                                ElementName=uc}" />
+    </Grid>
+</Window>

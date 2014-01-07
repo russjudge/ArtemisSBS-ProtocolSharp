@@ -1,6 +1,8 @@
-﻿using log4net;
+﻿
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -9,194 +11,83 @@ namespace ArtemisComm
 {
     public class VariablePackage : IPackage
     {
-        static readonly ILog _log = LogManager.GetLogger(typeof(VariablePackage));
-        public VariablePackage()
-        {
 
-        }
-        public VariablePackage(byte[] byteArray, int index)
+        MemoryStream _rawData = null;
+        public MemoryStream GetRawData()
         {
-            Initialize(byteArray, index);
+            if (_rawData == null)
+            {
+                _rawData = this.SetRawData();
+            }
+            return _rawData;
         }
-        public static void ProcessVariableData(PropertyInfo[] propertyList, object obj, byte[] sourceData, int index, bool[] IncludedFields)
+
+        public VariablePackage(Stream stream, int index)
         {
-            
+            Initialize(stream, index);
+        }
+        static Collection<Exception> ProcessVariableData(PropertyInfo[] propertyList, object obj, Stream sourceData, int index, bool[] IncludedFields)
+        {
+            int position = index;
+            Collection<Exception> errors = new Collection<Exception>();
             if (propertyList != null && obj != null && sourceData != null && IncludedFields != null)
             {
 
-
-              //@@@@
-                int position = index;
-                for (int i = 0; i < IncludedFields.Length; i++)
+                using (MemoryStream dataStream = sourceData.GetMemoryStream(index))
                 {
-                    if (position > sourceData.Length)
+                    dataStream.Position = 0;
+
+                    for (int i = 0; i < IncludedFields.Length; i++)
                     {
-                        break;
-                    }
-                    if (IncludedFields[i])
-                    {
-                        try
+
+                        if (IncludedFields[i])
                         {
-                            PropertyInfo prop = propertyList[i];
-                            if (prop.PropertyType == typeof(bool?))
+                            try
                             {
-                                //incoming must be byte--no way to translate other type at this point.
-                                bool? boolVal = Convert.ToBoolean(sourceData[position]);
-                                if (_log.IsInfoEnabled && boolVal != null)
-                                {
-                                    _log.InfoFormat("Property {0} set to {1}", prop.Name, boolVal.Value.ToString());
-                                }
-                                propertyList[i].SetValue(obj, boolVal, null);
-                                position += 1;
+                                
+
+                                position += Utility.LoadProperty(obj, dataStream, propertyList[i], errors);
+
+                                
                             }
-                            if (prop.PropertyType == typeof(int?))
+                            catch (Exception ex)
                             {
-                                if (position + 4 < sourceData.Length)
-                                {
-                                    int? intVal = BitConverter.ToInt32(sourceData, position);
-                                    if (_log.IsInfoEnabled && intVal != null)
-                                    {
-                                        _log.InfoFormat("Property {0} set to {1}", prop.Name, intVal.Value.ToString());
-                                    }
-                                    propertyList[i].SetValue(obj, intVal, null);
-                                }
-                                position += 4;
-                            }
-                            if (prop.PropertyType == typeof(ArtemisString))
-                            {
-
-                                ArtemisString val = new ArtemisString(sourceData, position);
-
-                                if (_log.IsInfoEnabled && val != null)
-                                {
-                                    _log.InfoFormat("Property {0} set to {1}", prop.Name, val.Value);
-                                }
-
-
-                                propertyList[i].SetValue(obj, val, null);
-                                position += val.Length * 2 + 4;
-
-                            }
-                            if (prop.PropertyType == typeof(float?))
-                            {
-                                if (position + 4 < sourceData.Length)
-                                {
-
-                                    float? floatVal = BitConverter.ToSingle(sourceData, position);
-                                    propertyList[i].SetValue(obj, floatVal, null);
-                                    if (_log.IsInfoEnabled && floatVal != null)
-                                    {
-                                        _log.InfoFormat("Property {0} set to {1}", prop.Name, floatVal.Value.ToString());
-                                    }
-                                }
-                                position += 4;
-                            }
-                            if (prop.PropertyType == typeof(byte?))
-                            {
-                                if (_log.IsInfoEnabled)
-                                {
-                                    _log.InfoFormat("Property {0} set to {1}", prop.Name, sourceData[position].ToString());
-                                }
-                                propertyList[i].SetValue(obj, sourceData[position], null);
-                                position++;
-
-                            }
-                            if (prop.PropertyType == typeof(short?))
-                            {
-                                if (position + 2 < sourceData.Length)
-                                {
-                                    short? shortVal = BitConverter.ToInt16(sourceData, position);
-                                    if (_log.IsInfoEnabled && shortVal != null)
-                                    {
-                                        _log.InfoFormat("Property {0} set to {1}", prop.Name, shortVal.Value.ToString());
-                                    }
-                                    propertyList[i].SetValue(obj, shortVal, null);
-                                }
-                                position += 2;
-                            }
-                            if (prop.PropertyType == typeof(long?))
-                            {
-                                if (position + 8 < sourceData.Length)
-                                {
-                                    long? longVal = BitConverter.ToInt64(sourceData, position);
-                                    if (_log.IsInfoEnabled && longVal != null)
-                                    {
-                                        _log.InfoFormat("Property {0} set to {1}", prop.Name, longVal.Value.ToString());
-                                    }
-
-                                    propertyList[i].SetValue(obj, longVal, null);
-                                }
-                                position += 8;
-                            }
-
-                            if (prop.PropertyType == typeof(OrdinanceTypes?))
-                            {
-                                OrdinanceTypes? OrdVal = (OrdinanceTypes?)sourceData[position++];
-                                if (_log.IsInfoEnabled && OrdVal != null)
-                                {
-                                    _log.InfoFormat("Property {0} set to {1}", prop.Name, OrdVal.Value.ToString());
-                                }
-
-                                propertyList[i].SetValue(obj, OrdVal, null);
-                                position++;
+                                errors.Add(ex);
                             }
                         }
-                        catch (Exception ex)
-                        {
-                            if (_log.IsWarnEnabled)
-                            {
-                                _log.Warn("Error getting bytes", ex);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (_log.IsInfoEnabled)
-                        {
-                            _log.InfoFormat("Property {0} not included", propertyList[i].Name);
-                        }
+
                     }
                 }
             }
-           
+            return errors;
         }
 
-        public static bool[] ProcessBitFlags(int propertyCount, byte[] byteArray, int index)
+        public static bool[] ProcessBitFlags(int propertyCount, MemoryStream stream, int index)
         {
-            if (byteArray != null)
+            if (stream != null)
             {
+                stream.Position = index;
+
                 List<bool> IncludedList = new List<bool>();
 
 
                 int k = 1;
-                int j = 0;
+              
                 int FlagSize = 1;
 
-                if (_log.IsInfoEnabled)
-                {
-                    _log.InfoFormat("(c)byte {0} value:{1}", FlagSize.ToString(), byteArray[index + j].ToString());
-                }
+                byte wrkByte = Convert.ToByte(stream.ReadByte());
+
                 for (int i = 0; i < propertyCount; i++)
                 {
-
-
-
                     //1, 2, 4, 8, 16, 32, 64, 128
-
-                    bool test = ((byteArray[index + j] & k) == k);
-
+                    bool test = ((wrkByte & k) == k);
                     IncludedList.Add(test);
                     k *= 2;
                     if (k > 128)
                     {
                         k = 1;
-                        j++;
+                        wrkByte = Convert.ToByte(stream.ReadByte());
                         FlagSize++;
-
-                        if (_log.IsInfoEnabled)
-                        {
-                            _log.InfoFormat("(d)byte {0} value:{1} ", FlagSize.ToString(), byteArray[index + j].ToString());
-                        }
                     }
 
                 }
@@ -208,21 +99,23 @@ namespace ArtemisComm
                 return null;
             }
         }
-        void Initialize(byte[] byteArray, int index)
+        
+        void Initialize(Stream stream, int index)
         {
-            if (byteArray != null)
+            if (stream != null)
             {
-                if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--{2} bytes in: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(byteArray, index), (byteArray.Length - index).ToString()); }
-
-                if (_log.IsInfoEnabled) { _log.InfoFormat("(a)index={0}", index); }
-                ID = BitConverter.ToInt32(byteArray, index);
-                
-
-                if (_log.IsInfoEnabled)
+                if (stream.CanRead)
                 {
-                    _log.InfoFormat("ID={0}, index={1}", ID.ToString(), index);
+                    stream.Position = index;
                 }
-
+                _rawData = stream.GetMemoryStream(index);
+                if (stream.CanRead)
+                {
+                    stream.Position = index;
+                }
+                _rawData.Position = 0;
+                ID = _rawData.ToInt32();
+                
 
                 List<PropertyInfo> propertyList = new List<PropertyInfo>();
 
@@ -230,125 +123,172 @@ namespace ArtemisComm
                 PropertyInfo[] properties = t.GetProperties(BindingFlags.Public | BindingFlags.Instance);
                 foreach (PropertyInfo prop in properties)
                 {
-                    if (prop.Name != "ID" && prop.Name != "IncludedFields")
+                    bool skip = false;
+                    foreach (System.Attribute attrib in prop.GetCustomAttributes(true))
                     {
-                        propertyList.Add(prop);
+                        if (attrib is ArtemisExcludedAttribute)
+                        {
+                            skip = true;
+                            break;
+                        }
+                    }
+                    if (!skip)
+                    {
+                        if (prop.Name != "ID" && prop.Name != "IncludedFields")
+                        {
+                            propertyList.Add(prop);
+                        }
                     }
                 }
 
-                if (_log.IsInfoEnabled) { _log.InfoFormat("(b)index={0}", index); }
-                IncludedFields = ProcessBitFlags(propertyList.Count, byteArray, index + 4);
+                IncludedFields = new ReadOnlyCollection<bool>(ProcessBitFlags(propertyList.Count, _rawData, 4));
                 int flagsize = (propertyList.Count - 1)/ 8 + 1;
 
-                int position = index + 4 + flagsize;
+                int position = 4 + flagsize;
 
-                ProcessVariableData(propertyList.ToArray(), this, byteArray, position, IncludedFields);
-
-
-
-                if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--Result bytes: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(this.GetBytes())); }
+                errors = ProcessVariableData(propertyList.ToArray(), this, _rawData, position, IncludedFields.ToArray<bool>());
+                
             }
             
         }
-        public VariablePackage(byte[] byteArray)
-        {
+       
 
-            Initialize(byteArray, 0);
-
-        }
         public int ID { get; set; }
-        public bool[] IncludedFields { get; set; }
-
-        public byte[] GetBytes()
+        [ArtemisExcluded]
+        public int Length
         {
-            List<byte> byteArray = new List<byte>();
-
-            byteArray.AddRange(BitConverter.GetBytes(ID));
-
-
-
-            List<byte> values = new List<byte>();
-            List<PropertyInfo> propertyList = new List<PropertyInfo>();
-            PropertyInfo[] properties = this.GetType().GetProperties();
-            foreach (PropertyInfo prop in properties)
+            get
             {
-                if (prop.Name != "ID" && prop.Name != "IncludedFields")
+                if (_rawData != null)
                 {
-                    propertyList.Add(prop);
+                    return Convert.ToInt32(_rawData.Length);
+                }
+                else
+                {
+                    return 0;
                 }
             }
-            byte position = 1;
-            byte workByte = 0;
-            for (int i = 0; i < IncludedFields.Length; i++)
-            {
-
-                if (IncludedFields[i])
-                {
-                    if (_log.IsInfoEnabled)
-                    {
-                        _log.InfoFormat(" Property #{0} included", i.ToString());
-                    }
-                    workByte += position;
-                    PropertyInfo prop = propertyList[i];
-                    object obj = prop.GetValue(this, null);
-                    if (obj != null)
-                    {
-                        if (prop.PropertyType == typeof(int?))
-                        {
-                            values.AddRange(BitConverter.GetBytes((int)obj));
-
-                        }
-                        if (prop.PropertyType == typeof(ArtemisString))
-                        {
-                            ArtemisString item = ((ArtemisString)obj);
-                            if (item != null)
-                            {
-                                values.AddRange(item.GetBytes());
-                            }
-                            else
-                            {
-                                for (int j = 0; i < 4; i++)
-                                {
-                                    values.Add(0);
-                                }
-                            }
-
-                        }
-                        if (prop.PropertyType == typeof(float?))
-                        {
-
-                            values.AddRange(BitConverter.GetBytes((float)obj));
-                        }
-                        if (prop.PropertyType == typeof(byte?) || prop.PropertyType == typeof(OrdinanceTypes?))
-                        {
-                            values.Add((byte)obj);
-
-                        }
-                        if (prop.PropertyType == typeof(short?))
-                        {
-                            values.AddRange(BitConverter.GetBytes((short)obj));
-                        }
-                        if (prop.PropertyType == typeof(long?))
-                        {
-                            values.AddRange(BitConverter.GetBytes((long)obj));
-                        }
-                    }
-                    
-                }
-                position *= 2;
-                if (position > 128 || position == 0)
-                {
-                    byteArray.Add(workByte);
-                    if (_log.IsInfoEnabled)
-                    {
-                        _log.InfoFormat("**Adding Included byte: {0}", workByte.ToString());
-                    }
-                    position = 1;
-                    workByte = 0;
-                }
-            }
-            byteArray.AddRange(values);
-            return byteArray.ToArray();
         }
+
+        [ArtemisExcluded]
+        public ReadOnlyCollection<bool> IncludedFields { get; private set; }
+
+        //public byte[] GetBytes()
+        //{
+        //    List<byte> byteArray = new List<byte>();
+
+        //    byteArray.AddRange(BitConverter.GetBytes(ID));
+
+
+
+        //    List<byte> values = new List<byte>();
+        //    List<PropertyInfo> propertyList = new List<PropertyInfo>();
+        //    PropertyInfo[] properties = this.GetType().GetProperties();
+        //    foreach (PropertyInfo prop in properties)
+        //    {
+        //        if (prop.Name != "ID" && prop.Name != "IncludedFields")
+        //        {
+        //            propertyList.Add(prop);
+        //        }
+        //    }
+        //    byte position = 1;
+        //    byte workByte = 0;
+        //    for (int i = 0; i < IncludedFields.Count; i++)
+        //    {
+
+        //        if (IncludedFields[i])
+        //        {
+
+        //            workByte += position;
+        //            PropertyInfo prop = propertyList[i];
+        //            object obj = prop.GetValue(this, null);
+        //            if (obj != null)
+        //            {
+        //                if (prop.PropertyType == typeof(int?))
+        //                {
+        //                    values.AddRange(BitConverter.GetBytes((int)obj));
+
+        //                }
+        //                if (prop.PropertyType == typeof(ArtemisString))
+        //                {
+        //                    ArtemisString item = ((ArtemisString)obj);
+        //                    if (item != null)
+        //                    {
+        //                        values.AddRange(item.GetBytes());
+        //                    }
+        //                    else
+        //                    {
+        //                        for (int j = 0; j < 4; j++)
+        //                        {
+        //                            values.Add(0);
+        //                        }
+        //                    }
+
+        //                }
+        //                if (prop.PropertyType == typeof(float?))
+        //                {
+
+        //                    values.AddRange(BitConverter.GetBytes((float)obj));
+        //                }
+        //                if (prop.PropertyType == typeof(byte?) || prop.PropertyType == typeof(OrdinanceType?))
+        //                {
+        //                    values.Add((byte)obj);
+
+        //                }
+        //                if (prop.PropertyType == typeof(short?))
+        //                {
+        //                    values.AddRange(BitConverter.GetBytes((short)obj));
+        //                }
+        //                if (prop.PropertyType == typeof(long?))
+        //                {
+        //                    values.AddRange(BitConverter.GetBytes((long)obj));
+        //                }
+        //            }
+                    
+        //        }
+        //        position *= 2;
+        //        if (position > 128 || position == 0)
+        //        {
+        //            byteArray.Add(workByte);
+
+        //            position = 1;
+        //            workByte = 0;
+        //        }
+        //    }
+        //    byteArray.AddRange(values);
+        //    return byteArray.ToArray();
+        //}
+
+        public OriginType GetValidOrigin()
+        {
+            return OriginType.Server; 
+        }
+
+        Collection<Exception> errors = new Collection<Exception>();
+        public ReadOnlyCollection<Exception> GetErrors()
+        {
+            return new ReadOnlyCollection<Exception>(errors);
+        }
+        #region Dispose
+
+        bool _isDisposed = false;
+        protected virtual void Dispose(bool isDisposing)
+        {
+            if (isDisposing)
+            {
+                if (!_isDisposed)
+                {
+
+                    this.DisposeProperties();
+                    _isDisposed = true;
+                }
+            }
+        }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }

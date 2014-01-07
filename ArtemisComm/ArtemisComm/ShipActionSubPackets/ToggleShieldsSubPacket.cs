@@ -1,6 +1,6 @@
-﻿using log4net;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -9,18 +9,20 @@ namespace ArtemisComm.ShipActionSubPackets
 {
     public class ToggleShieldsSubPacket : ShipAction
     {
-
-      
-        public static Packet GetPacket()
+        public static Packet GetPacket(int value)
         {
-            ToggleShieldsSubPacket tssp = new ToggleShieldsSubPacket();
-            ShipActionPacket sap = new ShipActionPacket(tssp);
-            return new Packet(sap);
+            return new Packet(new ShipActionPacket(new ToggleShieldsSubPacket(value)));
         }
-        
-        public ToggleShieldsSubPacket() : base() { }
 
-        public ToggleShieldsSubPacket(byte[] byteArray) : base(byteArray) { }
+
+        public ToggleShieldsSubPacket(int value) : base(value) { }
+
+
+        public ToggleShieldsSubPacket(Stream stream, int index)
+            : base(stream, index)
+        {
+
+        }
 
     }
 }

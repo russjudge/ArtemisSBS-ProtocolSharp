@@ -1,50 +1,41 @@
-﻿using log4net;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 
 namespace ArtemisComm.ShipAction2SubPackets
 {
-    public class EngSendDamconSubPacket : IPackage
+    public class EngSendDamconSubPacket : BasePacket
     {
-        static readonly ILog _log = LogManager.GetLogger(typeof(EngSendDamconSubPacket));
-        public EngSendDamconSubPacket()
+        public static Packet GetPacket(int teamNumber, int x, int y, int z)
         {
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Starting {0}", MethodBase.GetCurrentMethod().ToString()); }
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Ending {0}", MethodBase.GetCurrentMethod().ToString()); }   
+            return new Packet(new ShipAction2Packet(new EngSendDamconSubPacket(teamNumber, x, y, z)));
         }
-        public EngSendDamconSubPacket(byte[] byteArray)
+        public EngSendDamconSubPacket(int teamNumber, int x, int y, int z)
         {
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Starting {0}", MethodBase.GetCurrentMethod().ToString()); }
+            TeamNumber = teamNumber;
+            X = x;
+            Y = y;
+            Z = z;
+        }
+        public EngSendDamconSubPacket(Stream stream, int index)
+            : base(stream, index)
+        {
 
-            if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--bytes in: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(byteArray)); }
-
-            
-            TeamNumber = BitConverter.ToInt32(byteArray, 0);
-            X = BitConverter.ToInt32(byteArray, 4);
-            Y = BitConverter.ToInt32(byteArray, 8);
-            Z = BitConverter.ToInt32(byteArray, 12);
-
-
-            if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--Result bytes: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(this.GetBytes())); }
-
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Ending {0}", MethodBase.GetCurrentMethod().ToString()); }   
         }
         public int TeamNumber { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
         public int Z { get; set; }
 
-        public byte[] GetBytes()
+
+
+        public override OriginType GetValidOrigin()
         {
-            List<byte> retVal = new List<byte>();
-            retVal.AddRange(BitConverter.GetBytes(TeamNumber));
-            retVal.AddRange(BitConverter.GetBytes(X));
-            retVal.AddRange(BitConverter.GetBytes(Y));
-            retVal.AddRange(BitConverter.GetBytes(Z));
-            return retVal.ToArray();
+            return OriginType.Client;
         }
+        
     }
 }

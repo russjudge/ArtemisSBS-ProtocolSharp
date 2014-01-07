@@ -7,10 +7,10 @@ namespace ArtemisComm
 {
     public class PackageEventArgs : ConnectionEventArgs
     {
-        public PackageEventArgs(Packet p, Guid id)
+        public PackageEventArgs(Packet packet, Guid id)
             : base(id)
         {
-            ReceivedPacket = p;
+            ReceivedPacket = packet;
 
         }
         public Packet ReceivedPacket { get; private set; }

@@ -1,19 +1,24 @@
-﻿using log4net;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-
+﻿
+using System.IO;
 namespace ArtemisComm.ShipActionSubPackets
 {
     public class HelmRequestDockSubPacket : ShipAction
     {
 
      
-        public HelmRequestDockSubPacket() : base() { }
+        
+        public static Packet GetPacket(int value)
+        {
+            return new Packet(new ShipActionPacket(new HelmRequestDockSubPacket(value)));
+        }
 
-        public HelmRequestDockSubPacket(byte[] byteArray) : base(byteArray) { }
+        public HelmRequestDockSubPacket(int value) : base(value) { }
+
+        public HelmRequestDockSubPacket(Stream stream, int index)
+            : base(stream, index)
+        {
+
+        }
 
 
     }

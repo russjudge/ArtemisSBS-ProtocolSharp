@@ -1,7 +1,10 @@
 ﻿using ArtemisComm;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -272,7 +275,7 @@ namespace Sandbox
             RawData = OnConvert(RawData);
         }
 
-        byte[] ConvertToByteArray(string dataForProcessing)
+        static byte[] ConvertToByteArray(string dataForProcessing)
         {
             string[] data = dataForProcessing.Replace("\r", string.Empty).Replace("\n", string.Empty).Replace(" ", ":").Replace('!', ':').Split(':');
 
@@ -310,52 +313,62 @@ namespace Sandbox
             int ln = 0;
             List<byte> workArray = null;
             int startIndex = 0;
-
-            do
+            if (byteArray.Count > 7)
             {
-                ln = Packet.GetLength(byteArray.ToArray(), startIndex);
-                if (byteArray.Count < startIndex + ln)
+                do
                 {
-                    break;
-                }
-                
 
-                if (startIndex + ln > byteArray.Count)
-                {
-                    ln = byteArray.Count - startIndex;
-                }
+                    ln = BitConverter.ToInt32(byteArray.ToArray(), 4);
 
-                workArray = new List<byte>();
-                for (int i = startIndex; i < startIndex + ln; i++)
-                {
-                    workArray.Add(byteArray[i]);
-                }
-                Packet p = new Packet(workArray.ToArray());
-                bool ignore = false;
-                
-                if (FilterPackets && p.PacketType == PacketTypes.ObjectStatusUpdatePacket)
-                {
-                    ObjectStatusUpdatePacket objP = p.Package as ObjectStatusUpdatePacket;
-                    if (objP != null && objP.SubPacketType == ArtemisComm.ObjectStatusUpdateSubPackets.ObjectStatusUpdateSubPacketTypes.UnknownSubPacket)
+
+                    if (byteArray.Count < startIndex + ln)
                     {
-                        ignore = true;
+                        break;
                     }
-                }
-                if (!ignore)
-                {
-                    GetPropertyInformation(Result, p, p.PacketType.ToString(), 0);
 
-                    PropertyValue pv = new PropertyValue("----------", "-----------", "-----------", "-----------");
-                    Result.Add(pv);
-                }
-                startIndex += ln;
-            } while (startIndex < byteArray.Count - ArtemisComm.Packet.HeaderLength);
+
+                    if (startIndex + ln > byteArray.Count)
+                    {
+                        ln = byteArray.Count - startIndex;
+                    }
+
+                    workArray = new List<byte>();
+                    for (int i = startIndex; i < startIndex + ln; i++)
+                    {
+                        workArray.Add(byteArray[i]);
+                    }
+                    using (MemoryStream ms = new MemoryStream(byteArray.ToArray()))
+                    {
+                        using (Packet p = new Packet(ms.GetMemoryStream(0)))
+                        {
+                            bool ignore = false;
+
+                            if (FilterPackets && p.PacketType == PacketType.ObjectStatusUpdatePacket)
+                            {
+                                ObjectStatusUpdatePacket objP = p.Package as ObjectStatusUpdatePacket;
+                                if (objP != null && objP.SubPacketType == ArtemisComm.ObjectStatusUpdateSubPackets.ObjectStatusUpdateSubPacketType.UnknownSubPacket)
+                                {
+                                    ignore = true;
+                                }
+                            }
+                            if (!ignore)
+                            {
+                                GetPropertyInformation(Result, p, p.PacketType.ToString(), 0);
+
+                                PropertyValue pv = new PropertyValue("----------", "-----------", "-----------", "-----------");
+                                Result.Add(pv);
+                            }
+                        }
+                    }
+                    startIndex += ln;
+                } while (startIndex < byteArray.Count - ArtemisComm.Packet.HeaderLength);
+            }
             if (startIndex < byteArray.Count)
             {
                 List<string> elem = new List<string>();
                 for (int i = startIndex; i < byteArray.Count; i++)
                 {
-                    elem.Add(byteArray[i].ToString("X"));
+                    elem.Add(byteArray[i].ToString("X", CultureInfo.InvariantCulture).PadLeft(2,'0'));
                 }
                 retVal = string.Join(":", elem.ToArray());
             }
@@ -365,36 +378,30 @@ namespace Sandbox
         }
         void GetPropertyInformation(IList<PropertyValue> infoList, object obj, string propertyName, int depth)
         {
-            //if (_log.IsInfoEnabled) { _log.InfoFormat("Processing Property: {0}, depth: {1}--{2}", propertyName, depth.ToString(), MethodBase.GetCurrentMethod().ToString()); }
-            Array ar = obj as Array;
+            ICollection ar = obj as ICollection;
             if (ar != null)
             {
 
-
-                for (int i = 0; i < ar.Length; i++)
+                int i = 0;
+                foreach(object o1 in ar)
                 {
-                    //if (_log.IsInfoEnabled) { _log.InfoFormat("Is Array--Element # {0}", i.ToString());}
-                    object o1 = ar.GetValue(i);
                     if (o1 != null)
                     {
-                        GetPropertyInformation(infoList, o1, propertyName + "." + i.ToString(), depth + 1);
+                        GetPropertyInformation(infoList, o1, propertyName + "." + i.ToString(CultureInfo.InvariantCulture), depth);
                     }
+                    i++;
                 }
             }
             else
             {
-                //if (_log.IsInfoEnabled) { _log.Info("Processing Properties of property"); }
                 foreach (PropertyInfo pi in obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
                 {
-
-
                     if (pi.PropertyType == typeof(IPackage) || pi.PropertyType.IsSubclassOf(typeof(VariablePackage)))
                     {
-                        //if (_log.IsInfoEnabled) { _log.Info("-- IPackage --"); }
                         object o2 = pi.GetValue(obj, null);
                         if (o2 != null)
                         {
-                            GetPropertyInformation(infoList, o2, propertyName.PadLeft(depth, '-') + "." + pi.Name, depth + 1);
+                            GetPropertyInformation(infoList, o2, propertyName + "." + pi.Name, depth + 1);
                         }
                     }
                     else
@@ -402,28 +409,30 @@ namespace Sandbox
                         object objx = pi.GetValue(obj, null);
                         if (objx != null)
                         {
-                            if (pi.PropertyType.IsArray)
+                            ICollection arx = objx as ICollection;
+                            if (arx != null)
                             {
-                                //if (_log.IsInfoEnabled) { _log.InfoFormat("-- property {0} is an array - processing...", pi.Name); }
-                                GetPropertyInformation(infoList, objx, propertyName.PadLeft(depth, '-') + "." + pi.Name, depth + 1);
+                                GetPropertyInformation(infoList, objx, propertyName + "." + pi.Name, depth);
                             }
                             else
                             {
-                                //if (_log.IsInfoEnabled) { _log.InfoFormat("-- Adding {0} to list", pi.Name); }
                                 string propType = pi.PropertyType.ToString();
                                 if (pi.PropertyType.IsEnum)
                                 {
                                     propType += "(" + pi.PropertyType.GetEnumUnderlyingType().ToString() + ")";
                                 }
-                                PropertyValue pv = new PropertyValue(propertyName.PadLeft(depth, '-') + "." + pi.Name, objx.ToString(), propType, GetHexValue(objx));
-                                infoList.Add(pv);
+                                PropertyValue pv = new PropertyValue("".PadLeft(depth, '-') + propertyName + "." + pi.Name, objx.ToString(), propType, GetHexValue(objx));
+                                if (!string.IsNullOrEmpty(pv.HexValue))
+                                {
+                                    infoList.Add(pv);
+                                }
                             }
                         }
                     }
                 }
             }
         }
-        string GetHexValue(object obj)
+        static string GetHexValue(object obj)
         {
             string retVal = string.Empty;
             byte[] byteArray = null;
@@ -461,14 +470,21 @@ namespace Sandbox
 
             if (t == typeof(bool))
             {
-                byteArray = new byte[1] { Convert.ToByte(obj) };
+                byteArray = new byte[1] { Convert.ToByte(obj, CultureInfo.InvariantCulture) };
             }
 
             if (t == typeof(ArtemisString))
             {
-                byteArray = ((ArtemisString)obj).GetBytes();
+                using (MemoryStream ms = ((ArtemisString)obj).GetRawData())
+                {
+                    byteArray = new byte[ms.Length];
+                    ms.Read(byteArray, 0, byteArray.Length);
+                }
             }
-
+            if (t == typeof(string))
+            {
+                byteArray = System.Text.ASCIIEncoding.ASCII.GetBytes((string)obj);
+            }
             if (t == typeof(float))
             {
                 byteArray = BitConverter.GetBytes((float)obj);
@@ -478,51 +494,55 @@ namespace Sandbox
                 List<string> elem = new List<string>();
                 for (int i = 0; i < byteArray.Length; i++)
                 {
-                    elem.Add(byteArray[i].ToString("X"));
+                    elem.Add(byteArray[i].ToString("X", CultureInfo.InvariantCulture).PadLeft(2, '0'));
                 }
                 retVal = string.Join(" ", elem.ToArray());
             }
             return retVal;
 
         }
+        void DisposeServer()
+        {
+            if (ServerConnection != null)
+            {
+                ServerConnection.AudioCommandPacketReceived -= conn_AudioCommandPacketReceived;
+                ServerConnection.CommsIncomingPacketReceived -= conn_CommsIncomingPacketReceived;
+                ServerConnection.CommsOutgoingPacketReceived -= conn_CommsOutgoingPacketReceived;
+                ServerConnection.DestroyObjectPacketReceived -= conn_DestroyObjectPacketReceived;
+                ServerConnection.EngGridUpdatePacketReceived -= conn_EngGridUpdatePacketReceived;
+                ServerConnection.GameMessagePacketReceived -= conn_GamesMessagePacketReceived;
+                ServerConnection.IncomingAudioPacketReceived -= conn_IncomingAudioPacketReceived;
+                ServerConnection.ObjectStatusUpdatePacketReceived -= conn_ObjectStatusUpdatePacketReceived;
+
+                ServerConnection.PackageReceived -= conn_PackageReceived;  //This is not necessary (using only for logging) since all other events are subscribed to.
+
+                ServerConnection.ShipActionPacketReceived -= conn_ShipActionPacketReceived;
+                ServerConnection.ShipAction2PacketReceived -= conn_ShipActionPacket2Received;
+                ServerConnection.ShipAction3PacketReceived -= conn_ShipActionPacket3Received;
+                ServerConnection.StationStatusPacketReceived -= conn_StationStatusPacketReceived;
+                ServerConnection.UndefinedPacketReceived -= conn_UndefinedPacketReceived;
+                ServerConnection.GameStartPacketReceived -= conn_UnknownPacket1Received;
+                ServerConnection.Unknown2PacketReceived -= conn_UnknownPacket2Received;
+                ServerConnection.VersionPacketReceived -= conn_VersionPacketReceived;
+                ServerConnection.WelcomePacketReceived -= conn_WelcomePacketReceived;
+                ServerConnection.Dispose();
+            }
+        }
         private void OnStopServer(object sender, RoutedEventArgs e)
         {
-            
-            ServerConnection.AudioCommandPacketReceived -= conn_AudioCommandPacketReceived;
-            ServerConnection.CommsIncomingPacketReceived -= conn_CommsIncomingPacketReceived;
-            ServerConnection.CommsOutgoingPacketReceived -= conn_CommsOutgoingPacketReceived;
-            ServerConnection.DestroyObjectPacketReceived -= conn_DestroyObjectPacketReceived;
-            ServerConnection.EngGridUpdatePacketReceived -= conn_EngGridUpdatePacketReceived;
-            ServerConnection.GameMessagePacketReceived -= conn_GamesMessagePacketReceived;
-            ServerConnection.IncomingAudioPacketReceived -= conn_IncomingAudioPacketReceived;
-            ServerConnection.ObjectStatusUpdatePacketReceived -= conn_ObjectStatusUpdatePacketReceived;
-
-            ServerConnection.PackageReceived -= conn_PackageReceived;  //This is not necessary (using only for logging) since all other events are subscribed to.
-
-            ServerConnection.ShipActionPacketReceived -= conn_ShipActionPacketReceived;
-            ServerConnection.ShipAction2PacketReceived -= conn_ShipActionPacket2Received;
-            ServerConnection.ShipAction3PacketReceived -= conn_ShipActionPacket3Received;
-            ServerConnection.StationStatusPacketReceived -= conn_StationStatusPacketReceived;
-            ServerConnection.UndefinedPacketReceived -= conn_UndefinedPacketReceived;
-            ServerConnection.GameStartPacketReceived -= conn_UnknownPacket1Received;
-            ServerConnection.Unknown2PacketReceived -= conn_UnknownPacket2Received;
-            ServerConnection.VersionPacketReceived -= conn_VersionPacketReceived;
-            ServerConnection.WelcomePacketReceived -= conn_WelcomePacketReceived;
-            ServerConnection.Dispose();
+            DisposeServer();
             btnStopServer.Visibility = Visibility.Collapsed;
             btnStartServer.Visibility = Visibility.Visible;
         }
         bool isDisposed = false;
         protected virtual void Dispose(bool isDisposing)
         {
-            if (isDisposed)
+            if (isDisposing)
             {
                 if (!isDisposed)
                 {
-                    if (ServerConnection != null)
-                    {
-                        ServerConnection.Dispose();
-                    }
+                    DisposeServer();
+                    
                     isDisposed = true;
                 }
             }
@@ -848,7 +868,7 @@ namespace Sandbox
                 byte[] bytes = ConvertToByteArray(BitConverterValue);
                 if (bytes.Length == 4)
                 {
-                    BitConverterResult = BitConverter.ToInt32(bytes, 0).ToString();
+                    BitConverterResult = BitConverter.ToInt32(bytes, 0).ToString(CultureInfo.InvariantCulture);
                 }
                 else
                 {
@@ -862,7 +882,7 @@ namespace Sandbox
                 byte[] bytes = ConvertToByteArray(BitConverterValue);
                 foreach (byte b in bytes)
                 {
-                    sb.Append(b.ToString());
+                    sb.Append(b.ToString(CultureInfo.InvariantCulture));
                     sb.Append(", ");
                 }
                 BitConverterResult = sb.ToString();
@@ -872,7 +892,7 @@ namespace Sandbox
                 byte[] bytes = ConvertToByteArray(BitConverterValue);
                 if (bytes.Length == 2)
                 {
-                    BitConverterResult = BitConverter.ToInt16(bytes, 0).ToString();
+                    BitConverterResult = BitConverter.ToInt16(bytes, 0).ToString(CultureInfo.InvariantCulture);
                 }
                 else
                 {
@@ -884,7 +904,7 @@ namespace Sandbox
                 byte[] bytes = ConvertToByteArray(BitConverterValue);
                 if (bytes.Length == 4)
                 {
-                    BitConverterResult = BitConverter.ToUInt32(bytes, 0).ToString();
+                    BitConverterResult = BitConverter.ToUInt32(bytes, 0).ToString(CultureInfo.InvariantCulture);
                 }
                 else
                 {
@@ -896,7 +916,7 @@ namespace Sandbox
                 byte[] bytes = ConvertToByteArray(BitConverterValue);
                 if (bytes.Length == 4)
                 {
-                    BitConverterResult = BitConverter.ToSingle(bytes, 0).ToString();
+                    BitConverterResult = BitConverter.ToSingle(bytes, 0).ToString(CultureInfo.InvariantCulture);
                 }
                 else
                 {
@@ -908,7 +928,7 @@ namespace Sandbox
                 byte[] bytes = ConvertToByteArray(BitConverterValue);
                 if (bytes.Length == 2)
                 {
-                    BitConverterResult = BitConverter.ToUInt16(bytes, 0).ToString();
+                    BitConverterResult = BitConverter.ToUInt16(bytes, 0).ToString(CultureInfo.InvariantCulture);
                 }
                 else
                 {
@@ -928,13 +948,19 @@ namespace Sandbox
                     int by = BitConverter.ToInt32(bytes, 0);
                     if (bytes.Length != by * 2 + 4)
                     {
-                        MessageBox.Show(string.Format("Error: String length is defined as {0} characters, but length definition sets it as {1} characters",
+                        MessageBox.Show(
+                            string.Format(CultureInfo.InvariantCulture, "Error: String length is defined as {0} characters, but length definition sets it as {1} characters",
                             (bytes.Length - 4) / 2, by), "BitConverter Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     else
                     {
-                        ArtemisString s = new ArtemisString(bytes);
-                        BitConverterResult = s.Value;
+                        using (MemoryStream ms = new MemoryStream(bytes))
+                        {
+                            using (ArtemisString s = new ArtemisString(ms.GetMemoryStream(0), 0))
+                            {
+                                BitConverterResult = s.Value;
+                            }
+                        }
                     }
 
                 }

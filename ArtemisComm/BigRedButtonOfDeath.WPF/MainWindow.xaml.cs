@@ -1,7 +1,9 @@
 ﻿using ArtemisComm;
 using BigRedButtonOfDeath.Library;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -23,10 +25,121 @@ namespace BigRedButtonOfDeath.WPF
     {
         public MainWindow()
         {
+
+            SetAbortSelfDestruct();
+            SetSelfDestructImage();
+            Host = Properties.Settings.Default.LastHost;
+            Port = Properties.Settings.Default.LastPort;
+            if (Port == 0)
+            {
+                Port = 2010;
+            }
+
             InitializeComponent();
             new Controller(this);
         }
+        void SetSelfDestructImage()
+        {
+            if (string.IsNullOrEmpty(Properties.Settings.Default.SelfDestructPath))
+            {
+                SelfDestructImage = Properties.Resources.selfdestruct.ToBitmapSource();
+            }
+            else
+            {
+                ImageSource img = GetImage(Properties.Settings.Default.SelfDestructPath);
+                if (img != null)
+                {
+                    SelfDestructImage = img;
+                }
+            }
+        }
+        void SetAbortSelfDestruct()
+        {
+            if (string.IsNullOrEmpty(Properties.Settings.Default.AbortSelfDestructPath))
+            {
 
+                AbortSelfDestructImage = Properties.Resources.cancelselfdestruct.ToBitmapSource();
+            }
+            else
+            {
+                ImageSource img = GetImage(Properties.Settings.Default.AbortSelfDestructPath);
+                if (img != null)
+                {
+                    AbortSelfDestructImage = img;
+                }
+            }
+        }
+
+        static ImageSource GetImage(string path)
+        {
+            BitmapImage img = null;
+            try
+            {
+                using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+                {
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        int byRead = -1;
+                        byte[] bytes = new byte[32768];
+                        do
+                        {
+                            byRead = fs.Read(bytes, 0, bytes.Length);
+                            if (byRead > 0)
+                            {
+                                ms.Write(bytes, 0, byRead);
+                            }
+                        } while (byRead > 0);
+                        ms.Seek(0, SeekOrigin.Begin);
+                        img = new BitmapImage();
+                        img.BeginInit();
+                        img.StreamSource = ms;
+                        img.CacheOption = BitmapCacheOption.OnLoad;
+                        img.EndInit();
+                        img.Freeze();
+
+                    }
+                }
+            }
+            catch { }
+            return img;
+        }
+
+        public static readonly DependencyProperty SelfDestructImageProperty =
+           DependencyProperty.Register("SelfDestructImage", typeof(ImageSource),
+               typeof(MainWindow), new PropertyMetadata());
+
+        public ImageSource SelfDestructImage
+        {
+            get
+            {
+                return (ImageSource)this.UIThreadGetValue(SelfDestructImageProperty);
+
+            }
+            set
+            {
+                this.UIThreadSetValue(SelfDestructImageProperty, value);
+
+            }
+        }
+
+
+        public static readonly DependencyProperty AbortSelfDestructImageProperty =
+           DependencyProperty.Register("AbortSelfDestructImage", typeof(ImageSource),
+               typeof(MainWindow), new PropertyMetadata());
+
+        public ImageSource AbortSelfDestructImage
+        {
+            get
+            {
+                return (ImageSource)this.UIThreadGetValue(AbortSelfDestructImageProperty);
+
+            }
+            set
+            {
+                this.UIThreadSetValue(AbortSelfDestructImageProperty, value);
+
+            }
+        }
 
         public static readonly DependencyProperty HostProperty =
            DependencyProperty.Register("Host", typeof(string),
@@ -233,13 +346,14 @@ namespace BigRedButtonOfDeath.WPF
             }
             else
             {
-                
-                ConnectionStarted = false;
                 GameRunning = false;
                 SimulationRunning = false;
                 SelfDestructRunning = false;
                 plyr.Stop();
                 MessageBox.Show("Connection to server lost.", "Big Red Button of Death!", MessageBoxButton.OK, MessageBoxImage.Hand);
+
+                ConnectionStarted = false;
+             
             }
         }
 
@@ -264,6 +378,9 @@ namespace BigRedButtonOfDeath.WPF
         }
         private void OnConnect(object sender, RoutedEventArgs e)
         {
+            Properties.Settings.Default.LastPort = Port;
+            Properties.Settings.Default.LastHost = Host;
+            Properties.Settings.Default.Save();
             if (ConnectRequested != null)
             {
                 
@@ -315,7 +432,11 @@ namespace BigRedButtonOfDeath.WPF
                     {
                         DisposeRequested(this, EventArgs.Empty);
                     }
-                    plyr.Stop();
+                    if (plyr != null)
+                    {
+                        plyr.Stop();
+                        plyr.Dispose();
+                    }
                     isDisposed = true;
                 }
             }
@@ -376,6 +497,66 @@ namespace BigRedButtonOfDeath.WPF
                 }
                 Properties.Settings.Default.Save();
             }
+        }
+
+        private void OnChangeSelfDestruct(object sender, RoutedEventArgs e)
+        {
+            KeyValuePair<ImageSource, string> item = SelectImage("Select self-destruct image", Properties.Settings.Default.SelfDestructPath);
+            if (item.Key != null)
+            {
+                Properties.Settings.Default.SelfDestructPath = item.Value;
+                SelfDestructImage = item.Key;
+                Properties.Settings.Default.Save();
+            }
+        }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        static KeyValuePair<ImageSource, string> SelectImage(string title, string baseFile)
+        {
+            string target = null;
+            ImageSource img = null;
+            string file = baseFile;
+            OpenFileDialog diag = new OpenFileDialog();
+            diag.Title = title;
+            diag.FileName = file;
+            diag.CheckFileExists = true;
+            diag.Filter = "Image Files|*.jpg;*.png;*.gif;*.bmp;*.tif|All files|*.*";
+            if (diag.ShowDialog() == true)
+            {
+                img = GetImage(diag.FileName);
+                file = diag.FileName;
+                target = System.IO.Path.Combine(App.AppDataPath, new FileInfo(file).Name);
+                try
+                {
+                    File.Copy(file, target, true);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error copying to data directory:\r\n\r\n" + ex.Message, "Big Red Button of Death", MessageBoxButton.OK, MessageBoxImage.Error);
+                    target = null;
+                }
+            }
+            return new KeyValuePair<ImageSource, string>(img, target);
+        }
+        private void OnChangeAbortSelfDestruct(object sender, RoutedEventArgs e)
+        {
+            KeyValuePair<ImageSource, string> item = SelectImage("Select cancel self-destruct image", Properties.Settings.Default.AbortSelfDestructPath);
+            if (item.Key != null)
+            {
+                Properties.Settings.Default.AbortSelfDestructPath = item.Value;
+                AbortSelfDestructImage = item.Key;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        private void OnReset(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.AbortSelfDestructPath = string.Empty;
+
+            Properties.Settings.Default.SelfDestructPath = string.Empty;
+            
+            Properties.Settings.Default.Save();
+            SetSelfDestructImage();
+            SetAbortSelfDestruct();
         }
 
     }

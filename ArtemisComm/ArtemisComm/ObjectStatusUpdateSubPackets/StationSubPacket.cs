@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -7,14 +8,9 @@ namespace ArtemisComm.ObjectStatusUpdateSubPackets
 {
     public class StationSubPacket : VariablePackage
     {
-       
-        public StationSubPacket()
-            : base()
-        {
 
-        }
-        public StationSubPacket(byte[] byteArray)
-            : base(byteArray)
+        public StationSubPacket(Stream stream, int index)
+            : base(stream, index)
         {
 
         }
@@ -22,18 +18,25 @@ namespace ArtemisComm.ObjectStatusUpdateSubPackets
         public ArtemisString Name { get; set; }
         public float? Shields { get; set; }
         public float? AftShields { get; set; }
-        public int? Unknown { get; set; }
+        /// <summary>
+        /// Gets or sets the index of the station.
+        /// </summary>
+        /// <value>
+        /// The index of the station. zero-based
+        /// </value>
+        public int? StationIndex { get; set; }
         public int? Unknown2 { get; set; }
         public float? X { get; set; }
 
         public float? Y { get; set; }
         public float? Z { get; set; }
 
+        // Following 4 fields may likely be the torpedo stock.
         public int? Unknown3 { get; set; }
         public int? Unknown4 { get; set; }
         public int? Unknown5 { get; set; }
-
         public int? Unknown6 { get; set; }
+
         public byte? Unknown7 { get; set; }
         public byte? Unknown8 { get; set; }
 

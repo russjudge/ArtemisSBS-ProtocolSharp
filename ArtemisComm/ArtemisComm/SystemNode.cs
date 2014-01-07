@@ -1,6 +1,7 @@
-﻿using log4net;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -9,37 +10,54 @@ namespace ArtemisComm
 {
     public class SystemNode
     {
-        static readonly ILog _log = LogManager.GetLogger(typeof(SystemNode));   
-
-        public static SystemNode[] GetNodes(byte[] byteArray)
+        public static ReadOnlyCollection<SystemNode> GetNodes(Stream stream, int index)
         {
             List<SystemNode> retVal = new List<SystemNode>();
-            int index = 0;
+            byte endCheck = 0;
             do
             {
-                SystemNode nd = new SystemNode(byteArray, index);
+                SystemNode nd = new SystemNode(stream, index);
                 index += nd.DataLength;
                 retVal.Add(nd);
-
-            } while (byteArray[index] != 255);
-            return retVal.ToArray();
+                if (index < stream.Length)
+                {
+                    stream.Position = index;
+                    endCheck = Convert.ToByte(stream.ReadByte());
+                }
+            } while (endCheck != 255 && index < stream.Length);
+            return new ReadOnlyCollection<SystemNode>(retVal);
         }
+
+
+        //public static SystemNode[] GetNodes(byte[] byteArray)
+        //{
+        //    List<SystemNode> retVal = new List<SystemNode>();
+        //    int index = 0;
+        //    do
+        //    {
+        //        SystemNode nd = new SystemNode(byteArray, index);
+        //        index += nd.DataLength;
+        //        retVal.Add(nd);
+
+        //    } while (byteArray[index] != 255);
+        //    return retVal.ToArray();
+        //}
         public SystemNode()
         {
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Starting {0}", MethodBase.GetCurrentMethod().ToString()); }
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Ending {0}", MethodBase.GetCurrentMethod().ToString()); }   
 
         }
-        public SystemNode(byte[] byteArray)
-        {
-            Initialize(byteArray, 0);
+        //public SystemNode(byte[] byteArray)
+        //{
+        //    Initialize(byteArray, 0);
            
-        }
-        public SystemNode(byte[] byteArray, int index)
+        //}
+        public SystemNode(Stream stream, int index)
         {
-            Initialize(byteArray, index);
+            Initialize(stream, index);
 
         }
+
+        [ArtemisExcluded]
         public int DataLength
         {
             get
@@ -59,61 +77,68 @@ namespace ArtemisComm
                 }
                 if (Damage != null)
                 {
-                    retVal++;
+                    retVal += 4;
                 }
                 return retVal;
             }
         }
-        void Initialize(byte[] byteArray, int index)
+        void Initialize(Stream stream, int index)
         {
-            if (byteArray != null)
+            if (stream != null)
             {
                 bool isDone = false;
-                if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--bytes in: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(byteArray)); }
-
-                if (byteArray[index] == 255)
+                stream.Position = index;
+                if (Convert.ToByte(stream.ReadByte()) == 255)
                 {
                     isDone = true;
+                    return;
                 }
-                if (index < byteArray.Length && !isDone )
+                stream.Position = index++;
+                if (index < stream.Length && !isDone )
                 {
-                    X = byteArray[index];
-                    if (_log.IsInfoEnabled) { _log.InfoFormat("X={0}", X); }
-                    if (byteArray[index+ 1] == 255)
+                    X = Convert.ToByte(stream.ReadByte());
+
+                    if (Convert.ToByte(stream.ReadByte()) == 255)
                     {
                         isDone = true;
+                        return;
                     }
+                    stream.Position = ++index;
                 }
 
 
-                if (index + 1 < byteArray.Length && !isDone)
+                if (index < stream.Length && !isDone)
                 {
-                    Y = byteArray[index + 1];
-                    if (_log.IsInfoEnabled) { _log.InfoFormat("Y={0}", Y); }
-                    if (byteArray[index + 2] == 255)
+                    Y = Convert.ToByte(stream.ReadByte());
+
+                    if (Convert.ToByte(stream.ReadByte()) == 255)
                     {
                         isDone = true;
+                        return;
                     }
+                    stream.Position = ++index;
                 }
-                if (index + 2 < byteArray.Length && !isDone)
+                if (index < stream.Length && !isDone)
                 {
-                    Z = byteArray[index + 2];
-                    if (_log.IsInfoEnabled) { _log.InfoFormat("Z={0}", Z); }
-                    if (byteArray[index + 3] == 255)
+                    Z = Convert.ToByte(stream.ReadByte());
+
+                    if (Convert.ToByte(stream.ReadByte()) == 255)
                     {
                         isDone = true;
+                        return;
                     }
+                    stream.Position = ++index;
                 }
-                if (index + 7 <= byteArray.Length && !isDone)
+                if (index < stream.Length - 4 && !isDone)
                 {
-                    Damage = BitConverter.ToSingle(byteArray, index + 3);
-                    if (_log.IsInfoEnabled) { _log.InfoFormat("Damage={0}", Damage); }
+                    byte[] buffer = new byte[4];
+                    stream.Read(buffer, index, 4);
+                    Damage = BitConverter.ToSingle(buffer, 0);
                 }
                 else
                 {
                     isDone = true; 
                 }
-                if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--Result bytes: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(this.GetBytes())); }
             }
         }
         //This contains a list of system nodes, terminated with 0xff. Each system node is formatted as follows:
@@ -142,26 +167,28 @@ namespace ArtemisComm
 //Current Z coordinate (int)
 //Progress (float)
 //Number of team members (int)
-        public byte[] GetBytes()
-        {
-            List<byte> retVal = new List<byte>();
-            if (X != null)
-            {
-                retVal.Add(X.Value);
-            }
-            if (Y != null)
-            {
-                retVal.Add(Y.Value);
-            }
-            if (Z != null)
-            {
-                retVal.Add(Z.Value);
-            }
-            if (Damage != null)
-            {
-                retVal.AddRange(BitConverter.GetBytes(Damage.Value));
-            }
-            return retVal.ToArray();
-        }
+        //public byte[] GetBytes()
+        //{
+        //    List<byte> retVal = new List<byte>();
+        //    if (X != null)
+        //    {
+        //        retVal.Add(X.Value);
+        //    }
+        //    if (Y != null)
+        //    {
+        //        retVal.Add(Y.Value);
+        //    }
+        //    if (Z != null)
+        //    {
+        //        retVal.Add(Z.Value);
+        //    }
+        //    if (Damage != null)
+        //    {
+        //        retVal.AddRange(BitConverter.GetBytes(Damage.Value));
+        //    }
+            
+        //    return retVal.ToArray();
+        //}
+
     }
 }

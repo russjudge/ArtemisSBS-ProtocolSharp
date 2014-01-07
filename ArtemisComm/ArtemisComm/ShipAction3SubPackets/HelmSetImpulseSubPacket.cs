@@ -1,45 +1,38 @@
-﻿using log4net;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 
 namespace ArtemisComm.ShipAction3SubPackets
 {
-    public class HelmSetImpulseSubPacket : IPackage
+    public class HelmSetImpulseSubPacket : BasePacket
     {
-        static readonly ILog _log = LogManager.GetLogger(typeof(HelmSetImpulseSubPacket));
-        public HelmSetImpulseSubPacket()
+        public static Packet GetPacket(float velocity)
         {
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Starting {0}", MethodBase.GetCurrentMethod().ToString()); }
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Ending {0}", MethodBase.GetCurrentMethod().ToString()); }   
+            HelmSetImpulseSubPacket ssp = new HelmSetImpulseSubPacket(velocity);
+            ShipAction3Packet sap = new ShipAction3Packet(ssp);
+            Packet p = new Packet(sap);
+            return p;
         }
-        public HelmSetImpulseSubPacket(byte[] byteArray)
+        public HelmSetImpulseSubPacket(float velocity)
         {
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Starting {0}", MethodBase.GetCurrentMethod().ToString()); }
+            Velocity = velocity;
+        }
+        public HelmSetImpulseSubPacket(Stream stream, int index)
+            : base(stream, index)
+        {
 
-            if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--bytes in: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(byteArray)); }
-
-
-            Velocity = BitConverter.ToSingle(byteArray, 0);
-          
-
-
-            if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--Result bytes: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(this.GetBytes())); }
-
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Ending {0}", MethodBase.GetCurrentMethod().ToString()); }   
         }
         public float Velocity { get; set; }
-       
-        
 
-        public byte[] GetBytes()
+
+
+        public override OriginType GetValidOrigin()
         {
-            List<byte> retVal = new List<byte>();
-            retVal.AddRange(BitConverter.GetBytes(Velocity));
-            
-            return retVal.ToArray();
+            return OriginType.Client;
         }
+       
     }
 }

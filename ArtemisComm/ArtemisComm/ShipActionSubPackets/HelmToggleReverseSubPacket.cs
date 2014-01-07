@@ -1,18 +1,21 @@
-﻿using log4net;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-
+﻿
+using System.IO;
 namespace ArtemisComm.ShipActionSubPackets
 {
     public class HelmToggleReverseSubPacket : ShipAction
     {
         
-        public HelmToggleReverseSubPacket() : base() { }
+        public static Packet GetPacket(int value)
+        {
+            return new Packet(new ShipActionPacket(new HelmToggleReverseSubPacket(value)));
+        }
 
-        public HelmToggleReverseSubPacket(byte[] byteArray) : base(byteArray) { }
+        public HelmToggleReverseSubPacket(int value) : base(value) { }
+        public HelmToggleReverseSubPacket(Stream stream, int index)
+            : base(stream, index)
+        {
+
+        }
 
       
     }

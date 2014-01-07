@@ -1,47 +1,65 @@
-﻿using log4net;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 
 namespace ArtemisComm
 {
-    public class CommsIncomingPacket : IPackage
+    public class CommsIncomingPacket : BasePacket
     {
 
-        //CONFIRMED
-        static readonly ILog _log = LogManager.GetLogger(typeof(CommsIncomingPacket));
-        public CommsIncomingPacket()
+       
+        public CommsIncomingPacket() : base()
         {
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Starting {0}", MethodBase.GetCurrentMethod().ToString()); }
             Sender = new ArtemisString();
             Message = new ArtemisString();
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Ending {0}", MethodBase.GetCurrentMethod().ToString()); }   
 
         }
-        public CommsIncomingPacket(byte[] byteArray)
-        {
-            if (byteArray != null)
-            {
-                if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--bytes in: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(byteArray)); }
+        public CommsIncomingPacket(Stream stream, int index) : base(stream, index) { }
+        //public CommsIncomingPacket(byte[] byteArray)
+        //{
+        //    try
+        //    {
+        //        if (byteArray != null)
+        //        {
 
-                Priority = BitConverter.ToInt32(byteArray, 0);
+        //            if (byteArray.Length > 3) Priority = BitConverter.ToInt32(byteArray, 0);
 
-                Sender = new ArtemisString(byteArray, 4);
-                int newStart = 4 + (Sender.Length * 2) + 4;
-                Message = new ArtemisString(byteArray, newStart);
-                if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--Result bytes: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(this.GetBytes())); }
-            }
-        }
-        public byte[] GetBytes()
-        {
-            List<byte> retVal = new List<byte>();
-            retVal.AddRange(BitConverter.GetBytes(Priority));
-            retVal.AddRange(Sender.GetBytes());
-            retVal.AddRange(Message.GetBytes());
-            return retVal.ToArray();
-        }
+        //            if (byteArray.Length > 7) Sender = new ArtemisString(byteArray, 4);
+
+        //            int newStart = 4 + (Sender.Length * 2) + 4;
+        //            if (byteArray.Length > 11 + newStart) Message = new ArtemisString(byteArray, newStart);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        errors.Add(ex);
+        //    }
+        //}
+        //public byte[] GetBytes()
+        //{
+        //    List<byte> retVal = new List<byte>();
+        //    retVal.AddRange(BitConverter.GetBytes(Priority));
+        //    if (Sender != null)
+        //    {
+        //        retVal.AddRange(Sender.GetBytes());
+        //    }
+        //    else
+        //    {
+        //        retVal.AddRange(new byte[] { 0, 0, 0, 0 });
+        //    }
+        //    if (Message != null)
+        //    {
+        //        retVal.AddRange(Message.GetBytes());
+        //    }
+        //    else
+        //    {
+        //        retVal.AddRange(new byte[] { 0, 0, 0, 0 });
+        //    }
+        //    return retVal.ToArray();
+        //}
         /// <summary>
         /// Gets or sets the priority.  Marks background color of incoming Comms packet.
         /// </summary>
@@ -73,5 +91,11 @@ namespace ArtemisComm
 //The name of the entity (ship or station) that send the message.
 
 //Message (string)
+
+        public override OriginType GetValidOrigin()
+        {
+            return OriginType.Server;
+        }
+        
     }
 }

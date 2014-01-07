@@ -1,15 +1,15 @@
-﻿using log4net;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 
 namespace ArtemisComm
 {
-    public class Packet
+    public class Packet : IDisposable
     {
-        static readonly ILog _log = LogManager.GetLogger(typeof(Packet));
         /// <summary>
         /// Gets or sets a value indicating whether throw an exception if the packet is invalid.
         /// </summary>
@@ -35,113 +35,173 @@ namespace ArtemisComm
         public const int HeaderLength = 6*4;
 
 
-        public static int GetLength(byte[] byteArray, int startIndex)
+        internal static int GetLength(byte[] byteArray, int startIndex)
         {
-            return BitConverter.ToInt32(byteArray, startIndex + 4);
-        }
-        
-
-        public Packet(byte[] byteArray)
-        {
-            if (byteArray != null)
+            if (startIndex < int.MaxValue - 4)
             {
-                if (_log.IsInfoEnabled) { _log.Info("~~~~~~~~~~~~~~~~Starting Packet Creation.~~~~~~~~~~~~~~~~~~~~~~~~"); }
-                if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--{2} bytes in: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(byteArray), byteArray.Length.ToString()); }
+                int position = startIndex + 4;
+                return BitConverter.ToInt32(byteArray, position);
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException("startIndex");
+            }
+        }
+        //[ArtemisExcluded]
+        //public string HexValue { get; private set; }
 
 
-                ID = BitConverter.ToUInt32(byteArray, 0); //Len = 4
 
-                if (ID != Connector.StandardID)
+        MemoryStream _rawData = null;
+        [ArtemisExcluded]
+        public MemoryStream GetRawData()
+        {
+
+            if (_rawData == null)
+            {
+                SetRawData();
+            }
+
+            return _rawData.GetMemoryStream(0);
+
+        }
+        public Packet(Stream stream)
+        {
+            if (stream != null)
+            {
+                if (stream.CanSeek)
                 {
-                    if (ThrowWhenInvalid)
+                    stream.Position = 0;
+                }
+                _rawData = stream.GetMemoryStream(0);
+
+                if (ThrowWhenInvalid && _rawData.Length < HeaderLength)
+                {
+                    throw new InvalidPacketException();
+                }
+                else
+                {
+                    if (_rawData.Length > 3) ID = _rawData.ToInt32();
+                    if (ThrowWhenInvalid && ID != Connector.StandardID)
                     {
                         throw new InvalidPacketException();
                     }
                     else
                     {
-                        return;
+                        if (_rawData.Length > 7) Length = _rawData.ToInt32();
+                        if (_rawData.Length > 11) Origin = (OriginType)_rawData.ToInt32();
+                        if (_rawData.Length > 15) Unknown = _rawData.ToInt32();
+                        if (_rawData.Length > 19) PayloadLength = _rawData.ToInt32();
+                        if (_rawData.Length > 23) PacketType = (PacketType)_rawData.ToInt32();
+
+
+                        int ln = Convert.ToInt32(_rawData.Length);
+                        if (ln > Length)
+                        {
+                            ln = Length;
+                        }
+
+                        Payload = _rawData.GetMemoryStream(HeaderLength);
+
+                        _package = BuildPackage(_rawData, HeaderLength, Type.GetType(typeof(Packet).Namespace + "." + this.PacketType.ToString()));
+                                //GetPackage(byteArray);
+                        int packetLength = 0;
+                        if (_package != null)
+                        {
+                            if (_package.GetErrors().Count > 0)
+                            {
+                                ConversionFailed = true;
+                                
+                            }
+                            packetLength = Convert.ToInt32(Payload.Length);
+                            if (Length - HeaderLength != packetLength)
+                            {
+                                if (ThrowWhenInvalid)
+                                {
+                                    throw new InvalidPacketException();
+                                }
+                                else
+                                {
+                                    ConversionException = new InvalidPacketException();
+                                    ConversionFailed = true;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            //Unknown package found!!
+                        }
                     }
                 }
-
-                if (_log.IsInfoEnabled) { _log.InfoFormat("ID={0}", ID.ToString()); }
-                Length = BitConverter.ToInt32(byteArray, 4);//Len = 4
-                if (_log.IsInfoEnabled) { _log.InfoFormat("Length={0}", Length.ToString()); }
-                Origin = (OriginType)BitConverter.ToInt32(byteArray, 8);//Len = 4
-                if (_log.IsInfoEnabled) { _log.InfoFormat("Origin={0}", Origin.ToString()); }
-                Unknown = BitConverter.ToInt32(byteArray, 12);//Len = 4
-                if (_log.IsInfoEnabled) { _log.InfoFormat("Unknown={0}", Unknown.ToString()); }
-                PayloadLength = BitConverter.ToInt32(byteArray, 16);//Len = 4
-                if (_log.IsInfoEnabled) { _log.InfoFormat("RemainingPacketLength={0}", PayloadLength.ToString()); }
-                PacketType = (PacketTypes)BitConverter.ToUInt32(byteArray, 20);//Len = 4
-                if (_log.IsInfoEnabled) { _log.InfoFormat("PacketType={0}", PacketType.ToString()); }
-                List<byte> newArray = new List<byte>();
-                int ln = byteArray.Length;
-                if (ln > Length)
-                {
-                    ln = Length;
-                }
-                for (int i = HeaderLength; i < ln; i++)
-                {
-                    newArray.Add(byteArray[i]);
-                }
-                Payload = newArray.ToArray();
-
-                _package = GetPackage(Payload);
-                int packetLength = 0;
-                if (_package != null)
-                {
-                    byte[] packetBytes = _package.GetBytes();
-                    packetLength = packetBytes.Length;
-                }
-                if (packetLength + HeaderLength != Length && ThrowWhenInvalid)
-                {
-                    throw new InvalidPacketException();
-                }
-
-                if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--{2} Result bytes: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(this.GetBytes()), this.GetBytes().Length); }
-                if (_log.IsInfoEnabled) { _log.Info("~~~~~~~~~~~~~~~~Packet Creation Ended.~~~~~~~~~~~~~~~~~~~~~~~~"); }
             }
+
         }
+        
         public Packet(IPackage package)
         {
-            ID = Convert.ToUInt32(Connector.StandardID);
+            ID = Convert.ToInt32(Connector.StandardID);
             Origin = OriginType.Client;
             Package = package;
         }
 
+        [ArtemisExcluded]
+        public Exception ConversionException { get; private set; }
 
-        IPackage GetPackage(byte[] byteArray)
+        [ArtemisExcluded]
+        public bool ConversionFailed { get; private set; }
+
+        IPackage BuildPackage(MemoryStream stream, int index, Type packageType)
         {
-            IPackage retVal = null;
             try
             {
-                object[] parms = { byteArray };
-                Type[] constructorSignature = { typeof(byte[]) };
 
-                Type t = Type.GetType(typeof(Packet).Namespace + "." + this.PacketType.ToString());
-
-
-                if (t != null)
-                {
-
-                    ConstructorInfo constructor = t.GetConstructor(constructorSignature);
-                    object obj = constructor.Invoke(parms);
-                    retVal = obj as IPackage;
-
-                }
+                return GetPackage(stream, index, packageType);
             }
             catch (OverflowException ex)
             {
-                //Receiving this means the type is not correct.
+                if (ThrowWhenInvalid)
+                {
+                    throw new InvalidPacketException(ex);
+                }
+                else
+                {
+                    //Receiving this means the type is not correct.
+                    ConversionException = ex;
+                    ConversionFailed = true;
+                }
             }
             catch (Exception ex)
             {
-                //Receiving this probably means a type is not correct--but could mean something else.
+                if (ThrowWhenInvalid)
+                {
+                    throw new InvalidPacketException(ex);
+                }
+                else
+                {
+                    //Receiving this probably means a type is not correct--but could mean something else.
+                    ConversionException = ex;
+                    ConversionFailed = true;
+                }
             }
+            return null;
+        }
+        internal static IPackage GetPackage(MemoryStream stream, int index, Type packageType)
+        {
+            IPackage retVal = null;
+
+            object[] parms = { stream, index };
+            Type[] constructorSignature = { typeof(MemoryStream), typeof(int) };
+            if (packageType != null)
+            {
+                ConstructorInfo constructor = packageType.GetConstructor(constructorSignature);
+                object obj = constructor.Invoke(parms);
+                retVal = obj as IPackage;
+            }
+
             return retVal;
         }
 
-        public uint ID { get; private set; }
+        public int ID { get; private set; }
 
         public int Length { get; private set; }
         public OriginType Origin { get; private set; }
@@ -171,36 +231,43 @@ namespace ArtemisComm
         /// <value>
         /// The type of the packet.
         /// </value>
-        public PacketTypes PacketType { get; private set; }
+        public PacketType PacketType { get; private set; }
+        public void OverrideSetPacketType(int packetType)
+        {
+            PacketType = (PacketType)packetType;
+        }
         /// <summary>
         /// Sets the origin.  Origin is not set if the Packet type is not among the defined list--this is to assume that it is working with a newer version of Artemis
         /// than originally written for.
         /// </summary>
         void SetOrigin()
         {
-            
-            if (Package is AudioCommandPacket
-                || Package is CommsOutgoingPacket
-                || Package is ShipActionPacket
-                || Package is ShipAction2Packet
-                || Package is ShipAction3Packet)
+            if (Package != null)
             {
-                Origin = OriginType.Client;
+                Origin = Package.GetValidOrigin();
             }
-            if (Package is CommsIncomingPacket
-                || Package is DestroyObjectPacket
-                || Package is EngGridUpdatePacket
-                || Package is IncomingAudioPacket
-                || Package is GameMessagePacket
-                || Package is ObjectStatusUpdatePacket
-                || Package is StationStatusPacket
-                || Package is VersionPacket
-                || Package is WelcomePacket
-                || Package is GameStartPacket
-                || Package is Unknown2Packet)
-            {
-                Origin = OriginType.Server;
-            }
+            //if (Package is AudioCommandPacket
+            //    || Package is CommsOutgoingPacket
+            //    || Package is ShipActionPacket
+            //    || Package is ShipAction2Packet
+            //    || Package is ShipAction3Packet)
+            //{
+            //    Origin = OriginType.Client;
+            //}
+            //if (Package is CommsIncomingPacket
+            //    || Package is DestroyObjectPacket
+            //    || Package is EngGridUpdatePacket
+            //    || Package is IncomingAudioPacket
+            //    || Package is GameMessagePacket
+            //    || Package is ObjectStatusUpdatePacket
+            //    || Package is StationStatusPacket
+            //    || Package is VersionPacket
+            //    || Package is WelcomePacket
+            //    || Package is GameStartPacket
+            //    || Package is Unknown2Packet)
+            //{
+            //    Origin = OriginType.Server;
+            //}
 
         }
         IPackage _package;
@@ -216,7 +283,9 @@ namespace ArtemisComm
 
                 if (value != null)
                 {
-                    Payload = value.GetBytes();
+                    Payload = value.GetRawData();
+                    
+                    //Payload = new ReadOnlyCollection<byte>(value.GetBytes());
                     SetOrigin();
                 }
                 else
@@ -233,13 +302,15 @@ namespace ArtemisComm
                     }
                     try
                     {
-                        this.PacketType = (PacketTypes)Enum.Parse(typeof(PacketTypes), Payloadtype);
+                        this.PacketType = (PacketType)Enum.Parse(typeof(PacketType), Payloadtype);
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                        this.PacketType = PacketTypes.InvalidPacket;
+                        
+                        ConversionException = ex;
+                        this.PacketType = PacketType.InvalidPacket;
                     }
-                    Length = Payload.Length + HeaderLength;
+                    Length = Convert.ToInt32(Payload.Length) + HeaderLength;
 
                 }
                 else
@@ -259,28 +330,74 @@ namespace ArtemisComm
         //0x26: SetShipSettingsPacket
        
 
-        public void OverrideSetPacketType(PacketTypes packetType)
+        public void OverrideSetPacketType(PacketType packetType)
         {
             PacketType = packetType;
         }
 
-        private byte[] Payload { get; set; }
+        public MemoryStream Payload { get; private set; }
 
-
-        public byte[] GetBytes()
+        void SetRawData()
         {
-            List<byte> retVal = new List<byte>();
+            MemoryStream ms = null;
+            try
+            {
+                ms = new MemoryStream();
+                ms.Write(ID);
+                ms.Write(Length);
+                ms.Write(Origin);
+                ms.Write(Unknown);
+                ms.Write(PayloadLength);
+                ms.Write(PacketType);
+                if (Package != null)
+                {
+                    Package.GetRawData().WriteTo(ms);
 
-            retVal.AddRange(BitConverter.GetBytes(ID));
-            retVal.AddRange(BitConverter.GetBytes(Length));
-            retVal.AddRange(BitConverter.GetBytes((int)Origin));
+                }
+                else
+                {
+                    Payload.WriteTo(ms);
 
-            retVal.AddRange(BitConverter.GetBytes(Unknown));
-            retVal.AddRange(BitConverter.GetBytes(PayloadLength));
-
-            retVal.AddRange(BitConverter.GetBytes((uint)PacketType));
-            retVal.AddRange(Payload);
-            return retVal.ToArray();
+                }
+                _rawData = ms;
+                ms = null;
+            }
+            finally
+            {
+                if (ms != null)
+                {
+                    ms.Dispose();
+                }
+            }
+        }
+        
+        bool _isDisposed = false;
+        protected virtual void Dispose(bool isDisposing)
+        {
+            if (isDisposing)
+            {
+                if (!_isDisposed)
+                {
+                    if (_rawData != null)
+                    {
+                        _rawData.Dispose();
+                    }
+                    if (Payload != null)
+                    {
+                        Payload.Dispose();
+                    }
+                    if (Package != null)
+                    {
+                        Package.Dispose();
+                    }
+                    _isDisposed = true;
+                }
+            }
+        }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

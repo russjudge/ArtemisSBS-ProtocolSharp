@@ -1,30 +1,28 @@
-﻿using log4net;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 
 namespace ArtemisComm
 {
-    public class Unknown2Packet : IPackage
+    public class Unknown2Packet : BasePacket
     {
-        static readonly ILog _log = LogManager.GetLogger(typeof(Unknown2Packet));   
-        public Unknown2Packet()
+        public Unknown2Packet() : base()
         {
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Starting {0}", MethodBase.GetCurrentMethod().ToString()); }
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Ending {0}", MethodBase.GetCurrentMethod().ToString()); }   
 
         }
-        public Unknown2Packet(byte[] byteArray)
+        public Unknown2Packet(Stream stream, int index) : base(stream, index)
         {
-            if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--bytes in: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(byteArray)); }
-            if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--Result bytes: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(this.GetBytes())); }
 
         }
-        public byte[] GetBytes()
+
+
+        public override OriginType GetValidOrigin()
         {
-            return new byte[0];
+            return OriginType.Server;
         }
+        
     }
 }

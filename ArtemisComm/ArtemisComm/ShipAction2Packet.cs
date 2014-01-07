@@ -1,58 +1,62 @@
 ﻿using ArtemisComm.ShipAction2SubPackets;
 using ArtemisComm.ShipAction3SubPackets;
-using log4net;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 
 namespace ArtemisComm
 {
-    public class ShipAction2Packet: IPackage
+    public class ShipAction2Packet : BasePacket
     {
-        static readonly ILog _log = LogManager.GetLogger(typeof(ShipAction2Packet));
-        public ShipAction2Packet(IPackage subPacket)
+        public ShipAction2Packet(IPackage subPacket) : base()
         {
             SubPacket = subPacket;
         }
-        public ShipAction2Packet(byte[] byteArray)
+        public ShipAction2Packet(Stream stream, int index) : base()
         {
-            
-            if (byteArray != null)
+            try
             {
-                if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--bytes in: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(byteArray)); }
-                if (byteArray.Length > 3)
+                if (stream != null)
                 {
-                    SubPacketType = (ShipAction2SubPacketTypes)BitConverter.ToUInt32(byteArray, 0);
-                }
-                if (byteArray.Length > 4)
-                {
-                    List<byte> bytes = new List<byte>();
-                    for (int i = 4; i < byteArray.Length; i++)
+                    if (stream.CanSeek)
                     {
-                        bytes.Add(byteArray[i]);
+                        stream.Position = index;
                     }
-                    SubPacketData = bytes.ToArray();
-                    _subPacket = GetSubPacket(SubPacketData);
+                    if (index < stream.Length - 3)
+                    {
+                        SubPacketType = (ShipAction2SubPacketType)stream.ToInt32();
+                    }
+                    if (index < stream.Length - 4)
+                    {
+                        SubPacketData = stream.GetMemoryStream(index + 4);
+
+                        _subPacket = GetSubPacket(SubPacketData);
+                    }
+                    else
+                    {
+                        _subPacket = null;
+                        SubPacketData = null;
+                    }
                 }
-                else
-                {
-                    _subPacket = null;
-                    SubPacketData = null;
-                }
-                if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--Result bytes: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(this.GetBytes())); }
+            }
+            catch (Exception ex)
+            {
+                AddError(ex);
             }
         }
 
 
-        IPackage GetSubPacket(byte[] byteArray)
+        IPackage GetSubPacket(Stream stream)
         {
             IPackage retVal = null;
-            object[] parms = { byteArray };
-            Type[] constructorSignature = { typeof(byte[]) };
+            object[] parms = { stream, 0 };
+            Type[] constructorSignature = { typeof(Stream), typeof(int) };
 
-            Type t = Type.GetType(typeof(ShipAction2SubPacketTypes).Namespace + "." + this.SubPacketType.ToString());
+            Type t = Type.GetType(typeof(ShipAction2SubPacketType).Namespace + "." + this.SubPacketType.ToString());
 
 
             if (t != null)
@@ -66,7 +70,7 @@ namespace ArtemisComm
         }
 
 
-        public ShipAction2SubPacketTypes SubPacketType { get; set; }
+        public ShipAction2SubPacketType SubPacketType { get; set; }
 
 
         IPackage _subPacket = null;
@@ -79,14 +83,14 @@ namespace ArtemisComm
                 _subPacket = value;
                 if (value != null)
                 {
-                    SubPacketData = _subPacket.GetBytes();
+                    SubPacketData = _subPacket.GetRawData();
                     string tp = _subPacket.GetType().Name;
-                    SubPacketType = (ShipAction2SubPacketTypes)Enum.Parse(typeof(ShipAction2SubPacketTypes), tp);
+                    SubPacketType = (ShipAction2SubPacketType)Enum.Parse(typeof(ShipAction2SubPacketType), tp);
                 }
                 else
                 {
-                    SubPacketData = new byte[0];
-                    SubPacketType = (ShipAction2SubPacketTypes)int.MaxValue;
+                    SubPacketData = new MemoryStream();
+                    SubPacketType = (ShipAction2SubPacketType)int.MaxValue;
                 }
 
 
@@ -94,18 +98,16 @@ namespace ArtemisComm
             }
         }
 
-        //Message type (int)
-        public byte[] SubPacketData { get; set; }
+        [ArtemisExcluded]
+        public MemoryStream SubPacketData { get; private set; }
 
 
 
-        public byte[] GetBytes()
+
+        public override OriginType GetValidOrigin()
         {
-            List<byte> retVal = new List<byte>();
-            retVal.AddRange(BitConverter.GetBytes((uint)SubPacketType));
-
-            retVal.AddRange(SubPacketData);
-            return retVal.ToArray();
+            return OriginType.Client;
         }
+        
     }
 }

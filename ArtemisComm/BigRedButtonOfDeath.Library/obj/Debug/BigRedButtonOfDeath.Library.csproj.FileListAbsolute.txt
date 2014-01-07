@@ -2,7 +2,8 @@ E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButton
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Library\bin\Debug\BigRedButtonOfDeath.Library.dll
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Library\bin\Debug\BigRedButtonOfDeath.Library.pdb
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Library\bin\Debug\ArtemisComm.dll
-E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Library\bin\Debug\log4net.dll
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Library\bin\Debug\ArtemisComm.pdb
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Library\obj\Debug\BigRedButtonOfDeath.Library.dll
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Library\obj\Debug\BigRedButtonOfDeath.Library.pdb
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Library\bin\Debug\BigRedButtonOfDeath.Library.dll.CodeAnalysisLog.xml
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Library\bin\Debug\BigRedButtonOfDeath.Library.dll.lastcodeanalysissucceeded

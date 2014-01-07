@@ -34,5 +34,53 @@ namespace BigRedButtonOfDeath.WPF.Properties {
                 this["Size"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SelfDestructPath {
+            get {
+                return ((string)(this["SelfDestructPath"]));
+            }
+            set {
+                this["SelfDestructPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AbortSelfDestructPath {
+            get {
+                return ((string)(this["AbortSelfDestructPath"]));
+            }
+            set {
+                this["AbortSelfDestructPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastHost {
+            get {
+                return ((string)(this["LastHost"]));
+            }
+            set {
+                this["LastHost"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int LastPort {
+            get {
+                return ((int)(this["LastPort"]));
+            }
+            set {
+                this["LastPort"] = value;
+            }
+        }
     }
 }

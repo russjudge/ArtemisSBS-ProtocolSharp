@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -7,14 +8,9 @@ namespace ArtemisComm.ObjectStatusUpdateSubPackets
 {
     public class WeapPlayerUpdateSubPacket : VariablePackage
     {
-        
-        public WeapPlayerUpdateSubPacket()
-            : base()
-        {
 
-        }
-        public WeapPlayerUpdateSubPacket(byte[] byteArray)
-            : base(byteArray)
+        public WeapPlayerUpdateSubPacket(Stream stream, int index)
+            : base(stream, index)
         {
 
         }
@@ -39,11 +35,11 @@ namespace ArtemisComm.ObjectStatusUpdateSubPackets
         public byte? Tube5Status { get; set; }
         public byte? Tube6Status { get; set; }
 
-        public OrdinanceTypes? Tube1Content { get; set; }
-        public OrdinanceTypes? Tube2Content { get; set; }
-        public OrdinanceTypes? Tube3Content { get; set; }
-        public OrdinanceTypes? Tube4Content { get; set; }
-        public OrdinanceTypes? Tube5Content { get; set; }
-        public OrdinanceTypes? Tube6Content { get; set; }
+        public OrdinanceType? Tube1Content { get; set; }
+        public OrdinanceType? Tube2Content { get; set; }
+        public OrdinanceType? Tube3Content { get; set; }
+        public OrdinanceType? Tube4Content { get; set; }
+        public OrdinanceType? Tube5Content { get; set; }
+        public OrdinanceType? Tube6Content { get; set; }
     }
 }

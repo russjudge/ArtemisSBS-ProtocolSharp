@@ -1,35 +1,32 @@
-﻿using log4net;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 
 namespace ArtemisComm.ShipActionSubPackets
 {
-    public class SetShipSettingsSubPacket : IPackage
+    public class SetShipSettingsSubPacket : BasePacket
     {
-        static readonly ILog _log = LogManager.GetLogger(typeof(SetShipSettingsSubPacket));
-        public SetShipSettingsSubPacket()
+        public static Packet GetPacket(DriveType drive, int shipType, int unknown, string shipName)
         {
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Starting {0}", MethodBase.GetCurrentMethod().ToString()); }
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Ending {0}", MethodBase.GetCurrentMethod().ToString()); }   
+            SetShipSettingsSubPacket ssp = new SetShipSettingsSubPacket(drive, shipType, unknown, shipName);
+            ShipActionPacket sap = new ShipActionPacket(ssp);
+            Packet p = new Packet(sap);
+            return p;
         }
-        public SetShipSettingsSubPacket(byte[] byteArray)
+        public SetShipSettingsSubPacket(DriveType drive, int shipType, int unknown, string shipName)
         {
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Starting {0}", MethodBase.GetCurrentMethod().ToString()); }
+            Drive = drive;
+            ShipType = shipType;
+            Unknown = unknown;
+            ShipName = new ArtemisString(shipName);
+        }
+        public SetShipSettingsSubPacket(Stream stream, int index)
+            : base(stream, index)
+        {
 
-            if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--bytes in: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(byteArray)); }
-
-            DriveType = (DriveTypes)BitConverter.ToInt32(byteArray, 0);
-
-            ShipType = BitConverter.ToInt32(byteArray, 4);
-            Unknown = BitConverter.ToInt32(byteArray, 8);
-            
-            ShipName = new ArtemisString(byteArray, 12);
-            if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--Result bytes: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(this.GetBytes())); }
-
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Ending {0}", MethodBase.GetCurrentMethod().ToString()); }   
         }
         //ef:be:ad:de:38:00:00:00:02:00:00:00:00:00:00:00:24:00:00:00:
         //3c:1d:82:4c:
@@ -44,20 +41,17 @@ namespace ArtemisComm.ShipActionSubPackets
         //6e:00:
         //61:00:
         //00:00
-        public DriveTypes DriveType { get; set; }
+        public DriveType Drive { get; set; }
         public int ShipType { get; set; }
         public int Unknown { get; set; }
        
         public ArtemisString ShipName{get;set;}
-        
-        public byte[] GetBytes()
+
+
+        public override OriginType GetValidOrigin()
         {
-            List<byte> retVal = new List<byte>();
-            retVal.AddRange(BitConverter.GetBytes((int)DriveType));
-            retVal.AddRange(BitConverter.GetBytes(ShipType));
-            retVal.AddRange(BitConverter.GetBytes(Unknown));
-            retVal.AddRange(ShipName.GetBytes());
-            return retVal.ToArray();
+            return OriginType.Client;
         }
+        
     }
 }

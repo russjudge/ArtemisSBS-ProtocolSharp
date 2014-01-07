@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 
 namespace ArtemisComm.ShipAction2SubPackets
 {
-    public class EngSetCoolantSubPacket : IPackage
+    public class EngSetCoolantSubPacket : BasePacket
     {
         public static Packet GetPacket(ShipSystem system, int value)
         {
@@ -19,30 +20,19 @@ namespace ArtemisComm.ShipAction2SubPackets
             System = system;
             Value = value;
         }
-        public EngSetCoolantSubPacket(byte[] byteArray)
+        public EngSetCoolantSubPacket(Stream stream, int index)
+            : base(stream, index)
         {
-
-
-            System = (ShipSystem)BitConverter.ToInt32(byteArray, 0);
-            Value = BitConverter.ToInt32(byteArray, 4);
-            
 
         }
         public ShipSystem System { get; set; }
-        
-        public int Value
-        {
-            get;
-            set;
-        }
-        
 
-        public byte[] GetBytes()
+        public int Value { get; set; }
+
+        public override OriginType GetValidOrigin()
         {
-            List<byte> retVal = new List<byte>();
-            retVal.AddRange(BitConverter.GetBytes((int)System));
-            retVal.AddRange(BitConverter.GetBytes(Value));
-            return retVal.ToArray();
+            return OriginType.Client;
         }
+       
     }
 }

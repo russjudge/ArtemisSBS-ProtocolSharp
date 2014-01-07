@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
 namespace ArtemisComm.ObjectStatusUpdateSubPackets
 {
-    public class MonsterUpdateSubPacket : AnomalyUpdateSubPacket
+    public class MonsterUpdateSubPacket : NamedObjectUpdate
     {
-        public MonsterUpdateSubPacket()
-            : base()
-        {
-
-        }
-        public MonsterUpdateSubPacket(byte[] byteArray)
-            : base(byteArray)
+        public MonsterUpdateSubPacket(Stream stream, int index)
+            : base(stream, index)
         {
 
         }

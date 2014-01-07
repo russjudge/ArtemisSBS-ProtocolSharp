@@ -1,20 +1,21 @@
-﻿using log4net;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-
+﻿
+using System.IO;
 namespace ArtemisComm.ShipActionSubPackets
 {
     public class SciScanSubPacket : ShipAction
     {
-        
-        
-        public SciScanSubPacket() : base() { }
+        public static Packet GetPacket(int targetID)
+        {
+            return new Packet(new ShipActionPacket(new SciScanSubPacket(targetID)));
+        }
 
-        public SciScanSubPacket(byte[] byteArray) : base(byteArray) { }
+        public SciScanSubPacket(int targetID) : base(targetID) { }
+        public SciScanSubPacket(Stream stream, int index)
+            : base(stream, index)
+        {
 
+        }
+        [ArtemisExcluded]
         public int TargetID
         {
             get

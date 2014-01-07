@@ -1,51 +1,39 @@
-﻿using log4net;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 
 namespace ArtemisComm.ShipAction3SubPackets
 {
-    public class HelmJumpSubPacket : IPackage
+    public class HelmJumpSubPacket : BasePacket
     {
-        static readonly ILog _log = LogManager.GetLogger(typeof(HelmJumpSubPacket));
-        public HelmJumpSubPacket()
+        public static Packet GetPacket(float bearing, float distance)
         {
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Starting {0}", MethodBase.GetCurrentMethod().ToString()); }
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Ending {0}", MethodBase.GetCurrentMethod().ToString()); }   
+            HelmJumpSubPacket escsp = new HelmJumpSubPacket(bearing, distance);
+            ShipAction3Packet sap2 = new ShipAction3Packet(escsp);
+            return new Packet(sap2);
         }
-        public HelmJumpSubPacket(byte[] byteArray)
+        public HelmJumpSubPacket(float bearing, float distance)
         {
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Starting {0}", MethodBase.GetCurrentMethod().ToString()); }
+            Bearing = bearing;
+            Distance = distance;
+        }
+        public HelmJumpSubPacket(Stream stream, int index)
+            : base(stream, index)
+        {
 
-            if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--bytes in: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(byteArray)); }
-
-
-            Bearing = BitConverter.ToSingle(byteArray, 0);
-            Distance = BitConverter.ToSingle(byteArray, 4);
-            
-
-
-            if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--Result bytes: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(this.GetBytes())); }
-
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Ending {0}", MethodBase.GetCurrentMethod().ToString()); }   
         }
         public float Bearing { get; set; }
-        
-        public float Distance
-        {
-            get;
-            set;
-        }
-        
 
-        public byte[] GetBytes()
+        public float Distance { get; set; }
+
+
+        public override OriginType GetValidOrigin()
         {
-            List<byte> retVal = new List<byte>();
-            retVal.AddRange(BitConverter.GetBytes(Bearing));
-            retVal.AddRange(BitConverter.GetBytes(Distance));
-            return retVal.ToArray();
+            return OriginType.Client;
         }
+        
     }
 }

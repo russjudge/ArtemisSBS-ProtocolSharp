@@ -9,7 +9,8 @@ E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\obj\
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\bin\Debug\Sandbox.exe
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\bin\Debug\Sandbox.pdb
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\bin\Debug\ArtemisComm.dll
-E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\bin\Debug\log4net.dll
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\bin\Debug\ArtemisComm.pdb
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\obj\Debug\Sandbox.exe
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\obj\Debug\Sandbox.pdb
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\bin\Debug\Sandbox.exe.CodeAnalysisLog.xml
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\bin\Debug\Sandbox.exe.lastcodeanalysissucceeded

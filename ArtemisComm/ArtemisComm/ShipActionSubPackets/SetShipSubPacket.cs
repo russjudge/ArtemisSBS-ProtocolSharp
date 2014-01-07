@@ -1,16 +1,15 @@
-﻿using log4net;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 
 namespace ArtemisComm.ShipActionSubPackets
 {
-    public class SetShipSubPacket : IPackage
+    public class SetShipSubPacket : BasePacket 
     {
         //**CONFIRMED
-        static readonly ILog _log = LogManager.GetLogger(typeof(SetShipSubPacket));
         public static Packet GetPackage(int shipNumber)
         {
             SetShipSubPacket ssp = new SetShipSubPacket(shipNumber);
@@ -24,30 +23,13 @@ namespace ArtemisComm.ShipActionSubPackets
         /// <param name="shipNumber">The ship number.</param>
         public SetShipSubPacket(int shipNumber)
         {
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Starting {0}", MethodBase.GetCurrentMethod().ToString()); }
             ShipNumber = shipNumber;
-            
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Ending {0}", MethodBase.GetCurrentMethod().ToString()); }
-
         }
-        //public SetShipSubPacket()
-        //{
-        //    if (_log.IsDebugEnabled) { _log.DebugFormat("Starting {0}", MethodBase.GetCurrentMethod().ToString()); }
-        //    if (_log.IsDebugEnabled) { _log.DebugFormat("Ending {0}", MethodBase.GetCurrentMethod().ToString()); }   
-        //}
-        public SetShipSubPacket(byte[] byteArray)
+
+        public SetShipSubPacket(Stream stream, int index)
+            : base(stream, index)
         {
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Starting {0}", MethodBase.GetCurrentMethod().ToString()); }
 
-            if (byteArray != null)
-            {
-                if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--bytes in: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(byteArray)); }
-
-                _shipNumber = BitConverter.ToInt32(byteArray, 0);
-
-                if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--Result bytes: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(this.GetBytes())); }
-            }
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Ending {0}", MethodBase.GetCurrentMethod().ToString()); }   
         }
         int _shipNumber;
         /// <summary>
@@ -64,18 +46,25 @@ namespace ArtemisComm.ShipActionSubPackets
             }
             set
             {
-                //if (value < 1 || value > 8)
-                //{
-                //    throw new InvalidOperationException("Valid values for Ship number are 1 through 8");
-                //}
+                if (value < 1)
+                {
+                    throw new InvalidOperationException("Ship number must be greater than 0.");
+                }
+                if (value > 8)
+                {
+                    throw new InvalidOperationException("Ship number must be less than 9.");
+                }
                 _shipNumber = value - 1;
             }
         }
-        public byte[] GetBytes()
+
+
+        public override OriginType GetValidOrigin()
         {
-            List<byte> retVal = new List<byte>();
-            retVal.AddRange(BitConverter.GetBytes(_shipNumber));
-            return retVal.ToArray();
+            return OriginType.Client;
         }
+        
+
+
     }
 }

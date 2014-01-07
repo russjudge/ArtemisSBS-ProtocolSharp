@@ -1,19 +1,24 @@
-﻿using log4net;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
+﻿using System;
+using System.IO;
 
 namespace ArtemisComm.ShipActionSubPackets
 {
     public class EngSetAutoDamconSubPacket : ShipAction
     {
-        
-        public EngSetAutoDamconSubPacket() : base() { }
 
-        public EngSetAutoDamconSubPacket(byte[] byteArray) : base(byteArray) { }
+        public static Packet GetPacket(bool damComIsAutonomous)
+        {
+            return new Packet(new ShipActionPacket(new EngSetAutoDamconSubPacket(damComIsAutonomous)));
+        }
 
+        public EngSetAutoDamconSubPacket(bool damComIsAutonomous) : base(Convert.ToInt32(damComIsAutonomous)) { }
+
+        public EngSetAutoDamconSubPacket(Stream stream, int index)
+            : base(stream, index)
+        {
+
+        }
+        [ArtemisExcluded]
         public bool DamComIsAutonomous
         {
             get

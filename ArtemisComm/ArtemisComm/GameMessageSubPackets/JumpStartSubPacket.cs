@@ -1,29 +1,25 @@
-﻿using log4net;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 
 namespace ArtemisComm.GameMessageSubPackets
 {
-    public class JumpStartSubPacket: IPackage
+    public class JumpStartSubPacket: BasePacket
     {
-        public JumpStartSubPacket()
+        public JumpStartSubPacket(Stream stream, int index)
+            : base(stream, index)
         {
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Starting {0}", MethodBase.GetCurrentMethod().ToString()); }
-            if (_log.IsDebugEnabled) { _log.DebugFormat("Ending {0}", MethodBase.GetCurrentMethod().ToString()); }
+          
         }
 
-        public JumpStartSubPacket(byte[] byteArray)
+        public override OriginType GetValidOrigin()
         {
-            if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--bytes in: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(byteArray)); }
-            if (_log.IsInfoEnabled) { _log.InfoFormat("{0}--Result bytes: {1}", MethodBase.GetCurrentMethod().ToString(), Utility.BytesToDebugString(this.GetBytes())); }
+            return OriginType.Server;
         }
-        static readonly ILog _log = LogManager.GetLogger(typeof(JumpStartSubPacket));
-        public byte[] GetBytes()
-        {
-            return new byte[0];
-        }
+
+        
     }
 }

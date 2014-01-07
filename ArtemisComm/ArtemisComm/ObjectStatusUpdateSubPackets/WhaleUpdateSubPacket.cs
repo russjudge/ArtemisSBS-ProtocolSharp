@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -7,13 +8,8 @@ namespace ArtemisComm.ObjectStatusUpdateSubPackets
 {
     public class WhaleUpdateSubPacket : VariablePackage
     {
-        public WhaleUpdateSubPacket()
-            : base()
-        {
-
-        }
-        public WhaleUpdateSubPacket(byte[] byteArray)
-            : base(byteArray)
+        public WhaleUpdateSubPacket(Stream stream, int index)
+            : base(stream, index)
         {
 
         }
