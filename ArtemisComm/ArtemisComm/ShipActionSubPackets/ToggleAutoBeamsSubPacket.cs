@@ -10,12 +10,13 @@ namespace ArtemisComm.ShipActionSubPackets
     public class ToggleAutoBeamsSubPacket : ShipAction
     {
 
-        public static Packet GetPacket(int value)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+        public static Packet GetPacket()
         {
-            return new Packet(new ShipActionPacket(new ToggleAutoBeamsSubPacket(value)));
+            return new Packet(new ShipActionPacket(new ToggleAutoBeamsSubPacket()));
         }
 
-        public ToggleAutoBeamsSubPacket(int value) : base(value) { }
+        public ToggleAutoBeamsSubPacket() : base(ShipActionSubPacketType.ToggleAutoBeamsSubPacket, 0) { }
 
         public ToggleAutoBeamsSubPacket(Stream stream, int index)
             : base(stream, index)

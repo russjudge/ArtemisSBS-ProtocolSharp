@@ -1,0 +1,31 @@
+﻿<Window x:Class="Sandbox.PackageTester"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Package Tester" Height="300" Width="300">
+    <StackPanel>
+        <StackPanel Orientation="Horizontal" >
+        <TextBlock Text="Host:" />
+            <TextBox Name="Host" Width="100" Text="192.168.0.8"/>
+            <Button Click="OnConnect" >Connect</Button>
+            <CheckBox Name="GenerateRaw" Content="Generate Raw Only" />
+        </StackPanel>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" >
+            <TextBlock Text="Parm 1:" />
+                <TextBox Name="Parm1" Width="200" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" >
+                <TextBlock Text="Parm 2:" />
+                <TextBox Name="Parm2" Width="200" />
+            </StackPanel>
+        </StackPanel>
+        <WrapPanel>
+            <Button Click="OnToggleShields">Toggle Shields</Button>
+            <Button Click="OnToggleRedAlert">Toggle Red Alert</Button>
+            <Button Click="EngSetCoolant">Engineering Coolant Set</Button>
+            <Button Click="EngSetEnergy">Engineering Energy Set</Button>
+            <Button Click="SciSelect">SciSelect</Button>
+        </WrapPanel>
+        <TextBox TextWrapping="Wrap" Name="RawData" />
+    </StackPanel>
+</Window>

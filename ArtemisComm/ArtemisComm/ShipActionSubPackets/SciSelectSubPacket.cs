@@ -10,7 +10,7 @@ namespace ArtemisComm.ShipActionSubPackets
             return new Packet(new ShipActionPacket(new SciSelectSubPacket(targetID)));
         }
 
-        public SciSelectSubPacket(int targetID) : base(targetID) { }
+        public SciSelectSubPacket(int targetID) : base(ShipActionSubPacketType.SciSelectSubPacket, targetID) { }
 
         public SciSelectSubPacket(Stream stream, int index)
             : base(stream, index)

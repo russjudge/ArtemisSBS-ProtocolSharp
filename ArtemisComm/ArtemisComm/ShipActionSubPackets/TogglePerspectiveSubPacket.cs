@@ -9,12 +9,13 @@ namespace ArtemisComm.ShipActionSubPackets
 {
     public class TogglePerspectiveSubPacket : ShipAction
     {
-        public static Packet GetPacket(int value)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+        public static Packet GetPacket()
         {
-            return new Packet(new ShipActionPacket(new TogglePerspectiveSubPacket(value)));
+            return new Packet(new ShipActionPacket(new TogglePerspectiveSubPacket()));
         }
 
-        public TogglePerspectiveSubPacket(int value) : base(value) { }
+        public TogglePerspectiveSubPacket() : base(ShipActionSubPacketType.TogglePerspectiveSubPacket, 0) { }
 
         public TogglePerspectiveSubPacket(Stream stream, int index)
             : base(stream, index)

@@ -12,21 +12,21 @@
          <Members>
           <Member Name="#ConnectionFailed()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message Id="System.Windows.MessageBox.Show(System.String,System.String,System.Windows.MessageBoxButton,System.Windows.MessageBoxImage)" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2014-01-04 13:32:30Z" FixCategory="DependsOnFix">
+            <Message Id="System.Windows.MessageBox.Show(System.String,System.String,System.Windows.MessageBoxButton,System.Windows.MessageBoxImage)" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2014-09-14 18:49:58Z" FixCategory="DependsOnFix">
              <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.WPF" File="MainWindow.xaml.cs" Line="353">Method 'MainWindow.ConnectionFailed()' passes a literal string as parameter 'caption' of a call to 'MessageBox.Show(string, string, MessageBoxButton, MessageBoxImage)'. Retrieve the following string(s) from a resource table instead: "Big Red Button of Death!".</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#SelectImage(System.String,System.String)" Kind="Method" Static="True" Accessibility="Private" ExternallyVisible="False">
            <Messages>
-            <Message Id="System.Windows.MessageBox.Show(System.String,System.String,System.Windows.MessageBoxButton,System.Windows.MessageBoxImage)" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2014-01-04 13:32:30Z" FixCategory="DependsOnFix">
+            <Message Id="System.Windows.MessageBox.Show(System.String,System.String,System.Windows.MessageBoxButton,System.Windows.MessageBoxImage)" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2014-09-14 18:49:58Z" FixCategory="DependsOnFix">
              <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.WPF" File="MainWindow.xaml.cs" Line="534">Method 'MainWindow.SelectImage(string, string)' passes a literal string as parameter 'caption' of a call to 'MessageBox.Show(string, string, MessageBoxButton, MessageBoxImage)'. Retrieve the following string(s) from a resource table instead: "Big Red Button of Death".</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#UnableToConnect()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message Id="System.Windows.MessageBox.Show(System.String,System.String,System.Windows.MessageBoxButton,System.Windows.MessageBoxImage)" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2014-01-04 13:32:30Z" FixCategory="DependsOnFix">
+            <Message Id="System.Windows.MessageBox.Show(System.String,System.String,System.Windows.MessageBoxButton,System.Windows.MessageBoxImage)" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2014-09-14 18:49:58Z" FixCategory="DependsOnFix">
              <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.WPF" File="MainWindow.xaml.cs" Line="465">Method 'MainWindow.UnableToConnect()' passes a literal string as parameter 'caption' of a call to 'MessageBox.Show(string, string, MessageBoxButton, MessageBoxImage)'. Retrieve the following string(s) from a resource table instead: "The Big Red Button of Death!".</Issue>
             </Message>
            </Messages>

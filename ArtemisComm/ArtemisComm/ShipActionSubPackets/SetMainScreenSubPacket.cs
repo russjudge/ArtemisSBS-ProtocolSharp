@@ -5,12 +5,13 @@ namespace ArtemisComm.ShipActionSubPackets
     public class SetMainScreenSubPacket : ShipAction
     {
 
-        public static Packet GetPacket(int value)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+        public static Packet GetPacket(MainScreenViewTypes value)
         {
             return new Packet(new ShipActionPacket(new SetMainScreenSubPacket(value)));
         }
 
-        public SetMainScreenSubPacket(int value) : base(value) { }
+        public SetMainScreenSubPacket(MainScreenViewTypes value) : base(ShipActionSubPacketType.SetMainScreenSubPacket, (int)value) { }
 
         public SetMainScreenSubPacket(Stream stream, int index)
             : base(stream, index)
@@ -18,15 +19,15 @@ namespace ArtemisComm.ShipActionSubPackets
 
         }
         [ArtemisExcluded]
-        public int View
+        public MainScreenViewTypes View
         {
             get
             {
-                return Value;
+                return (MainScreenViewTypes)Value;
             }
             set
             {
-                Value = value;
+                Value = (int)value;
             }
         }
 

@@ -1,0 +1,459 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2DE2030A-FCCD-4736-B0DD-892C9C0B503E}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ArtemisComm.Android</RootNamespace>
+    <AssemblyName>ArtemisComm.Android</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NOLOG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Android" />
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\ArtemisComm\ArtemisExcludedAttribute.cs">
+      <Link>ArtemisExcludedAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ArtemisString.cs">
+      <Link>ArtemisString.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ArtemisTypeAttribute.cs">
+      <Link>ArtemisTypeAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\AudioCommandPacket.cs">
+      <Link>AudioCommandPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\AudioCommands.cs">
+      <Link>AudioCommands.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\AudioMode.cs">
+      <Link>AudioMode.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\BasePacket.cs">
+      <Link>BasePacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\BeamFiredPacket.cs">
+      <Link>BeamFiredPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\BridgeStationStatus.cs">
+      <Link>BridgeStationStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\BytesReceivedEventArgs.cs">
+      <Link>BytesReceivedEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\CommsIncomingPacket.cs">
+      <Link>CommsIncomingPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\CommsOutgoingPacket.cs">
+      <Link>CommsOutgoingPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ConnectionEventArgs.cs">
+      <Link>ConnectionEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\Connector.cs">
+      <Link>Connector.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\DamComStatus.cs">
+      <Link>DamComStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\DestroyObjectPacket.cs">
+      <Link>DestroyObjectPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\DifficultyPacket.cs">
+      <Link>DifficultyPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\DriveType.cs">
+      <Link>DriveType.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\EngGridUpdatePacket.cs">
+      <Link>EngGridUpdatePacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ExceptionEventArgs.cs">
+      <Link>ExceptionEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\GameMasterMessagePacket.cs">
+      <Link>GameMasterMessagePacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\GameMessagePacket.cs">
+      <Link>GameMessagePacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\GameMessageSubPackets\AllShipSettingsSubPacket.cs">
+      <Link>GameMessageSubPackets\AllShipSettingsSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\GameMessageSubPackets\DMXMessageSubPacket.cs">
+      <Link>GameMessageSubPackets\DMXMessageSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\GameMessageSubPackets\GameMessageSubPacketType.cs">
+      <Link>GameMessageSubPackets\GameMessageSubPacketType.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\GameMessageSubPackets\GameOverReasonSubPacket.cs">
+      <Link>GameMessageSubPackets\GameOverReasonSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\GameMessageSubPackets\GameOverStatsSubPacket.cs">
+      <Link>GameMessageSubPackets\GameOverStatsSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\GameMessageSubPackets\GameOverSubPacket.cs">
+      <Link>GameMessageSubPackets\GameOverSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\GameMessageSubPackets\GameTextMessageSubPacket.cs">
+      <Link>GameMessageSubPackets\GameTextMessageSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\GameMessageSubPackets\JumpCompleteSubPacket.cs">
+      <Link>GameMessageSubPackets\JumpCompleteSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\GameMessageSubPackets\JumpStartSubPacket.cs">
+      <Link>GameMessageSubPackets\JumpStartSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\GameMessageSubPackets\KeepAliveSubPacket.cs">
+      <Link>GameMessageSubPackets\KeepAliveSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\GameMessageSubPackets\KeyCaptureToggleSubPacket.cs">
+      <Link>GameMessageSubPackets\KeyCaptureToggleSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\GameMessageSubPackets\PlayerShipDamageSubPacket.cs">
+      <Link>GameMessageSubPackets\PlayerShipDamageSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\GameMessageSubPackets\SkyboxSubPacket.cs">
+      <Link>GameMessageSubPackets\SkyboxSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\GameMessageSubPackets\SoundEffectSubPacket.cs">
+      <Link>GameMessageSubPackets\SoundEffectSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\GameMessageSubPackets\Unknown1SubPacket.cs">
+      <Link>GameMessageSubPackets\Unknown1SubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\GameMessageSubPackets\Unknown3SubPacket.cs">
+      <Link>GameMessageSubPackets\Unknown3SubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\GameStartPacket.cs">
+      <Link>GameStartPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\GameTypes.cs">
+      <Link>GameTypes.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\GlobalSuppressions.cs">
+      <Link>GlobalSuppressions.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\IncomingAudioPacket.cs">
+      <Link>IncomingAudioPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\IntelPacket.cs">
+      <Link>IntelPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\InvalidPacketException.cs">
+      <Link>InvalidPacketException.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\IPackage.cs">
+      <Link>IPackage.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ObjectStatusUpdatePacket.cs">
+      <Link>ObjectStatusUpdatePacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ObjectStatusUpdateSubPackets\AnomalyUpdateSubPacket.cs">
+      <Link>ObjectStatusUpdateSubPackets\AnomalyUpdateSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ObjectStatusUpdateSubPackets\AsteroidUpdateSubPacket.cs">
+      <Link>ObjectStatusUpdateSubPackets\AsteroidUpdateSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ObjectStatusUpdateSubPackets\BlackHoleUpdateSubPacket.cs">
+      <Link>ObjectStatusUpdateSubPackets\BlackHoleUpdateSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ObjectStatusUpdateSubPackets\DroneUpdateSubPacket.cs">
+      <Link>ObjectStatusUpdateSubPackets\DroneUpdateSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ObjectStatusUpdateSubPackets\EngPlayerUpdateSubPacket.cs">
+      <Link>ObjectStatusUpdateSubPackets\EngPlayerUpdateSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ObjectStatusUpdateSubPackets\GenericMeshSubPacket.cs">
+      <Link>ObjectStatusUpdateSubPackets\GenericMeshSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ObjectStatusUpdateSubPackets\MainPlayerUpdateSubPacket.cs">
+      <Link>ObjectStatusUpdateSubPackets\MainPlayerUpdateSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ObjectStatusUpdateSubPackets\MineUpdateSubPacket.cs">
+      <Link>ObjectStatusUpdateSubPackets\MineUpdateSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ObjectStatusUpdateSubPackets\MonsterUpdateSubPacket.cs">
+      <Link>ObjectStatusUpdateSubPackets\MonsterUpdateSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ObjectStatusUpdateSubPackets\NamedObjectUpdate.cs">
+      <Link>ObjectStatusUpdateSubPackets\NamedObjectUpdate.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ObjectStatusUpdateSubPackets\NebulaUpdateSubPacket.cs">
+      <Link>ObjectStatusUpdateSubPackets\NebulaUpdateSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ObjectStatusUpdateSubPackets\NpcUpdateSubPacket.cs">
+      <Link>ObjectStatusUpdateSubPackets\NpcUpdateSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ObjectStatusUpdateSubPackets\ObjectStatusUpdateSubPacketType.cs">
+      <Link>ObjectStatusUpdateSubPackets\ObjectStatusUpdateSubPacketType.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ObjectStatusUpdateSubPackets\StationSubPacket.cs">
+      <Link>ObjectStatusUpdateSubPackets\StationSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ObjectStatusUpdateSubPackets\TorpedoUpdateSubPacket.cs">
+      <Link>ObjectStatusUpdateSubPackets\TorpedoUpdateSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ObjectStatusUpdateSubPackets\UnknownSubPacket.cs">
+      <Link>ObjectStatusUpdateSubPackets\UnknownSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ObjectStatusUpdateSubPackets\UnnamedObjectUpdate.cs">
+      <Link>ObjectStatusUpdateSubPackets\UnnamedObjectUpdate.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ObjectStatusUpdateSubPackets\WeapPlayerUpdateSubPacket.cs">
+      <Link>ObjectStatusUpdateSubPackets\WeapPlayerUpdateSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ObjectStatusUpdateSubPackets\WhaleUpdateSubPacket.cs">
+      <Link>ObjectStatusUpdateSubPackets\WhaleUpdateSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ObjectType.cs">
+      <Link>ObjectType.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\OrdinanceType.cs">
+      <Link>OrdinanceType.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\OriginType.cs">
+      <Link>OriginType.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\PackageEventArgs.cs">
+      <Link>PackageEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\Packet.cs">
+      <Link>Packet.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\PacketProcessing.cs">
+      <Link>PacketProcessing.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\PacketProcessingException.cs">
+      <Link>PacketProcessingException.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\PacketType.cs">
+      <Link>PacketType.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ParentPacket.cs">
+      <Link>ParentPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ParseException.cs">
+      <Link>ParseException.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\PlayerShip.cs">
+      <Link>PlayerShip.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipAction2Packet.cs">
+      <Link>ShipAction2Packet.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipAction2SubPackets\ConvertTorpedoSubPacket.cs">
+      <Link>ShipAction2SubPackets\ConvertTorpedoSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipAction2SubPackets\EngSendDamconSubPacket.cs">
+      <Link>ShipAction2SubPackets\EngSendDamconSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipAction2SubPackets\EngSetCoolantSubPacket.cs">
+      <Link>ShipAction2SubPackets\EngSetCoolantSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipAction2SubPackets\LoadTubeSubPacket.cs">
+      <Link>ShipAction2SubPackets\LoadTubeSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipAction2SubPackets\ShipAction2.cs">
+      <Link>ShipAction2SubPackets\ShipAction2.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipAction2SubPackets\ShipAction2SubPacketType.cs">
+      <Link>ShipAction2SubPackets\ShipAction2SubPacketType.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipAction2SubPackets\TorpedoEnergyConversionTypes.cs">
+      <Link>ShipAction2SubPackets\TorpedoEnergyConversionTypes.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipAction3Packet.cs">
+      <Link>ShipAction3Packet.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipAction3SubPackets\EngSetEnergySubPacket.cs">
+      <Link>ShipAction3SubPackets\EngSetEnergySubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipAction3SubPackets\HelmJumpSubPacket.cs">
+      <Link>ShipAction3SubPackets\HelmJumpSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipAction3SubPackets\HelmSetImpulseSubPacket.cs">
+      <Link>ShipAction3SubPackets\HelmSetImpulseSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipAction3SubPackets\HelmSetSteeringSubPacket.cs">
+      <Link>ShipAction3SubPackets\HelmSetSteeringSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipAction3SubPackets\ShipAction3.cs">
+      <Link>ShipAction3SubPackets\ShipAction3.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipAction3SubPackets\ShipAction3SubPacketType.cs">
+      <Link>ShipAction3SubPackets\ShipAction3SubPacketType.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipActionPacket.cs">
+      <Link>ShipActionPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipActionSubPackets\BeamFrequencyTypes.cs">
+      <Link>ShipActionSubPackets\BeamFrequencyTypes.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipActionSubPackets\CaptainSelectSubPacket.cs">
+      <Link>ShipActionSubPackets\CaptainSelectSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipActionSubPackets\DiveRiseSubPacket.cs">
+      <Link>ShipActionSubPackets\DiveRiseSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipActionSubPackets\EngSetAutoDamconSubPacket.cs">
+      <Link>ShipActionSubPackets\EngSetAutoDamconSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipActionSubPackets\FireTubeSubPacket.cs">
+      <Link>ShipActionSubPackets\FireTubeSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipActionSubPackets\HelmRequestDockSubPacket.cs">
+      <Link>ShipActionSubPackets\HelmRequestDockSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipActionSubPackets\HelmSetWarpSubPacket.cs">
+      <Link>ShipActionSubPackets\HelmSetWarpSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipActionSubPackets\HelmToggleReverseSubPacket.cs">
+      <Link>ShipActionSubPackets\HelmToggleReverseSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipActionSubPackets\KeystrokeSubPacket.cs">
+      <Link>ShipActionSubPackets\KeystrokeSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipActionSubPackets\MainScreenViewTypes.cs">
+      <Link>ShipActionSubPackets\MainScreenViewTypes.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipActionSubPackets\Ready2SubPacket.cs">
+      <Link>ShipActionSubPackets\Ready2SubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipActionSubPackets\ReadySubPacket.cs">
+      <Link>ShipActionSubPackets\ReadySubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipActionSubPackets\SciScanSubPacket.cs">
+      <Link>ShipActionSubPackets\SciScanSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipActionSubPackets\SciSelectSubPacket.cs">
+      <Link>ShipActionSubPackets\SciSelectSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipActionSubPackets\SetBeamFreqSubPacket.cs">
+      <Link>ShipActionSubPackets\SetBeamFreqSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipActionSubPackets\SetMainScreenSubPacket.cs">
+      <Link>ShipActionSubPackets\SetMainScreenSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipActionSubPackets\SetShipSettingsSubPacket.cs">
+      <Link>ShipActionSubPackets\SetShipSettingsSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipActionSubPackets\SetShipSubPacket.cs">
+      <Link>ShipActionSubPackets\SetShipSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipActionSubPackets\SetStationSubPacket.cs">
+      <Link>ShipActionSubPackets\SetStationSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipActionSubPackets\SetWeaponsTargetSubPacket.cs">
+      <Link>ShipActionSubPackets\SetWeaponsTargetSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipActionSubPackets\ShipAction.cs">
+      <Link>ShipActionSubPackets\ShipAction.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipActionSubPackets\ShipActionSubPacketType.cs">
+      <Link>ShipActionSubPackets\ShipActionSubPacketType.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipActionSubPackets\ToggleAutoBeamsSubPacket.cs">
+      <Link>ShipActionSubPackets\ToggleAutoBeamsSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipActionSubPackets\TogglePerspectiveSubPacket.cs">
+      <Link>ShipActionSubPackets\TogglePerspectiveSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipActionSubPackets\ToggleRedAlertSubPacket.cs">
+      <Link>ShipActionSubPackets\ToggleRedAlertSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipActionSubPackets\ToggleShieldsSubPacket.cs">
+      <Link>ShipActionSubPackets\ToggleShieldsSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipActionSubPackets\UnloadTubeSubPacket.cs">
+      <Link>ShipActionSubPackets\UnloadTubeSubPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\ShipSystem.cs">
+      <Link>ShipSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\StationStatusPacket.cs">
+      <Link>StationStatusPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\StationType.cs">
+      <Link>StationType.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\SystemNode.cs">
+      <Link>SystemNode.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\Unknown2Packet.cs">
+      <Link>Unknown2Packet.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\Utility.cs">
+      <Link>Utility.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\VariablePackage.cs">
+      <Link>VariablePackage.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\VersionPacket.cs">
+      <Link>VersionPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\ArtemisComm\WelcomePacket.cs">
+      <Link>WelcomePacket.cs</Link>
+    </Compile>
+    <Compile Include="Resources\Resource.Designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\ArtemisComm\app.config">
+      <Link>app.config</Link>
+    </None>
+    <None Include="Resources\AboutResources.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\Values\Strings.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logger.Android\Logger.Android.csproj">
+      <Project>{a1572aae-8ad7-4ee0-8bcf-7a14a68c3342}</Project>
+      <Name>Logger.Android</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties ProjectLinkReference="656b27bd-31b0-43bb-abb5-bc9b847f9d85" ProjectLinkerExcludeFilter="\\?desktop(\\.*)?$;\\?silverlight(\\.*)?$;\.desktop;\.silverlight;\.xaml;^service references(\\.*)?$;\.clientconfig;^web references(\\.*)?$" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

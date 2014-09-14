@@ -8,7 +8,7 @@ using System.Text;
 
 namespace ArtemisComm
 {
-    public class ShipActionPacket : BasePacket
+    public class ShipActionPacket : ParentPacket
     {
         public ShipActionPacket(IPackage subpacket)
             : base()

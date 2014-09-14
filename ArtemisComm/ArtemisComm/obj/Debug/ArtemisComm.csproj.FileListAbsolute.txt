@@ -5,3 +5,6 @@ E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\ArtemisComm\
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\ArtemisComm\bin\Debug\ArtemisComm.dll.CodeAnalysisLog.xml
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\ArtemisComm\bin\Debug\ArtemisComm.dll.lastcodeanalysissucceeded
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\ArtemisComm\obj\Debug\ArtemisComm.csprojResolveAssemblyReference.cache
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\ArtemisComm\bin\Debug\ArtemisComm.dll.config
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\ArtemisComm\bin\Debug\Logger.dll
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\ArtemisComm\bin\Debug\Logger.pdb

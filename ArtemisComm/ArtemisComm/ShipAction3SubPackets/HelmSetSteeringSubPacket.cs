@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ArtemisComm.ShipAction3SubPackets
 {
-    public class HelmSetSteeringSubPacket : BasePacket
+    public class HelmSetSteeringSubPacket : ShipAction3
     {
         public static Packet GetPacket(float turnValue)
         {
@@ -15,10 +15,8 @@ namespace ArtemisComm.ShipAction3SubPackets
             ShipAction3Packet sap2 = new ShipAction3Packet(escsp);
             return new Packet(sap2);
         }
-        public HelmSetSteeringSubPacket(float turnValue)
-        {
-            TurnValue = turnValue;
-        }
+        public HelmSetSteeringSubPacket(float turnValue) : base(ShipAction3SubPacketType.HelmSetSteeringSubPacket, turnValue, 0.0F) { }
+      
         public HelmSetSteeringSubPacket(Stream stream, int index)
             : base(stream, index)
         {
@@ -26,10 +24,6 @@ namespace ArtemisComm.ShipAction3SubPackets
         }
         public float TurnValue { get; set; }
 
-        public override OriginType GetValidOrigin()
-        {
-            return OriginType.Client;
-        }
         
     }
 }

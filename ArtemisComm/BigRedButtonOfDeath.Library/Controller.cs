@@ -130,7 +130,7 @@ namespace BigRedButtonOfDeath.Library
                 if (shieldsRaised)
                 {
                     
-                    connector.SendToggleShields(serverID, 0);
+                    connector.SendToggleShields(serverID);
                 }
             }
         }
@@ -139,7 +139,7 @@ namespace BigRedButtonOfDeath.Library
             if (GameInProgress)
             {
                 
-                connector.SendToggleRedAlert(serverID, 0);
+                connector.SendToggleRedAlert(serverID);
             }
         }
         void SetEngineeringSettings()
@@ -155,41 +155,53 @@ namespace BigRedButtonOfDeath.Library
         {
             if (GameInProgress)
             {
-                foreach (ShipSystem st in Enum.GetValues(typeof(ShipSystem)))
-                {
-                    if (st != ShipSystem.WarpJumpDrive)
+                //for (int i = 0; i < 2; i++)
+                //{
+                    foreach (ShipSystem st in Enum.GetValues(typeof(ShipSystem)))
                     {
-                        //connector.SendPackage(EngSetEnergySubPacket.GetPacket(st, 0));
-                        connector.SendEngSetEnergySubPacket(serverID, st, 0);
+                        if (st != ShipSystem.WarpJumpDrive)
+                        {
+                            //connector.SendPackage(EngSetEnergySubPacket.GetPacket(st, 0));
+                            connector.SendEngSetEnergySubPacket(serverID, st, 0);
+                        }
                     }
-                }
+                //}
             }
         }
         void MaxWarpEnergy()
         {
             if (GameInProgress)
             {
-                //connector.SendPackage(EngSetEnergySubPacket.GetPacket(ShipSystems.WarpJumpDrive, 1));
-                connector.SendEngSetEnergySubPacket(serverID, ShipSystem.WarpJumpDrive, 1);
+                //for (int i = 0; i < 2; i++)
+                //{
+                    //connector.SendPackage(EngSetEnergySubPacket.GetPacket(ShipSystems.WarpJumpDrive, 1));
+                    connector.SendEngSetEnergySubPacket(serverID, ShipSystem.WarpJumpDrive, 1);
+                //}
             }
         }
         void ZeroWarpEnergy()
         {
             if (GameInProgress)
             {
-                //connector.SendPackage(EngSetEnergySubPacket.GetPacket(ShipSystems.WarpJumpDrive, 0));
-                connector.SendEngSetEnergySubPacket(serverID, ShipSystem.WarpJumpDrive, 0);
+                //for (int i = 0; i < 2; i++)
+                //{
+                    //connector.SendPackage(EngSetEnergySubPacket.GetPacket(ShipSystems.WarpJumpDrive, 0));
+                    connector.SendEngSetEnergySubPacket(serverID, ShipSystem.WarpJumpDrive, 0);
+                //}
             }
         }
         void ZeroAllCoolant()
         {
             if (GameInProgress)
             {
-                foreach (ShipSystem st in Enum.GetValues(typeof(ShipSystem)))
-                {
-                    
-                    connector.SendEngSetCoolantSubPacket(serverID, st, 0);
-                }
+                //for (int i = 0; i < 2; i++)
+                //{
+                    foreach (ShipSystem st in Enum.GetValues(typeof(ShipSystem)))
+                    {
+
+                        connector.SendEngSetCoolantSubPacket(serverID, st, 0);
+                    }
+                //}
             }
 
         }
@@ -240,7 +252,7 @@ namespace BigRedButtonOfDeath.Library
                 GameMessagePacket p = e.ReceivedPacket.Package as GameMessagePacket;
                 if (p != null)
                 {
-                    if (p.SubPacketType == GameMessageSubPacketType.GameResetSubPacket)
+                    if (p.SubPacketType == GameMessageSubPacketType.GameOverSubPacket)
                     {
 
                         GameInProgress = !GameInProgress;
@@ -257,11 +269,11 @@ namespace BigRedButtonOfDeath.Library
                         }
 
                     }
-                    if (p.SubPacketType == GameMessageSubPacketType.Unknown1SubPacket)
+                    if (p.SubPacketType == GameMessageSubPacketType.SimulationEndSubPacket)
                     {
                         
-                        //GameInProgress = false;
-                        //View.SimulationEnded();
+                        GameInProgress = false;
+                        View.SimulationEnded();
                     }
                     if (p.SubPacketType == GameMessageSubPacketType.AllShipSettingsSubPacket)
                     {
@@ -387,7 +399,7 @@ namespace BigRedButtonOfDeath.Library
 
                 //Ready
 
-                connector.SendReadySubPacket(serverID, 0);
+                connector.SendReadySubPacket(serverID);
 
             }
 
@@ -399,7 +411,7 @@ namespace BigRedButtonOfDeath.Library
             {
                 if (connector != null)
                 {
-                    connector.SendReady2SubPacket(serverID, 0);
+                    connector.SendReady2SubPacket(serverID);
 
                 }
                

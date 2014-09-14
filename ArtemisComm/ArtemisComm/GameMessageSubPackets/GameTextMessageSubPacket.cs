@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ArtemisComm.GameMessageSubPackets
 {
-    public class GameTextMessageSubPacket : BasePacket
+    public class GameTextMessageSubPacket : ParentPacket
     {
         public GameTextMessageSubPacket(Stream stream, int index) : base(stream, index)
         {

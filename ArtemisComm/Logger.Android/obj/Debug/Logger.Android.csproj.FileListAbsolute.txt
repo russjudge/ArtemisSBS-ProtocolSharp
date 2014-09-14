@@ -1,0 +1,12 @@
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Logger.Android\bin\Debug\Logger.Android.dll
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Logger.Android\bin\Debug\Logger.Android.pdb
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Logger.Android\bin\Debug\Logger.Android.dll.mdb
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Logger.Android\bin\Debug\Logger.Android.apk
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Logger.Android\bin\Debug\Logger.Android-Signed.apk
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Logger.Android\obj\Debug\Logger.Android.dll
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Logger.Android\obj\Debug\Logger.Android.pdb
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Logger.Android\obj\Debug\android\bin\Logger.Android.apk
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Logger.Android\obj\Debug\res\values\strings.xml
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Logger.Android\obj\Debug\R.cs.flag
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Logger.Android\obj\Debug\uploadflags.txt
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Logger.Android\obj\Debug\Logger.Android.csprojResolveAssemblyReference.cache

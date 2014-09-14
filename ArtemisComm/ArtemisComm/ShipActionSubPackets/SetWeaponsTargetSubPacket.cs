@@ -10,13 +10,13 @@ namespace ArtemisComm.ShipActionSubPackets
     public class SetWeaponsTargetSubPacket : ShipAction
     {
         
-        public static Packet GetPacket(int tubeIndex)
+        public static Packet GetPacket(int targetId)
         {
-            return new Packet(new ShipActionPacket(new SetWeaponsTargetSubPacket(tubeIndex)));
+            return new Packet(new ShipActionPacket(new SetWeaponsTargetSubPacket(targetId)));
         }
 
 
-        public SetWeaponsTargetSubPacket(int tubeIndex) : base(tubeIndex) { }
+        public SetWeaponsTargetSubPacket(int targetId) : base(ShipActionSubPacketType.SetWeaponsTargetSubPacket, targetId) { }
 
 
         public SetWeaponsTargetSubPacket(Stream stream, int index)

@@ -6,12 +6,13 @@ namespace ArtemisComm.ShipActionSubPackets
     {
 
 
-        public static Packet GetPacket(int frequencyIndex)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+        public static Packet GetPacket(BeamFrequencyTypes frequencyIndex)
         {
             return new Packet(new ShipActionPacket(new SetBeamFreqSubPacket(frequencyIndex)));
         }
 
-        public SetBeamFreqSubPacket(int frequencyIndex) : base(frequencyIndex) { }
+        public SetBeamFreqSubPacket(BeamFrequencyTypes frequencyIndex) : base(ShipActionSubPacketType.SetBeamFreqSubPacket, (int)frequencyIndex) { }
 
 
         public SetBeamFreqSubPacket(Stream stream, int index)
@@ -20,15 +21,15 @@ namespace ArtemisComm.ShipActionSubPackets
 
         }
         [ArtemisExcluded]
-        public int FrequencyIndex
+        public BeamFrequencyTypes FrequencyIndex
         {
             get
             {
-                return Value;
+                return (BeamFrequencyTypes)Value;
             }
             set
             {
-                Value = value;
+                Value = (int)value;
             }
         }
 

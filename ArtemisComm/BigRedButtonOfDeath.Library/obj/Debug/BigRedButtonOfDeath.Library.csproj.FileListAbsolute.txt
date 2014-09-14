@@ -7,3 +7,5 @@ E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButton
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Library\obj\Debug\BigRedButtonOfDeath.Library.pdb
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Library\bin\Debug\BigRedButtonOfDeath.Library.dll.CodeAnalysisLog.xml
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Library\bin\Debug\BigRedButtonOfDeath.Library.dll.lastcodeanalysissucceeded
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Library\bin\Debug\Logger.dll
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Library\bin\Debug\Logger.pdb

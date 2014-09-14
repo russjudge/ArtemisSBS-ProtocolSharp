@@ -1,7 +1,9 @@
 ﻿<Application x:Class="BigRedButtonOfDeath.WPF.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="MainWindow.xaml" DispatcherUnhandledException="OnUnhandledException">
+             DispatcherUnhandledException="OnUnhandledException"
+             Exit="OnExit"
+             StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ImageSource x:Key="plusSign">pack://application:,,,/Resources/plus.png</ImageSource>
         <ImageSource x:Key="CancelSelfDestruct">pack://application:,,,/Resources/cancelselfdestruct.png</ImageSource>

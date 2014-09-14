@@ -7,3 +7,5 @@ E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.Librar
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.Library\obj\Debug\Proxy.Library.pdb
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.Library\bin\Debug\Proxy.Library.dll.CodeAnalysisLog.xml
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.Library\bin\Debug\Proxy.Library.dll.lastcodeanalysissucceeded
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.Library\bin\Debug\Logger.dll
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.Library\bin\Debug\Logger.pdb

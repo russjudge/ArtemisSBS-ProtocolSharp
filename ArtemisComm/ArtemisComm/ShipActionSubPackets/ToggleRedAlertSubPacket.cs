@@ -9,13 +9,13 @@ namespace ArtemisComm.ShipActionSubPackets
 {
     public class ToggleRedAlertSubPacket : ShipAction
     {
-        public static Packet GetPacket(int value)
+        public static Packet GetPacket()
         {
-            return new Packet(new ShipActionPacket(new ToggleRedAlertSubPacket(value)));
+            return new Packet(new ShipActionPacket(new ToggleRedAlertSubPacket()));
         }
 
 
-        public ToggleRedAlertSubPacket(int value) : base(value) { }
+        public ToggleRedAlertSubPacket() : base(ShipActionSubPacketType.ToggleRedAlertSubPacket, 0) { }
 
 
         public ToggleRedAlertSubPacket(Stream stream, int index)
@@ -23,7 +23,6 @@ namespace ArtemisComm.ShipActionSubPackets
         {
 
         }
-
-
+       
     }
 }

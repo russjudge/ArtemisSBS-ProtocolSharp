@@ -23,6 +23,8 @@ namespace ArtemisComm.ObjectStatusUpdateSubPackets
         public float? Z { get; set; }
         public int? Unknown3 { get; set; }
         public float? Y { get; set; }
+
+
         public float? Heading { get; set; }
         public int? Unknown4 { get; set; }
 

@@ -4,13 +4,14 @@ namespace ArtemisComm.ShipActionSubPackets
 {
     public class HelmToggleReverseSubPacket : ShipAction
     {
-        
-        public static Packet GetPacket(int value)
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+        public static Packet GetPacket()
         {
-            return new Packet(new ShipActionPacket(new HelmToggleReverseSubPacket(value)));
+            return new Packet(new ShipActionPacket(new HelmToggleReverseSubPacket()));
         }
 
-        public HelmToggleReverseSubPacket(int value) : base(value) { }
+        public HelmToggleReverseSubPacket() : base(ShipActionSubPacketType.HelmToggleReverseSubPacket, 0) { }
         public HelmToggleReverseSubPacket(Stream stream, int index)
             : base(stream, index)
         {

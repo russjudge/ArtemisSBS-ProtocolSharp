@@ -8,7 +8,7 @@ using System.Text;
 
 namespace ArtemisComm
 {
-    public class IntelPacket : BasePacket
+    public class IntelPacket : ParentPacket
     {
 
 

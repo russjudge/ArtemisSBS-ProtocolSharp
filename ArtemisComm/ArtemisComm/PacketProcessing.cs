@@ -1,6 +1,7 @@
 ﻿using ArtemisComm.ShipAction2SubPackets;
 using ArtemisComm.ShipAction3SubPackets;
 using ArtemisComm.ShipActionSubPackets;
+using Russ.Logger;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,6 +18,33 @@ namespace ArtemisComm
     public class PacketProcessing : IDisposable
     {
 
+        static Log _log = Log.GetLogger(typeof(PackageEventArgs));
+        static PacketProcessing()
+        {
+            CrashOnException = true;
+#if NOLOG
+            string logLevel = "Warn";
+#else
+            string logLevel = Properties.Settings.Default.LogLevel;
+#endif
+            if (!string.IsNullOrEmpty(logLevel))
+            {
+                LogLevels level;
+                if (Enum.TryParse<LogLevels>(logLevel, out level))
+                {
+#if NOLOG
+                   
+#else
+                    string logfile = Properties.Settings.Default.LogPath;
+                    
+                    if (!string.IsNullOrEmpty(logfile))
+                    {
+                        Log.InitializeLogging(level, logfile, Properties.Settings.Default.AppendLog);
+                    }
+#endif
+                }
+            }
+        }
         #region Events
 
         public event EventHandler<ConnectionEventArgs> NewConnectionCreated;
@@ -73,10 +101,7 @@ namespace ArtemisComm
 
         #endregion
         public static bool CrashOnException { get; set; }
-        static PacketProcessing()
-        {
-            CrashOnException = true;
-        }
+        
         public string Host { get; private set; }
 
         public PacketProcessing()
@@ -110,6 +135,10 @@ namespace ArtemisComm
 
         public void Send(Guid connectionID, Packet packet)
         {
+            if (packet != null)
+            {
+                _log.InfoFormat("Ordered to send {0} packet to {1}", packet.PacketType.ToString(), connectionID.ToString());
+            }
             if (packet != null && connections != null && connections.ContainsKey(connectionID))
             {
                 using (MemoryStream stream = packet.GetRawData())
@@ -144,7 +173,10 @@ namespace ArtemisComm
         {
             Send(connectionID, CommsOutgoingPacket.GetPacket(recipientType, recipientID, messageID, targetObjectID, unknown));
         }
+        public void SendGameMasterMessagePacket()
+        {
 
+        }
 
 
         #region Ship Action Sub Packets
@@ -169,9 +201,9 @@ namespace ArtemisComm
         }
 
 
-        public void SendHelmRequestDockSubPacket(Guid connectionID, int value)
+        public void SendHelmRequestDockSubPacket(Guid connectionID)
         {
-            Send(connectionID, HelmRequestDockSubPacket.GetPacket(value));
+            Send(connectionID, HelmRequestDockSubPacket.GetPacket());
         }
         public void SendHelmSetWarpSubPacket(Guid connectionID, int warpFactor)
         {
@@ -179,21 +211,21 @@ namespace ArtemisComm
         }
 
 
-        public void SendHelmToggleReverseSubPacket(Guid connectionID, int value)
+        public void SendHelmToggleReverseSubPacket(Guid connectionID)
         {
-            Send(connectionID, HelmToggleReverseSubPacket.GetPacket(value));
+            Send(connectionID, HelmToggleReverseSubPacket.GetPacket());
         }
 
-        public void SendReadySubPacket(Guid connectionID, int value)
+        public void SendReadySubPacket(Guid connectionID)
         {
-            Send(connectionID, ReadySubPacket.GetPacket(value));
+            Send(connectionID, ReadySubPacket.GetPacket());
         }
 
 
 
-        public void SendReady2SubPacket(Guid connectionID, int value)
+        public void SendReady2SubPacket(Guid connectionID)
         {
-            Send(connectionID, Ready2SubPacket.GetPacket(value));
+            Send(connectionID, Ready2SubPacket.GetPacket());
         }
 
 
@@ -209,13 +241,13 @@ namespace ArtemisComm
 
 
 
-        public void SendSetBeamFreqSubPacket(Guid connectionID, int frequencyIndex)
+        public void SendSetBeamFreqSubPacket(Guid connectionID, BeamFrequencyTypes frequencyIndex)
         {
             Send(connectionID, SetBeamFreqSubPacket.GetPacket(frequencyIndex));
         }
 
 
-        public void SendSetMainScreenSubPacket(Guid connectionID, int value)
+        public void SendSetMainScreenSubPacket(Guid connectionID, MainScreenViewTypes value)
         {
             Send(connectionID, SetMainScreenSubPacket.GetPacket(value));
         }
@@ -264,23 +296,23 @@ namespace ArtemisComm
             Send(connectionID, SetWeaponsTargetSubPacket.GetPacket(tubeIndex));
         }
 
-        public void SendToggleAutoBeamsSubPacket(Guid connectionID, int value)
+        public void SendToggleAutoBeamsSubPacket(Guid connectionID)
         {
-            Send(connectionID, ToggleAutoBeamsSubPacket.GetPacket(value));
+            Send(connectionID, ToggleAutoBeamsSubPacket.GetPacket());
         }
 
 
-        public void SendTogglePerspectiveSubPacket(Guid connectionID, int value)
+        public void SendTogglePerspectiveSubPacket(Guid connectionID)
         {
-            Send(connectionID, TogglePerspectiveSubPacket.GetPacket(value));
+            Send(connectionID, TogglePerspectiveSubPacket.GetPacket());
         }
-        public void SendToggleRedAlert(Guid connectionID, int value)
+        public void SendToggleRedAlert(Guid connectionID)
         {
-            Send(connectionID, ToggleRedAlertSubPacket.GetPacket(value));
+            Send(connectionID, ToggleRedAlertSubPacket.GetPacket());
         }
-        public void SendToggleShields(Guid connectionID, int value)
+        public void SendToggleShields(Guid connectionID)
         {
-            Send(connectionID, ToggleShieldsSubPacket.GetPacket(value));
+            Send(connectionID, ToggleShieldsSubPacket.GetPacket());
         }
 
         public void SendUnloadTubeSubPacket(Guid connectionID, int tubeIndex)
@@ -291,9 +323,9 @@ namespace ArtemisComm
         #endregion
 
         #region Ship Action Packet 2 Sub-packets
-        public void SendConvertTorpedoSubPacket(Guid connectionID, float direction, int unknown1, int unknown2, int unknown3)
+        public void SendConvertTorpedoSubPacket(Guid connectionID, TorpedoEnergyConversionTypes direction)
         {
-            Send(connectionID, ConvertTorpedoSubPacket.GetPacket(direction, unknown1, unknown2, unknown3));
+            Send(connectionID, ConvertTorpedoSubPacket.GetPacket(direction));
         }
         public void SendEngSendDamconSubPacket(Guid connectionID, int teamNumber, int x, int y, int z)
         {
@@ -304,7 +336,7 @@ namespace ArtemisComm
             Send(connectionID, EngSetCoolantSubPacket.GetPacket(system, value));
         }
 
-        public void SendLoadTubeSubPacket(Guid connectionID, int tubeIndex, int ordinance)
+        public void SendLoadTubeSubPacket(Guid connectionID, int tubeIndex, OrdinanceType ordinance)
         {
             Send(connectionID, LoadTubeSubPacket.GetPacket(tubeIndex, ordinance));
         }
@@ -440,6 +472,7 @@ namespace ArtemisComm
         void conn_BytesReceived(object sender, BytesReceivedEventArgs e)
         {
 
+            _log.InfoFormat("Received {0} bytes from connection {1}", e.DataStream.Length, e.ID.ToString());
             Enqueue(e.DataStream, e.ID);
         }
 
@@ -623,9 +656,14 @@ namespace ArtemisComm
 
 
             KeyValuePair<Stream, Guid> bytes = new KeyValuePair<Stream, Guid>(stream, ID);
+            try
+            {
 
-            ProcessQueue.Enqueue(bytes);
-            
+                ProcessQueue.Enqueue(bytes);
+            }
+            catch (ArgumentException)  //I think this is a bug in Visual Studio--this occurs sometimes for unknown reasons within .NET System.Array.Copy--and I have no control over this.
+            {
+            }
 
             mreListener.Set();
 
@@ -736,6 +774,7 @@ namespace ArtemisComm
                         }
                         else
                         {
+                            _log.InfoFormat("Invoking event {0}", singleCast.Method.Name);
                             singleCast(this, e);
                         }
                     }
@@ -864,12 +903,13 @@ namespace ArtemisComm
            
             if (PackageReceived != null)
             {
+
                 EnqueuePacket(PackageReceivedQueue, pea, mrePacketReceived);
             }
         }
         static void EnqueuePacket(Queue<PackageEventArgs> que, PackageEventArgs pea, ManualResetEvent mre)
         {
-
+            _log.InfoFormat("Queuing Packet {0} for processing.", pea.ReceivedPacket.PacketType.ToString());
             que.Enqueue(pea);
 
             mre.Set();
@@ -883,6 +923,7 @@ namespace ArtemisComm
             {
                 lock (ProcessQueue)
                 {
+                    mreListener.WaitOne();
                     while (ProcessQueue.Count > 0)
                     {
                         KeyValuePair<Stream, Guid> que = ProcessQueue.Dequeue();
@@ -895,6 +936,7 @@ namespace ArtemisComm
                                 Packet p = new Packet(que.Key);
                                 if (p != null)
                                 {
+                                    _log.InfoFormat("Processing packet: {0}, for connection {1}", p.PacketType.ToString(), que.Value.ToString());
                                     PackageEventArgs pea = new PackageEventArgs(p, que.Value);
                                     EnqueueReceivedPacket(pea);
                                     if (p.ConversionException != null)
@@ -958,7 +1000,7 @@ namespace ArtemisComm
                 if (!abort)
                 {
                     mreListener.Reset();
-                    mreListener.WaitOne();
+                    
                 }
             } while (!abort);
         }

@@ -31,7 +31,7 @@ namespace ArtemisComm.ObjectStatusUpdateSubPackets
 
         public ArtemisString TextureName { get; set; }
 
-        public byte? Undefined1 { get; set; }
+       // public byte? Undefined1 { get; set; }
 
         public int? Unknown8 { get; set; }
         public short? Unknown9 { get; set; }

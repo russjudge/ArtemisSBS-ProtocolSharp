@@ -394,7 +394,7 @@ namespace BigRedButtonOfDeath.WPF
         {
             if (StartSelfDestruct != null)
             {
-                plyr.PlayLooping();
+                //plyr.PlayLooping();
                 SelfDestructRunning = true;
                 StartSelfDestruct(this, EventArgs.Empty);
                

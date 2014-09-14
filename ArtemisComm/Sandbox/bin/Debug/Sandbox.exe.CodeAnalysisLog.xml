@@ -12,14 +12,111 @@
          <Members>
           <Member Name="#OnBitConvert(System.Object,System.Windows.RoutedEventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
            <Messages>
-            <Message Id="System.Windows.MessageBox.Show(System.String,System.String,System.Windows.MessageBoxButton,System.Windows.MessageBoxImage)" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2014-01-04 02:51:26Z" FixCategory="DependsOnFix">
-             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="MainWindow.xaml.cs" Line="875">Method 'MainWindow.OnBitConvert(object, RoutedEventArgs)' passes a literal string as parameter 'caption' of a call to 'MessageBox.Show(string, string, MessageBoxButton, MessageBoxImage)'. Retrieve the following string(s) from a resource table instead: "BitConverter Error".</Issue>
-             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="MainWindow.xaml.cs" Line="899">Method 'MainWindow.OnBitConvert(object, RoutedEventArgs)' passes a literal string as parameter 'caption' of a call to 'MessageBox.Show(string, string, MessageBoxButton, MessageBoxImage)'. Retrieve the following string(s) from a resource table instead: "BitConverter Error".</Issue>
-             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="MainWindow.xaml.cs" Line="911">Method 'MainWindow.OnBitConvert(object, RoutedEventArgs)' passes a literal string as parameter 'caption' of a call to 'MessageBox.Show(string, string, MessageBoxButton, MessageBoxImage)'. Retrieve the following string(s) from a resource table instead: "BitConverter Error".</Issue>
-             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="MainWindow.xaml.cs" Line="923">Method 'MainWindow.OnBitConvert(object, RoutedEventArgs)' passes a literal string as parameter 'caption' of a call to 'MessageBox.Show(string, string, MessageBoxButton, MessageBoxImage)'. Retrieve the following string(s) from a resource table instead: "BitConverter Error".</Issue>
-             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="MainWindow.xaml.cs" Line="935">Method 'MainWindow.OnBitConvert(object, RoutedEventArgs)' passes a literal string as parameter 'caption' of a call to 'MessageBox.Show(string, string, MessageBoxButton, MessageBoxImage)'. Retrieve the following string(s) from a resource table instead: "BitConverter Error".</Issue>
-             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="MainWindow.xaml.cs" Line="943">Method 'MainWindow.OnBitConvert(object, RoutedEventArgs)' passes a literal string as parameter 'caption' of a call to 'MessageBox.Show(string, string, MessageBoxButton, MessageBoxImage)'. Retrieve the following string(s) from a resource table instead: "BitConverter Error".</Issue>
-             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="MainWindow.xaml.cs" Line="951">Method 'MainWindow.OnBitConvert(object, RoutedEventArgs)' passes a literal string as parameter 'caption' of a call to 'MessageBox.Show(string, string, MessageBoxButton, MessageBoxImage)'. Retrieve the following string(s) from a resource table instead: "BitConverter Error".</Issue>
+            <Message Id="System.Windows.MessageBox.Show(System.String,System.String,System.Windows.MessageBoxButton,System.Windows.MessageBoxImage)" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2014-09-14 19:20:46Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="MainWindow.xaml.cs" Line="878">Method 'MainWindow.OnBitConvert(object, RoutedEventArgs)' passes a literal string as parameter 'caption' of a call to 'MessageBox.Show(string, string, MessageBoxButton, MessageBoxImage)'. Retrieve the following string(s) from a resource table instead: "BitConverter Error".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="MainWindow.xaml.cs" Line="902">Method 'MainWindow.OnBitConvert(object, RoutedEventArgs)' passes a literal string as parameter 'caption' of a call to 'MessageBox.Show(string, string, MessageBoxButton, MessageBoxImage)'. Retrieve the following string(s) from a resource table instead: "BitConverter Error".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="MainWindow.xaml.cs" Line="914">Method 'MainWindow.OnBitConvert(object, RoutedEventArgs)' passes a literal string as parameter 'caption' of a call to 'MessageBox.Show(string, string, MessageBoxButton, MessageBoxImage)'. Retrieve the following string(s) from a resource table instead: "BitConverter Error".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="MainWindow.xaml.cs" Line="926">Method 'MainWindow.OnBitConvert(object, RoutedEventArgs)' passes a literal string as parameter 'caption' of a call to 'MessageBox.Show(string, string, MessageBoxButton, MessageBoxImage)'. Retrieve the following string(s) from a resource table instead: "BitConverter Error".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="MainWindow.xaml.cs" Line="938">Method 'MainWindow.OnBitConvert(object, RoutedEventArgs)' passes a literal string as parameter 'caption' of a call to 'MessageBox.Show(string, string, MessageBoxButton, MessageBoxImage)'. Retrieve the following string(s) from a resource table instead: "BitConverter Error".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="MainWindow.xaml.cs" Line="946">Method 'MainWindow.OnBitConvert(object, RoutedEventArgs)' passes a literal string as parameter 'caption' of a call to 'MessageBox.Show(string, string, MessageBoxButton, MessageBoxImage)'. Retrieve the following string(s) from a resource table instead: "BitConverter Error".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="MainWindow.xaml.cs" Line="954">Method 'MainWindow.OnBitConvert(object, RoutedEventArgs)' passes a literal string as parameter 'caption' of a call to 'MessageBox.Show(string, string, MessageBoxButton, MessageBoxImage)'. Retrieve the following string(s) from a resource table instead: "BitConverter Error".</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="PackageTester" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#CancelSelfDestruct()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2014-09-14 19:20:46Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="PackageTester.xaml.cs" Line="199">'PackageTester.CancelSelfDestruct()' appears to have no upstream public or protected callers.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ConnectorUnsubscribe()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2014-09-14 19:20:46Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="PackageTester.xaml.cs" Line="305">'PackageTester.ConnectorUnsubscribe()' appears to have no upstream public or protected callers.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#EngSetCoolant(System.Object,System.Windows.RoutedEventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Int32.TryParse(System.String,System.Int32@)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Active" Created="2014-09-14 19:20:46Z" FixCategory="NonBreaking">
+             <Issue Name="TryParse" Certainty="95" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="PackageTester.xaml.cs" Line="431">'PackageTester.EngSetCoolant(object, RoutedEventArgs)' calls 'int.TryParse(string, out int)' but does not explicitly check whether the conversion succeeded. Either use the return value in a conditional statement or verify that the call site expects that the out argument will be set to the default value when the conversion fails.</Issue>
+             <Issue Name="TryParse" Certainty="95" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="PackageTester.xaml.cs" Line="432">'PackageTester.EngSetCoolant(object, RoutedEventArgs)' calls 'int.TryParse(string, out int)' but does not explicitly check whether the conversion succeeded. Either use the return value in a conditional statement or verify that the call site expects that the out argument will be set to the default value when the conversion fails.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#EngSetEnergy(System.Object,System.Windows.RoutedEventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Int32.TryParse(System.String,System.Int32@)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Active" Created="2014-09-14 19:20:46Z" FixCategory="NonBreaking">
+             <Issue Name="TryParse" Certainty="95" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="PackageTester.xaml.cs" Line="456">'PackageTester.EngSetEnergy(object, RoutedEventArgs)' calls 'int.TryParse(string, out int)' but does not explicitly check whether the conversion succeeded. Either use the return value in a conditional statement or verify that the call site expects that the out argument will be set to the default value when the conversion fails.</Issue>
+             <Issue Name="TryParse" Certainty="95" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="PackageTester.xaml.cs" Line="457">'PackageTester.EngSetEnergy(object, RoutedEventArgs)' calls 'int.TryParse(string, out int)' but does not explicitly check whether the conversion succeeded. Either use the return value in a conditional statement or verify that the call site expects that the out argument will be set to the default value when the conversion fails.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#FormatIt(System.Byte[])" Kind="Method" Static="True" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Byte.ToString(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2014-09-14 19:20:46Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="PackageTester.xaml.cs" Line="381">Because the behavior of 'byte.ToString(string)' could vary based on the current user's locale settings, replace this call in 'PackageTester.FormatIt(byte[])' with a call to 'byte.ToString(string, IFormatProvider)'. If the result of 'byte.ToString(string, IFormatProvider)' will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#MaxWarpEnergy()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2014-09-14 19:20:46Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="PackageTester.xaml.cs" Line="269">'PackageTester.MaxWarpEnergy()' appears to have no upstream public or protected callers.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#SciSelect(System.Object,System.Windows.RoutedEventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Int32.TryParse(System.String,System.Int32@)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Active" Created="2014-09-14 19:20:46Z" FixCategory="NonBreaking">
+             <Issue Name="TryParse" Certainty="95" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="PackageTester.xaml.cs" Line="483">'PackageTester.SciSelect(object, RoutedEventArgs)' calls 'int.TryParse(string, out int)' but does not explicitly check whether the conversion succeeded. Either use the return value in a conditional statement or verify that the call site expects that the out argument will be set to the default value when the conversion fails.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#SendRedAlert()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2014-09-14 19:20:46Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="PackageTester.xaml.cs" Line="238">'PackageTester.SendRedAlert()' appears to have no upstream public or protected callers.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#SetEngineeringSettings()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2014-09-14 19:20:46Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="PackageTester.xaml.cs" Line="246">'PackageTester.SetEngineeringSettings()' appears to have no upstream public or protected callers.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#StartSelfDestruct()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2014-09-14 19:20:46Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="PackageTester.xaml.cs" Line="210">'PackageTester.StartSelfDestruct()' appears to have no upstream public or protected callers.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ZeroAllButWarpEnergy()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2014-09-14 19:20:46Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="PackageTester.xaml.cs" Line="255">'PackageTester.ZeroAllButWarpEnergy()' appears to have no upstream public or protected callers.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ZeroAllCoolant()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2014-09-14 19:20:46Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="PackageTester.xaml.cs" Line="285">'PackageTester.ZeroAllCoolant()' appears to have no upstream public or protected callers.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ZeroWarpEnergy()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2014-09-14 19:20:46Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox" File="PackageTester.xaml.cs" Line="277">'PackageTester.ZeroWarpEnergy()' appears to have no upstream public or protected callers.</Issue>
             </Message>
            </Messages>
           </Member>
@@ -33,6 +130,16 @@
   </Target>
  </Targets>
  <Rules>
+  <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
+   <Name>Avoid uncalled private code</Name>
+   <Description>There is uncalled code that is not externally visible and is not a known runtime entry point. If this violation fires in error, please send a problem report to the Visual Studio Code Analysis team.</Description>
+   <Resolution Name="Default">{0} appears to have no upstream public or protected callers.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182264(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="performancerules.dll" Version="11.0.0.0" />
+  </Rule>
   <Rule TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303">
    <Name>Do not pass literals as localized parameters</Name>
    <Description>Literal strings that are embedded in source code are difficult to localize. Avoid passing literal strings as arguments in circumstances where a localized string is generally expected.</Description>
@@ -42,6 +149,26 @@
    <Email />
    <MessageLevel Certainty="75">Warning</MessageLevel>
    <File Name="dataflowrules.dll" Version="11.0.0.0" />
+  </Rule>
+  <Rule TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806">
+   <Name>Do not ignore method results</Name>
+   <Description>The result of methods that return new instances of strings should be assigned to a variable and subsequently used. If the result of a method that creates a new object, such as String.ToLower(), is not assigned to a variable, the call is wasted.</Description>
+   <Resolution Name="TryParse">{0} calls {1} but does not explicitly check whether the conversion succeeded. Either use the return value in a conditional statement or verify that the call site expects that the out argument will be set to the default value when the conversion fails.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182273(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Warning</MessageLevel>
+   <File Name="usagerules.dll" Version="11.0.0.0" />
+  </Rule>
+  <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
+   <Name>Specify IFormatProvider</Name>
+   <Description>If an overload exists that takes an IFormatProvider argument, it should always be called in favor of an overload that does not. Some methods in the runtime convert a value to or from a string representation and take a string parameter that contains one or more characters, called format specifiers, which indicate how the value is to be converted. If the meaning of the format specifier varies by culture, a formatting object supplies the actual characters used in the string representation. In scenarios where sorting and comparison behavior should never change between cultures, specify CultureInfo.InvariantCulture, otherwise, specify CultureInfo.CurrentCulture.</Description>
+   <Resolution Name="IFormatProviderAlternateString">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify {3} as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify {4}.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182190(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="globalizationrules.dll" Version="11.0.0.0" />
   </Rule>
  </Rules>
  <Localized>

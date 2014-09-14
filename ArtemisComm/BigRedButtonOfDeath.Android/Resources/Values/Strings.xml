@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="Hello">Hello World, Click Me!</string>
+    <string name="ApplicationName">BigRedButtonOfDeath.Android</string>
+  <string name="Title">Artemis SBS: The Big Red Button of Death!</string>
+</resources>

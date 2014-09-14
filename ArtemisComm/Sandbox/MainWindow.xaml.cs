@@ -29,7 +29,7 @@ namespace Sandbox
         public MainWindow()
         {
 
-            Packet.ThrowWhenInvalid = true;
+            Packet.ThrowWhenInvalid = false;
             Result = new ObservableCollection<PropertyValue>();
             InitializeComponent();
         }
@@ -372,7 +372,10 @@ namespace Sandbox
                 }
                 retVal = string.Join(":", elem.ToArray());
             }
-            ResultList.ScrollIntoView(ResultList.Items[Result.Count - 1]);
+            if (Result.Count > 0)
+            {
+                ResultList.ScrollIntoView(ResultList.Items[Result.Count - 1]);
+            }
             System.Media.SystemSounds.Beep.Play();
             return retVal;
         }
@@ -970,6 +973,13 @@ namespace Sandbox
         private void OnClear(object sender, RoutedEventArgs e)
         {
             Result.Clear();
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+        private void OnPacketTester(object sender, RoutedEventArgs e)
+        {
+            PackageTester win = new PackageTester();
+            win.Show();
         }
     }
 }

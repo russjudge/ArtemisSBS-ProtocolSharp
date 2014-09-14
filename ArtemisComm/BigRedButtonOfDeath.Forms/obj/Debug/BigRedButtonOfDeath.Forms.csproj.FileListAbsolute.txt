@@ -12,3 +12,5 @@ E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButton
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Forms\obj\Debug\BigRedButtonOfDeath.Forms.pdb
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Forms\bin\Debug\BigRedButtonOfDeath.Forms.exe.CodeAnalysisLog.xml
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Forms\bin\Debug\BigRedButtonOfDeath.Forms.exe.lastcodeanalysissucceeded
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Forms\bin\Debug\Logger.dll
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Forms\bin\Debug\Logger.pdb

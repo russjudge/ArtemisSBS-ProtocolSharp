@@ -7,36 +7,52 @@ using System.Text;
 
 namespace ArtemisComm.ShipAction2SubPackets
 {
-    public class LoadTubeSubPacket : BasePacket 
+    public class LoadTubeSubPacket : ShipAction2 
     {
-        public static Packet GetPacket(int tubeIndex, int ordinance)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+        public static Packet GetPacket(int tubeIndex, OrdinanceType ordinance)
         {
             LoadTubeSubPacket ltb = new LoadTubeSubPacket(tubeIndex, ordinance);
             ShipAction2Packet sap2 = new ShipAction2Packet(ltb);
             return new Packet(sap2);
         }
-        
-        public LoadTubeSubPacket(int tubeIndex, int ordinance)
-        {
-            TubeIndex = tubeIndex;
-            Ordinance = ordinance;
-        }
+
+        public LoadTubeSubPacket(int tubeIndex, OrdinanceType ordinance)
+            : base(ShipAction2SubPacketType.LoadTubeSubPacket, tubeIndex, Convert.ToInt32(ordinance), 0, 0)
+        { }
+      
         public LoadTubeSubPacket(Stream stream, int index)
             : base(stream, index)
         {
 
         }
-        public int TubeIndex { get; set; }
-
-        public int Ordinance { get; set; }
-
-
-
-
-        public override OriginType GetValidOrigin()
+        [ArtemisExcluded]
+        public int TubeIndex
         {
-            return OriginType.Client;
+            get
+            {
+                return Value1;
+            }
+            set
+            {
+                Value1 = value;
+            }
         }
-        
+
+        [ArtemisExcluded]
+        public OrdinanceType Ordinance
+        {
+            get
+            {
+                return (OrdinanceType)Convert.ToByte(Value2);
+            }
+            set
+            {
+                Value2 = Convert.ToInt32(value);
+            }
+        }
+
+
+
     }
 }

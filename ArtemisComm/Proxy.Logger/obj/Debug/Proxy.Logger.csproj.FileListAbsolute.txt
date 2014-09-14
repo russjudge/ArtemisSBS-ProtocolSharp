@@ -7,3 +7,5 @@ E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.Logger
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.Logger\obj\Debug\Proxy.Logger.csprojResolveAssemblyReference.cache
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.Logger\obj\Debug\Proxy.Logger.dll
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.Logger\obj\Debug\Proxy.Logger.pdb
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.Logger\bin\Debug\Logger.dll
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.Logger\bin\Debug\Logger.pdb

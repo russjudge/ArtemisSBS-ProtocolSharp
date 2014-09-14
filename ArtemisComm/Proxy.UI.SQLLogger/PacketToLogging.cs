@@ -32,10 +32,11 @@ namespace ArtemisComm.Proxy.UI.SQLLogger
             }
             return seqID;
         }
+        object lockingObject2 = new object();
         int InsertIntoPacketTable(Packet p, Guid sourceID, Guid targetID, int subPacketType)
         {
             int retVal = -1;
-            lock (ActiveConnection)
+            lock (lockingObject2)
             {
                 using (SqlCommand cmd =
                     new SqlCommand("INSERT INTO Packets (SourceID, TargetID, Length, Origin, Unknown, PayloadLength, PacketType, SubPacketType, Payload) "
@@ -48,7 +49,7 @@ namespace ArtemisComm.Proxy.UI.SQLLogger
                     cmd.Parameters.AddWithValue("@TargetID", targetID.ToString());
                     cmd.Parameters.AddWithValue("@Length", p.Length);
                     cmd.Parameters.AddWithValue("@Origin", (int)p.Origin);
-                    cmd.Parameters.AddWithValue("@Unknown", p.Unknown);
+                    cmd.Parameters.AddWithValue("@Unknown", p.Padding);
                     cmd.Parameters.AddWithValue("@PayloadLength", p.PayloadLength);
                     cmd.Parameters.AddWithValue("@PacketType", packType);
 
@@ -68,7 +69,7 @@ namespace ArtemisComm.Proxy.UI.SQLLogger
         {
             if (error != null)
             {
-                lock (ActiveConnection)
+                lock (lockingObject2)
                 {
                     using (SqlCommand cmd =
                            new SqlCommand("INSERT INTO Exceptions (SourceID, Message, StackTrace, ExceptionType) "
@@ -137,7 +138,7 @@ namespace ArtemisComm.Proxy.UI.SQLLogger
 
         public void ProcessValues(object key, string propertyName, object value, string propertyType, string hexValue)
         {
-            lock (ActiveConnection)
+            lock (lockingObject2)
             {
                 using (SqlCommand cmd =
                     new SqlCommand("INSERT INTO [Values] (PacketSequenceID, Property, PropertyType, Value, HexValue) "

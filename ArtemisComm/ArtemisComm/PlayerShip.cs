@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ArtemisComm
 {
-    public class PlayerShip : BasePacket
+    public class PlayerShip : ParentPacket
     {
         //A list of the eight available player ships. Each ship is structured as follows:
 
@@ -25,9 +25,11 @@ namespace ArtemisComm
         {
            
         }
-   
-        public int Unknown0 { get; set; }  //From Unique ID in vesselData.xml.
-        public int Unknown1 { get; set; }  //Always 1?
+
+        public DriveType DriveType { get; set; }  
+        public int ShipType { get; set; }  //Always 1?
+
+        //new in 2.0? 
         public int Unknown2 { get; set; }  //Always 0?
         /// <summary>
         /// Gets or sets the name, unicode, null-terminated.

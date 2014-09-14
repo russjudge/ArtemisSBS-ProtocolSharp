@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ArtemisComm.GameMessageSubPackets
 {
-    public class KeyCaptureToggleSubPacket : BasePacket
+    public class KeyCaptureToggleSubPacket : ParentPacket
     {
         //0x11
         public KeyCaptureToggleSubPacket(Stream stream, int index) : base(stream, index) { }

@@ -8,6 +8,7 @@ using System.Text;
 
 namespace ArtemisComm
 {
+    //Matches to Artemis Packet Protocol: Common Packet Structure
     public class Packet : IDisposable
     {
         /// <summary>
@@ -65,6 +66,16 @@ namespace ArtemisComm
             return _rawData.GetMemoryStream(0);
 
         }
+        static string FormatIt(byte[] buffer)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (byte b in buffer)
+            {
+                sb.Append(b.ToString("x").PadLeft(2, '0'));
+                sb.Append(":");
+            }
+            return sb.ToString();
+        }
         public Packet(Stream stream)
         {
             if (stream != null)
@@ -73,6 +84,13 @@ namespace ArtemisComm
                 {
                     stream.Position = 0;
                 }
+#if DEBUG
+                HexFormattedData = FormatIt(stream.GetMemoryStream(0).ToArray());
+                if (stream.CanSeek)
+                {
+                    stream.Position = 0;
+                }
+#endif
                 _rawData = stream.GetMemoryStream(0);
 
                 if (ThrowWhenInvalid && _rawData.Length < HeaderLength)
@@ -90,7 +108,7 @@ namespace ArtemisComm
                     {
                         if (_rawData.Length > 7) Length = _rawData.ToInt32();
                         if (_rawData.Length > 11) Origin = (OriginType)_rawData.ToInt32();
-                        if (_rawData.Length > 15) Unknown = _rawData.ToInt32();
+                        if (_rawData.Length > 15) Padding = _rawData.ToInt32();
                         if (_rawData.Length > 19) PayloadLength = _rawData.ToInt32();
                         if (_rawData.Length > 23) PacketType = (PacketType)_rawData.ToInt32();
 
@@ -136,7 +154,14 @@ namespace ArtemisComm
             }
 
         }
-        
+#if DEBUG
+
+        public string HexFormattedData
+        {
+            get;
+            private set;
+        }
+#endif
         public Packet(IPackage package)
         {
             ID = Convert.ToInt32(Connector.StandardID);
@@ -201,6 +226,8 @@ namespace ArtemisComm
             return retVal;
         }
 
+
+        //@@@@
         public int ID { get; private set; }
 
         public int Length { get; private set; }
@@ -215,7 +242,7 @@ namespace ArtemisComm
         {
             Origin = origin;
         }
-        public int Unknown { get; set; }
+        public int Padding { get; set; }
         /// <summary>
         /// Gets the length of the payload.
         /// </summary>
@@ -346,7 +373,7 @@ namespace ArtemisComm
                 ms.Write(ID);
                 ms.Write(Length);
                 ms.Write(Origin);
-                ms.Write(Unknown);
+                ms.Write(Padding);
                 ms.Write(PayloadLength);
                 ms.Write(PacketType);
                 if (Package != null)

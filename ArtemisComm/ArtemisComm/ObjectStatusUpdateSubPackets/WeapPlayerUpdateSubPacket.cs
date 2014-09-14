@@ -35,11 +35,17 @@ namespace ArtemisComm.ObjectStatusUpdateSubPackets
         public byte? Tube5Status { get; set; }
         public byte? Tube6Status { get; set; }
 
+        [ArtemisType(typeof(byte))]
         public OrdinanceType? Tube1Content { get; set; }
+        [ArtemisType(typeof(byte))]
         public OrdinanceType? Tube2Content { get; set; }
+        [ArtemisType(typeof(byte))]
         public OrdinanceType? Tube3Content { get; set; }
+        [ArtemisType(typeof(byte))]
         public OrdinanceType? Tube4Content { get; set; }
+        [ArtemisType(typeof(byte))]
         public OrdinanceType? Tube5Content { get; set; }
+        [ArtemisType(typeof(byte))]
         public OrdinanceType? Tube6Content { get; set; }
     }
 }

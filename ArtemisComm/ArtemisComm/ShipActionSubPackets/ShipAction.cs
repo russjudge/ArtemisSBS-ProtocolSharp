@@ -7,12 +7,13 @@ using System.Text;
 
 namespace ArtemisComm.ShipActionSubPackets
 {
-    public class ShipAction: BasePacket
+    public class ShipAction: ParentPacket
     {
 
-       
-        public ShipAction(int value)
+
+        public ShipAction(ShipActionSubPacketType actionType, int value)
         {
+            ActionType = actionType;
             Value = value;
         }
         public ShipAction(Stream stream, int index)
@@ -20,6 +21,11 @@ namespace ArtemisComm.ShipActionSubPackets
         {
 
         }
+        //Legacy code fills out the bytes--TODO is to change it to use the ActionType instead.  Need to examine code that generates.
+        [ArtemisExcluded]
+        public ShipActionSubPacketType ActionType { get; set; }
+
+
         public int Value { get; set; }
 
 

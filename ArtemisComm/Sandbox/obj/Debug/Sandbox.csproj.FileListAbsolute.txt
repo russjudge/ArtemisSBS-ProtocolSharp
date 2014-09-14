@@ -14,3 +14,7 @@ E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\obj\
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\obj\Debug\Sandbox.pdb
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\bin\Debug\Sandbox.exe.CodeAnalysisLog.xml
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\bin\Debug\Sandbox.exe.lastcodeanalysissucceeded
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\bin\Debug\Logger.dll
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\bin\Debug\Logger.pdb
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\obj\Debug\PackageTester.baml
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Sandbox\obj\Debug\PackageTester.g.cs

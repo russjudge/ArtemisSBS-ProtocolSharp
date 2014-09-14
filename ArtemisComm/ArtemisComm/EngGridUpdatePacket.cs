@@ -18,15 +18,19 @@ namespace ArtemisComm
         }
         public void Initialize(Stream stream, int index)
         {
-            Systems = SystemNode.GetNodes(stream, index);
-            
-            foreach (SystemNode node in Systems)
+            if (stream != null)
             {
-                index += node.DataLength;
-            }
-            index++;
-            DamageControlTeams = DamComStatus.GetDamComTeams(stream, index);
+                stream.Position = index;
+                Unknown1 = Convert.ToByte(stream.ReadByte());
+                Systems = SystemNode.GetNodes(stream, ++index);
 
+                foreach (SystemNode node in Systems)
+                {
+                    index += node.DataLength;
+                }
+                index++;
+                DamageControlTeams = DamComStatus.GetDamComTeams(stream, index);
+            }
         }
         //public byte[] GetBytes()
         //{
@@ -46,6 +50,10 @@ namespace ArtemisComm
 
         //    return retVal.ToArray();
         //}
+        //Seen to have 0 and 1.  Possibly boolean.
+        public byte Unknown1 { get; private set; }
+
+
         public ReadOnlyCollection<SystemNode> Systems { get; private set; }
 
         public ReadOnlyCollection<DamComStatus> DamageControlTeams { get; private set; }

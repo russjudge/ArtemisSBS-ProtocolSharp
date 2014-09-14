@@ -7,17 +7,20 @@ namespace ArtemisComm.ShipActionSubPackets
 {
     public enum ShipActionSubPacketType
     {
-        CaptainSelectSubPacket = 0x11,
+        CaptainSelectSubPacket = 0x11,  
         DiveRiseSubPacket = 0x1b,
         EngSetAutoDamconSubPacket = 0x0c,
         FireTubeSubPacket = 0x08,
         HelmRequestDockSubPacket = 0x07,
         HelmSetWarpSubPacket = 0x00,
         HelmToggleReverseSubPacket = 0x18,
+        
+        KeystrokePacket = 0x14,
+
         ReadySubPacket = 0x0f,
         Ready2SubPacket = 0x19,
-        SciScanSubPacket = 0x13,
         SciSelectSubPacket = 0x10,
+        SciScanSubPacket = 0x13,
         SetBeamFreqSubPacket = 0x0b,
         SetMainScreenSubPacket = 0x01,
         SetShipSubPacket = 0x0d,

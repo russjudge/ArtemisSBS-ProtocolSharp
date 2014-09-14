@@ -132,7 +132,9 @@ namespace ArtemisComm
                 if (index < stream.Length - 4 && !isDone)
                 {
                     byte[] buffer = new byte[4];
-                    stream.Read(buffer, index, 4);
+                   
+                        stream.Read(buffer, 0, 4);
+                   
                     Damage = BitConverter.ToSingle(buffer, 0);
                 }
                 else

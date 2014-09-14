@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" package="ConfederateInBlue.ArtemisSBS.TheBigRedButtonOfDeath" android:versionCode="1">
+	<uses-sdk android:minSdkVersion="8" android:targetSdkVersion="8" />
+	<application android:label="ArtemisSBS: The Big Red Button of Death"></application>
+	<uses-permission android:name="android.permission.INTERNET" />
+</manifest>

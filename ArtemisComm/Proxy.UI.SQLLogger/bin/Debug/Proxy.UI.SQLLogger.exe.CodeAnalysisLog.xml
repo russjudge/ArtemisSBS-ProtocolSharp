@@ -1,57 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="c:\program files (x86)\microsoft visual studio 11.0\team tools\static analysis tools\fxcop\Xml\CodeAnalysisReport.xsl"?>
 <FxCopReport Version="11.0">
- <Targets>
-  <Target Name="E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.UI.SQLLogger\bin\Debug\Proxy.UI.SQLLogger.exe">
-   <Modules>
-    <Module Name="proxy.ui.sqllogger.exe">
-     <Namespaces>
-      <Namespace Name="ArtemisComm.Proxy.UI.SQLLogger">
-       <Types>
-        <Type Name="PacketToLogging" Kind="Class" Accessibility="Public" ExternallyVisible="True">
-         <Members>
-          <Member Name="#AddException(System.Guid,System.Exception)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
-           <Messages>
-            <Message TypeName="DoNotLockOnObjectsWithWeakIdentity" Category="Microsoft.Reliability" CheckId="CA2002" Status="Active" Created="2014-01-07 00:11:23Z" FixCategory="NonBreaking">
-             <Issue Certainty="75" Level="CriticalError" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.UI.SQLLogger" File="PacketToLogging.cs" Line="84">'PacketToLogging.AddException(Guid, Exception)' locks on a reference of type 'SqlConnection'. Replace this with a lock against an object with strong-identity.</Issue>
-            </Message>
-           </Messages>
-          </Member>
-          <Member Name="#InsertIntoPacketTable(ArtemisComm.Packet,System.Guid,System.Guid,System.Int32)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
-           <Messages>
-            <Message TypeName="DoNotLockOnObjectsWithWeakIdentity" Category="Microsoft.Reliability" CheckId="CA2002" Status="Active" Created="2014-01-07 00:11:23Z" FixCategory="NonBreaking">
-             <Issue Certainty="75" Level="CriticalError" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.UI.SQLLogger" File="PacketToLogging.cs" Line="63">'PacketToLogging.InsertIntoPacketTable(Packet, Guid, Guid, int)' locks on a reference of type 'SqlConnection'. Replace this with a lock against an object with strong-identity.</Issue>
-            </Message>
-           </Messages>
-          </Member>
-          <Member Name="#ProcessValues(System.Object,System.String,System.Object,System.String,System.String)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
-           <Messages>
-            <Message TypeName="DoNotLockOnObjectsWithWeakIdentity" Category="Microsoft.Reliability" CheckId="CA2002" Status="Active" Created="2014-01-07 00:11:23Z" FixCategory="NonBreaking">
-             <Issue Certainty="75" Level="CriticalError" Path="e:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.UI.SQLLogger" File="PacketToLogging.cs" Line="154">'PacketToLogging.ProcessValues(object, string, object, string, string)' locks on a reference of type 'SqlConnection'. Replace this with a lock against an object with strong-identity.</Issue>
-            </Message>
-           </Messages>
-          </Member>
-         </Members>
-        </Type>
-       </Types>
-      </Namespace>
-     </Namespaces>
-    </Module>
-   </Modules>
-  </Target>
- </Targets>
- <Rules>
-  <Rule TypeName="DoNotLockOnObjectsWithWeakIdentity" Category="Microsoft.Reliability" CheckId="CA2002">
-   <Name>Do not lock on objects with weak identity</Name>
-   <Description>Don't take locks on objects that may bleed across AppDomains or that don't have a strong identity.</Description>
-   <Resolution Name="Default">{0} locks on a reference of type {1}. Replace this with a lock against an object with strong-identity.</Resolution>
-   <Owner />
-   <Url>http://msdn.microsoft.com/library/ms182290(VS.100).aspx</Url>
-   <Email>[none]</Email>
-   <MessageLevel Certainty="75">CriticalError</MessageLevel>
-   <File Name="reliabilityrules.dll" Version="11.0.0.0" />
-  </Rule>
- </Rules>
  <Localized>
   <String Key="Category">Category</String>
   <String Key="Certainty">Certainty</String>

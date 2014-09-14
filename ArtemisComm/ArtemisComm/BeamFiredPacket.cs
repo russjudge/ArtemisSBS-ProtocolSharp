@@ -4,7 +4,7 @@ using System.IO;
 
 namespace ArtemisComm
 {
-    public class BeamFiredPacket : BasePacket
+    public class BeamFiredPacket : ParentPacket
     {
          public BeamFiredPacket() : base()
         {
@@ -14,18 +14,27 @@ namespace ArtemisComm
         
 
 
+        //Possible boolean: 0 from enemy when fired, 1 from Artemis fired.
          public int Unknown1 { get; set; }
+
+        //Observed 1200 from Artemis, 100 from enemy.
          public int Unknown2 { get; set; }
-         public int Unknown3 { get; set; }
+
+         public int BeamPort { get; set; }
+
+        /*
          public int Unknown4 { get; set; }
          public int Unknown5 { get; set; }
          public int Unknown6 { get; set; }
+         * */
          public int OriginObjectID { get; set; }
          public int TargetObjectID { get; set; }
-         public int Unknown9 { get; set; }
-         public int Unknown10 { get; set; }
-         public int Unknown11 { get; set; }
-         public int Unknown12 { get; set; }
+
+
+         public float ImpactX { get; set; }
+         public float ImpactY { get; set; }
+         public float ImpactZ { get; set; }
+         public int Mode { get; set; } //0=auto, 1=manual
         //Sample data:
          //44:3E:00:00:00:00:00:00:64:00:00:00:00:00:00:00:04:00:00:00:05:00:00:00:EA:39:00:00:C6:38:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00
 

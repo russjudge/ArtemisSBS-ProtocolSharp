@@ -117,8 +117,9 @@ namespace ArtemisComm
             if (me != null)
             {
                 byte[] buffer = new byte[4];
-                
+              
                 me.Read(buffer, 0, 4);
+               
                 return BitConverter.ToInt32(buffer, 0);
             }
             else
@@ -254,6 +255,10 @@ namespace ArtemisComm
                             if (artyAttrib != null)
                             {
                                 ArtyType = artyAttrib.ArtemisProtocolType;
+                            }
+                            if (ArtyType.IsEnum)
+                            {
+                                ArtyType = ArtyType.GetEnumUnderlyingType();
                             }
                             if (castType == typeof(IPackage))
                             {
@@ -445,7 +450,7 @@ namespace ArtemisComm
 
                                     intermediateObject = item.Value;
 
-                                    retVal = item.Key;
+                                    retVal = item.Key; //length.
 
                                     if (CastType == typeof(string))
                                     {
@@ -483,8 +488,14 @@ namespace ArtemisComm
         {
             int retVal = index;
             object intermediateObject = null;
-
-            if (CastType == typeof(byte))
+            Type cTp = CastType;
+            if (cTp.IsEnum)
+            {
+             
+                
+                cTp = Enum.GetUnderlyingType(cTp);
+            }
+            if (cTp == typeof(byte) || cTp == typeof(byte?))
             {
 
                 if (retVal < stream.Length)
@@ -493,7 +504,7 @@ namespace ArtemisComm
                     retVal = 1;
                 }
             }
-            if (CastType == typeof(short))
+            if (cTp == typeof(short) || cTp == typeof(short?))
             {
 
                 if (retVal < stream.Length - 1)
@@ -502,7 +513,7 @@ namespace ArtemisComm
                     retVal = 2;
                 }
             }
-            if (CastType == typeof(int))
+            if (cTp == typeof(int) || cTp == typeof(int?))
             {
 
                 if (retVal < stream.Length - 3)
@@ -512,7 +523,7 @@ namespace ArtemisComm
                     retVal = 4;
                 }
             }
-            if (CastType == typeof(float))
+            if (cTp == typeof(float) || cTp == typeof(float?))
             {
 
                 if (retVal < stream.Length - 3)
@@ -522,7 +533,7 @@ namespace ArtemisComm
                     retVal = 4;
                 }
             }
-            if (CastType == typeof(long))
+            if (cTp == typeof(long) || cTp == typeof(long?))
             {
 
                 if (retVal < stream.Length - 7)
@@ -553,11 +564,11 @@ namespace ArtemisComm
             {
                 prop.SetValue(baseObject, intermediateObject as ArtemisString, null);
             }
-            if (toType == typeof(bool))
+            if (toType == typeof(bool) || toType == typeof(bool?))
             {
                 prop.SetValue(baseObject, Convert.ToBoolean(intermediateObject, CultureInfo.InvariantCulture), null);
             }
-            if (toType == typeof(byte))
+            if (toType == typeof(byte) || toType == typeof(byte?))
             {
                 if (prop.PropertyType.IsEnum)
                 {
@@ -568,7 +579,7 @@ namespace ArtemisComm
                     prop.SetValue(baseObject, Convert.ToByte(intermediateObject, CultureInfo.InvariantCulture), null);
                 }
             }
-            if (toType == typeof(short))
+            if (toType == typeof(short) || toType == typeof(short?))
             {
                 if (prop.PropertyType.IsEnum)
                 {
@@ -579,7 +590,7 @@ namespace ArtemisComm
                     prop.SetValue(baseObject, Convert.ToInt16(intermediateObject, CultureInfo.InvariantCulture), null);
                 }
             }
-            if (toType == typeof(int))
+            if (toType == typeof(int) || toType == typeof(int?))
             {
                 if (prop.PropertyType.IsEnum)
                 {
@@ -590,11 +601,11 @@ namespace ArtemisComm
                     prop.SetValue(baseObject, Convert.ToInt32(intermediateObject, CultureInfo.InvariantCulture), null);
                 }
             }
-            if (toType == typeof(float))
+            if (toType == typeof(float) || toType == typeof(float?))
             {
                 prop.SetValue(baseObject, Convert.ToSingle(intermediateObject, CultureInfo.InvariantCulture), null);
             }
-            if (toType == typeof(long))
+            if (toType == typeof(long) || toType == typeof(long?))
             {
                 if (prop.PropertyType.IsEnum)
                 {
@@ -641,6 +652,7 @@ namespace ArtemisComm
                             {
                                 retVal += LoadProperty(baseObject, RawData, prop, errors);
                             }
+                            long i = RawData.Position;
                         }
                         if (stream.CanSeek)
                         {

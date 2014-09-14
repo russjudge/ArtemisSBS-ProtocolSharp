@@ -16,7 +16,7 @@ namespace ArtemisComm.ShipActionSubPackets
             return new Packet(new ShipActionPacket(new DiveRiseSubPacket(delta)));
         }
 
-        public DiveRiseSubPacket(int delta) : base(delta) { }
+        public DiveRiseSubPacket(int delta) : base(ShipActionSubPacketType.DiveRiseSubPacket, delta) { }
 
         public DiveRiseSubPacket(Stream stream, int index)
             : base(stream, index)

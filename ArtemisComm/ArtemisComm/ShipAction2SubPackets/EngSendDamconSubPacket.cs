@@ -7,35 +7,73 @@ using System.Text;
 
 namespace ArtemisComm.ShipAction2SubPackets
 {
-    public class EngSendDamconSubPacket : BasePacket
+    public class EngSendDamconSubPacket : ShipAction2
     {
         public static Packet GetPacket(int teamNumber, int x, int y, int z)
         {
             return new Packet(new ShipAction2Packet(new EngSendDamconSubPacket(teamNumber, x, y, z)));
         }
         public EngSendDamconSubPacket(int teamNumber, int x, int y, int z)
+            : base(ShipAction2SubPacketType.EngSendDamconSubPacket, teamNumber, x, y, z)
         {
-            TeamNumber = teamNumber;
-            X = x;
-            Y = y;
-            Z = z;
+
         }
         public EngSendDamconSubPacket(Stream stream, int index)
             : base(stream, index)
         {
 
         }
-        public int TeamNumber { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int Z { get; set; }
 
-
-
-        public override OriginType GetValidOrigin()
+        [ArtemisExcluded]
+        public int TeamNumber
         {
-            return OriginType.Client;
+            get
+            {
+                return Value1;
+            }
+            set
+            {
+                Value1 = value;
+            }
         }
-        
+        [ArtemisExcluded]
+        public int X
+        {
+            get
+            {
+                return Value2;
+            }
+            set
+            {
+                Value2 = value;
+            }
+        }
+        [ArtemisExcluded]
+        public int Y
+        {
+            get
+            {
+                return Value3;
+            }
+            set
+            {
+                Value3 = value;
+            }
+        }
+        [ArtemisExcluded]
+        public int Z
+        {
+            get
+            {
+                return Value4;
+            }
+            set
+            {
+                Value4 = value;
+            }
+        }
+
+
+
     }
 }

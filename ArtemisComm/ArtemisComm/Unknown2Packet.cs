@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ArtemisComm
 {
-    public class Unknown2Packet : BasePacket
+    public class Unknown2Packet : ParentPacket
     {
         public Unknown2Packet() : base()
         {

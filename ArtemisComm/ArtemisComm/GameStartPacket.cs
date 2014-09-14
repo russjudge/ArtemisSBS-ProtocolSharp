@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ArtemisComm
 {
-    public class GameStartPacket : BasePacket
+    public class GameStartPacket : ParentPacket
     {
 
         public GameStartPacket(Stream stream, int index) : base(stream, index) { }

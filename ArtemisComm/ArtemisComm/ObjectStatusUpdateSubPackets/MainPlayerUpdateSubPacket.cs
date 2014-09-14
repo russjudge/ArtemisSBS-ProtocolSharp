@@ -26,8 +26,8 @@ namespace ArtemisComm.ObjectStatusUpdateSubPackets
         public float? X { get; set; }
         public float? Y { get; set; }
         public float? Z { get; set; }
-        public int? Unknown2 { get; set; }
-        public int? Unknown3 { get; set; }
+        public float? Pitch { get; set; }
+        public float? Roll { get; set; }
         /// <summary>
         /// Gets or sets the heading. pi to negative pi. 0 is south
         /// </summary>
@@ -54,9 +54,9 @@ namespace ArtemisComm.ObjectStatusUpdateSubPackets
         public byte? DriveType { get; set; }
         public int? ScanningID { get; set; }
         public float? ScanProgress { get; set; }
-        public int? Reverse { get; set; }
-        public short? Undefined1 { get; set; }
-        public int? Undefined2 { get; set; }
+        public byte? Reverse { get; set; }
+        public float? Undefined1 { get; set; }
+        public byte? Undefined2 { get; set; }
         public int? Undefined3 { get; set; }
     }
 }

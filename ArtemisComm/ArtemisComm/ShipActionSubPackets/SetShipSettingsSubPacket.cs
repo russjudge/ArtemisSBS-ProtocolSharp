@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ArtemisComm.ShipActionSubPackets
 {
-    public class SetShipSettingsSubPacket : BasePacket
+    public class SetShipSettingsSubPacket : ShipAction
     {
         public static Packet GetPacket(DriveType drive, int shipType, int unknown, string shipName)
         {
@@ -16,9 +16,9 @@ namespace ArtemisComm.ShipActionSubPackets
             Packet p = new Packet(sap);
             return p;
         }
-        public SetShipSettingsSubPacket(DriveType drive, int shipType, int unknown, string shipName)
+        public SetShipSettingsSubPacket(DriveType drive, int shipType, int unknown, string shipName) : base( ShipActionSubPacketType.SetShipSettingsSubPacket, (int)drive)
         {
-            Drive = drive;
+           
             ShipType = shipType;
             Unknown = unknown;
             ShipName = new ArtemisString(shipName);
@@ -41,17 +41,25 @@ namespace ArtemisComm.ShipActionSubPackets
         //6e:00:
         //61:00:
         //00:00
-        public DriveType Drive { get; set; }
+        [ArtemisExcluded]
+        public DriveType Drive 
+        {
+            get
+            {
+                return (DriveType)Value;
+            }
+            set
+            {
+                Value = (int)value;
+            }
+        }
         public int ShipType { get; set; }
         public int Unknown { get; set; }
        
         public ArtemisString ShipName{get;set;}
 
 
-        public override OriginType GetValidOrigin()
-        {
-            return OriginType.Client;
-        }
+    
         
     }
 }

@@ -1,12 +1,20 @@
 ﻿<Window x:Class="BigRedButtonOfDeath.WPF.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:valueConvert="clr-namespace:BigRedButtonOfDeath.WPF"
-        Name="uc" ResizeMode="CanResizeWithGrip" 
         xmlns:prop="clr-namespace:BigRedButtonOfDeath.WPF.Properties"
-        Title="The Big Red Button of Death" Topmost="True"
-        SizeToContent="WidthAndHeight" MaxHeight="600" MaxWidth="600" SizeChanged="OnSizeChanged" 
-        Closed="OnClosed" Background="Transparent" AllowsTransparency="True" WindowStyle="None">
+        xmlns:valueConvert="clr-namespace:BigRedButtonOfDeath.WPF"
+        Name="uc"
+        Title="The Big Red Button of Death"
+        MaxWidth="600"
+        MaxHeight="600"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Closed="OnClosed"
+        ResizeMode="CanResizeWithGrip"
+        SizeChanged="OnSizeChanged"
+        SizeToContent="WidthAndHeight"
+        Topmost="True"
+        WindowStyle="None">
     <Window.Resources>
         <prop:Settings x:Key="Settings" />
         <valueConvert:BoolToVisibilityParameterConverter x:Key="BoolToVisibilityParameterConverter" />
@@ -15,28 +23,35 @@
     <DockPanel>
         <DockPanel.ContextMenu>
             <ContextMenu>
-                <MenuItem Header="Close" Click="OnClose" />
+                <MenuItem Click="OnClose" Header="Close" />
             </ContextMenu>
         </DockPanel.ContextMenu>
-        <Image
-                
-                MouseLeftButtonDown="OnMouseDown"
-                Visibility="Visible"
-                DockPanel.Dock="Top"
-               
-                Width="10" VerticalAlignment="Top" HorizontalAlignment="Left" Source="{StaticResource plusSign}"  />
+        <Image Width="10"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               DockPanel.Dock="Top"
+               MouseLeftButtonDown="OnMouseDown"
+               Source="{StaticResource plusSign}"
+               Visibility="Visible" />
 
-        <GroupBox
-            BorderBrush="White" BorderThickness="1,1,1,1"
-            DockPanel.Dock="Top" Visibility="{Binding ConnectionStarted, ElementName=uc, Mode=OneWay, Converter={StaticResource BoolToVisibilityParameterConverter}, ConverterParameter='Collapsed|Visible'}">
+        <GroupBox BorderBrush="White"
+                  BorderThickness="1,1,1,1"
+                  DockPanel.Dock="Top"
+                  Visibility="{Binding ConnectionStarted,
+                                       ElementName=uc,
+                                       Mode=OneWay,
+                                       Converter={StaticResource BoolToVisibilityParameterConverter},
+                                       ConverterParameter='Collapsed|Visible'}">
             <GroupBox.Background>
                 <RadialGradientBrush>
-                    <GradientStop Color="#FFFB1010" Offset="0"/>
-                    <GradientStop Color="#FFFBBF3D" Offset="1"/>
+                    <GradientStop Offset="0" Color="#FFFB1010" />
+                    <GradientStop Offset="1" Color="#FFFBBF3D" />
                 </RadialGradientBrush>
             </GroupBox.Background>
             <GroupBox.Header>
-                <TextBlock Background="White" FontWeight="Bold" Text="Connect To Server" />
+                <TextBlock Background="White"
+                           FontWeight="Bold"
+                           Text="Connect To Server" />
             </GroupBox.Header>
 
             <StackPanel Orientation="Horizontal">
@@ -45,35 +60,51 @@
                 <TextBox Width="150" Text="{Binding Path=Host, ElementName=uc, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <Label Content="Port:" FontWeight="Bold" />
                 <TextBox Width="150" Text="{Binding Path=Port, ElementName=uc, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <Button IsDefault="True" Click="OnConnect" Content="Connect" />
+                <Button Click="OnConnect"
+                        Content="Connect"
+                        IsDefault="True" />
             </StackPanel>
 
 
         </GroupBox>
-        <GroupBox
-            BorderBrush="White" BorderThickness="1,1,1,1"
-            DockPanel.Dock="Top" Visibility="{Binding ConnectionStarted, ElementName=uc, Mode=OneWay, Converter={StaticResource BoolToVisibilityParameterConverter}, ConverterParameter='Collapsed|Visible'}">
+        <GroupBox BorderBrush="White"
+                  BorderThickness="1,1,1,1"
+                  DockPanel.Dock="Top"
+                  Visibility="{Binding ConnectionStarted,
+                                       ElementName=uc,
+                                       Mode=OneWay,
+                                       Converter={StaticResource BoolToVisibilityParameterConverter},
+                                       ConverterParameter='Collapsed|Visible'}">
             <GroupBox.Background>
                 <RadialGradientBrush>
-                    <GradientStop Color="#FFFB1010" Offset="0"/>
-                    <GradientStop Color="#FFFBBF3D" Offset="1"/>
+                    <GradientStop Offset="0" Color="#FFFB1010" />
+                    <GradientStop Offset="1" Color="#FFFBBF3D" />
                 </RadialGradientBrush>
             </GroupBox.Background>
             <GroupBox.Header>
-                <TextBlock Background="White" FontWeight="Bold" Text="Images" />
+                <TextBlock Background="White"
+                           FontWeight="Bold"
+                           Text="Images" />
             </GroupBox.Header>
             <StackPanel>
-                <DockPanel/>
-                <DockPanel/>
+                <DockPanel />
+                <DockPanel />
                 <DockPanel>
-                    <Button DockPanel.Dock="Left" ToolTip="Click to change Self-destruct image." Click="OnChangeSelfDestruct">
-                        <Image  Width="150" Source="{Binding SelfDestructImage, Mode=OneWay, ElementName=uc}" />
+                    <Button Click="OnChangeSelfDestruct"
+                            DockPanel.Dock="Left"
+                            ToolTip="Click to change Self-destruct image.">
+                        <Image Width="150" Source="{Binding SelfDestructImage, Mode=OneWay, ElementName=uc}" />
                     </Button>
-                    <Button VerticalAlignment="Bottom" DockPanel.Dock="Right" Content="Reset to Default" Click="OnReset" />
-                    <Button DockPanel.Dock="Right" ToolTip="Click to change Abort Self-destruct image." Click="OnChangeAbortSelfDestruct">
-                        <Image Source="{Binding AbortSelfDestructImage, Mode=OneWay, ElementName=uc}" Width="150" />
+                    <Button VerticalAlignment="Bottom"
+                            Click="OnReset"
+                            Content="Reset to Default"
+                            DockPanel.Dock="Right" />
+                    <Button Click="OnChangeAbortSelfDestruct"
+                            DockPanel.Dock="Right"
+                            ToolTip="Click to change Abort Self-destruct image.">
+                        <Image Width="150" Source="{Binding AbortSelfDestructImage, Mode=OneWay, ElementName=uc}" />
                     </Button>
-                    
+
                     <TextBlock />
                 </DockPanel>
             </StackPanel>
@@ -89,23 +120,23 @@
                                                 ElementName=uc,
                                                 Mode=OneWay,
                                                 Converter={StaticResource BoolToVisibilityParameterConverter},
-                                                ConverterParameter='Visible|Collapsed'}" >
+                                                ConverterParameter='Visible|Collapsed'}">
                     <TextBlock.Background>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" SpreadMethod="Reflect">
+                        <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0.5,0" EndPoint="0.5,1">
                             <LinearGradientBrush.RelativeTransform>
                                 <TransformGroup>
-                                    <ScaleTransform CenterY="4" CenterX="-1"/>
-                                    <SkewTransform CenterY="4" CenterX="-1"/>
-                                    <RotateTransform CenterY="4" CenterX="-1"/>
-                                    <TranslateTransform/>
+                                    <ScaleTransform CenterX="-1" CenterY="4" />
+                                    <SkewTransform CenterX="-1" CenterY="4" />
+                                    <RotateTransform CenterX="-1" CenterY="4" />
+                                    <TranslateTransform />
                                 </TransformGroup>
                             </LinearGradientBrush.RelativeTransform>
-                            <GradientStop Color="#FF00FF23" Offset="0.711"/>
-                            <GradientStop Color="#FFFF9123" Offset="1"/>
-                            <GradientStop Color="#FFFFCB19" Offset="0.849"/>
-                            <GradientStop Color="#FF0068FF" Offset="0.586"/>
-                            <GradientStop Color="#FF0C00FF" Offset="0.41"/>
-                            <GradientStop Color="Red" Offset="0.184"/>
+                            <GradientStop Offset="0.711" Color="#FF00FF23" />
+                            <GradientStop Offset="1" Color="#FFFF9123" />
+                            <GradientStop Offset="0.849" Color="#FFFFCB19" />
+                            <GradientStop Offset="0.586" Color="#FF0068FF" />
+                            <GradientStop Offset="0.41" Color="#FF0C00FF" />
+                            <GradientStop Offset="0.184" Color="Red" />
                         </LinearGradientBrush>
                     </TextBlock.Background>
 
@@ -119,18 +150,19 @@
                                             ElementName=uc,
                                             Mode=OneWay,
                                             Converter={StaticResource BoolToVisibilityParameterConverter},
-                                            ConverterParameter='Collapsed|Visible'}" >
+                                            ConverterParameter='Collapsed|Visible'}">
                 <TextBlock.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FF19A803" Offset="0"/>
-                        <GradientStop Color="#FFB6F72A" Offset="1"/>
-                        <GradientStop Color="#FFCDC465" Offset="0.301"/>
-                        <GradientStop Color="#FFFF180C" Offset="0.766"/>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Offset="0" Color="#FF19A803" />
+                        <GradientStop Offset="1" Color="#FFB6F72A" />
+                        <GradientStop Offset="0.301" Color="#FFCDC465" />
+                        <GradientStop Offset="0.766" Color="#FFFF180C" />
                     </LinearGradientBrush>
                 </TextBlock.Background>
             </TextBlock>
             <AdornerDecorator Visibility="{Binding SimulationRunning, ElementName=uc, Mode=OneWay, Converter={StaticResource BoolToVisibilityParameterConverter}, ConverterParameter='Visible|Collapsed'}">
-                <Button Background="Transparent" Click="OnSelfDestruct"
+                <Button Background="Transparent"
+                        Click="OnSelfDestruct"
                         DockPanel.Dock="Top"
                         Visibility="{Binding SelfDestructRunning,
                                              ElementName=uc,
@@ -144,9 +176,15 @@
                 </Button>
             </AdornerDecorator>
             <AdornerDecorator Visibility="{Binding SimulationRunning, ElementName=uc, Mode=OneWay, Converter={StaticResource BoolToVisibilityParameterConverter}, ConverterParameter='Visible|Collapsed'}">
-                <Button Background="Transparent" Click="OnResetSelfDestruct" Visibility="{Binding SelfDestructRunning, ElementName=uc, Mode=OneWay, Converter={StaticResource BoolToVisibilityParameterConverter}, ConverterParameter='Visible|Collapsed'}">
+                <Button Background="Transparent"
+                        Click="OnResetSelfDestruct"
+                        Visibility="{Binding SelfDestructRunning,
+                                             ElementName=uc,
+                                             Mode=OneWay,
+                                             Converter={StaticResource BoolToVisibilityParameterConverter},
+                                             ConverterParameter='Visible|Collapsed'}">
                     <Button.Content>
-                        <Image  Source="{Binding AbortSelfDestructImage, Mode=OneWay, ElementName=uc}" Width="{Binding Source={StaticResource Settings}, Path=Default.Size, Mode=TwoWay}" />
+                        <Image Width="{Binding Source={StaticResource Settings}, Path=Default.Size, Mode=TwoWay}" Source="{Binding AbortSelfDestructImage, Mode=OneWay, ElementName=uc}" />
                     </Button.Content>
                 </Button>
             </AdornerDecorator>

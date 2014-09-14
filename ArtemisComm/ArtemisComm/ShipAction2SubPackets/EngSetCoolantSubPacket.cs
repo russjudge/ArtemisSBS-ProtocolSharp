@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ArtemisComm.ShipAction2SubPackets
 {
-    public class EngSetCoolantSubPacket : BasePacket
+    public class EngSetCoolantSubPacket : ShipAction2
     {
         public static Packet GetPacket(ShipSystem system, int value)
         {
@@ -16,23 +16,41 @@ namespace ArtemisComm.ShipAction2SubPackets
             return new Packet(sap2);
         }
         public EngSetCoolantSubPacket(ShipSystem system, int value)
+            : base(ShipAction2SubPacketType.EngSetCoolantSubPacket, (int)system, value, 0, 0)
         {
-            System = system;
-            Value = value;
         }
         public EngSetCoolantSubPacket(Stream stream, int index)
             : base(stream, index)
         {
 
         }
-        public ShipSystem System { get; set; }
-
-        public int Value { get; set; }
-
-        public override OriginType GetValidOrigin()
+        [ArtemisExcluded]
+        public ShipSystem System
         {
-            return OriginType.Client;
+            get
+            {
+                return (ShipSystem)Value1;
+            }
+            set
+            {
+                Value1 = (int)value;
+            }
         }
-       
+
+        [ArtemisExcluded]
+        public int Value
+        {
+            get
+            {
+                return Value2;
+            }
+            set
+            {
+                Value2 = value;
+            }
+        }
+
+
+
     }
 }

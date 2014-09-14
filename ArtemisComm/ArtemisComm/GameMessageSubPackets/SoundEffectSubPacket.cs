@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ArtemisComm.GameMessageSubPackets
 {
-    public class SoundEffectSubPacket : BasePacket
+    public class SoundEffectSubPacket : ParentPacket
     {
         //0x03
         public SoundEffectSubPacket(Stream stream, int index) : base(stream, index) { }

@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace ArtemisComm
 {
-    internal sealed class Connector: IDisposable
+    internal sealed class Connector : IDisposable
     {
         const int ConnectionTimeout = 0;
         public static readonly int StandardID = BitConverter.ToInt32(BitConverter.GetBytes(0xdeadbeef), 0);
@@ -48,7 +48,7 @@ namespace ArtemisComm
                 ExceptionEncountered(this, new ExceptionEventArgs(ex, this.ID));
             }
         }
-      
+
         void RaiseBytesReceived(Stream buffer)
         {
             if (BytesReceived != null)
@@ -121,7 +121,7 @@ namespace ArtemisComm
         /// </summary>
         void BytesToQueueProcessor()
         {
-            
+
             try
             {
 
@@ -206,13 +206,10 @@ namespace ArtemisComm
                                     bytesRead = ServerStream.Read(buff, 0, remainToRead);
                                     if (bytesRead > 0)
                                     {
-
-                                        byte[] wrkByte = new byte[bytesRead];
-                                        Array.Copy(buff, 0, wrkByte, 0, bytesRead);
                                         currentBlock += bytesRead;
 
                                         //buffer.AddRange(wrkByte);
-                                        msBuffer.Write(wrkByte, 0, bytesRead);
+                                        msBuffer.Write(buff, 0, bytesRead);
                                         remainToRead -= bytesRead;
                                     }
 
@@ -225,7 +222,7 @@ namespace ArtemisComm
                                     //RaiseBytesReceived(buffer.ToArray());
                                     msBuffer.Position = 0;
                                     RaiseBytesReceived(msBuffer);
-                                    
+
                                 }
 
 
@@ -245,6 +242,9 @@ namespace ArtemisComm
                 } while (!Abort);
 
             }
+            catch (ObjectDisposedException)
+            {
+            }
             catch (ThreadAbortException)
             {
 
@@ -258,12 +258,12 @@ namespace ArtemisComm
             {
                 RaiseExceptionEncountered(e);
             }
-           
+
             if (this.ConnectionLost != null)
             {
                 ConnectionLost(this, new ConnectionEventArgs(this.ID));
             }
-          
+
         }
 
         public void ClearSendQueue()
@@ -274,16 +274,16 @@ namespace ArtemisComm
         {
             if (stream != null && stream.Length > 0)
             {
-                
-                    stream.Position = 0;
-                    //try
-                    //{
-                    lock (SendQueue)
-                    {
+
+                stream.Position = 0;
+                //try
+                //{
+                lock (SendQueue)
+                {
                     SendQueue.Enqueue(stream.GetMemoryStream(0));
                 }
-                    mreSender.Set();
-                
+                mreSender.Set();
+
                 //}
                 //catch (ArgumentException)
                 //{ 
@@ -309,7 +309,7 @@ namespace ArtemisComm
         //        //  Retry logic still might not solve issue, but it is worth a try.
 
         //        Send(new MemoryStream(byteArray));
-                
+
         //    }
         //}
         void SendProcessor()
@@ -333,7 +333,7 @@ namespace ArtemisComm
                                 if (ms != null)
                                 {
                                     ms.Position = 0;
-                                    
+
                                     ms.CopyTo(ServerStream);
 
 
@@ -393,13 +393,13 @@ namespace ArtemisComm
                         mreSender.Set();
                         mreSender.Dispose();
                     }
-                    
+
                     if (ServerConnectionThread != null && ServerConnectionThread.ThreadState == ThreadState.Running)
                     {
                         ServerConnectionThread.Abort();
 
                     }
-                  
+
                     if (SendingThread != null && SendingThread.ThreadState == ThreadState.Running)
                     {
                         SendingThread.Abort();

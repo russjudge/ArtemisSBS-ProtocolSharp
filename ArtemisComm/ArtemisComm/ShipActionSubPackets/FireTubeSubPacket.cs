@@ -15,7 +15,7 @@ namespace ArtemisComm.ShipActionSubPackets
             return new Packet(new ShipActionPacket(new FireTubeSubPacket(tubeIndex)));
         }
 
-        public FireTubeSubPacket(int tubeIndex) : base(tubeIndex) { }
+        public FireTubeSubPacket(int tubeIndex) : base(ShipActionSubPacketType.FireTubeSubPacket,  tubeIndex) { }
 
         public FireTubeSubPacket(Stream stream, int index)
             : base(stream, index)

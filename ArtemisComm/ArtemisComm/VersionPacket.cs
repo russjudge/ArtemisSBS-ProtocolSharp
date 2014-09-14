@@ -7,12 +7,16 @@ using System.Text;
 
 namespace ArtemisComm
 {
-    public class VersionPacket : BasePacket
+    public class VersionPacket : ParentPacket
     {
         //**CONFIRMED
         public VersionPacket() : base()
         {
-            Version = 2.0F;  //Current version of Artemis as of 12/5/2013.
+            MajorVersion= 2;
+            MinorVersion =1;
+            PatchVersion = 1;
+
+            //LegacyVersion = 2.1.1F;  //Current version of Artemis as of 12/5/2013.
         }
         public VersionPacket(Stream stream, int index) : base(stream, index) {}
         //{
@@ -44,8 +48,12 @@ namespace ArtemisComm
         //    retVal.AddRange(BitConverter.GetBytes(Version));
         //    return retVal.ToArray();
         //}
+        //1264 F0 04 00 00 seen consistently here
         public int Unknown { get; set; }
-        public float Version { get; set; }
+        public float LegacyVersion { get; set; }
+        public int MajorVersion { get; set; }
+        public int MinorVersion { get; set; }
+        public int PatchVersion { get; set; }
 
 
         public override OriginType GetValidOrigin()

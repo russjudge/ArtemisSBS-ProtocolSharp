@@ -23,3 +23,5 @@ E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.UI.SQL
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.UI.SQLLogger\bin\Debug\Proxy.Logger.dll
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.UI.SQLLogger\bin\Debug\Proxy.Logger.pdb
 E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.UI.SQLLogger\obj\Debug\ArtemisComm.Proxy.UI.SQLLogger.Properties.Resources.resources
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.UI.SQLLogger\bin\Debug\Logger.dll
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Proxy.UI.SQLLogger\bin\Debug\Logger.pdb

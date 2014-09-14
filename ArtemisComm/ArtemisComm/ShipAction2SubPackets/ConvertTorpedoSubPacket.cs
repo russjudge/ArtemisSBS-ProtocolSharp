@@ -7,9 +7,10 @@ using System.Text;
 
 namespace ArtemisComm.ShipAction2SubPackets
 {
-    public class ConvertTorpedoSubPacket : BasePacket
+    public class ConvertTorpedoSubPacket : ShipAction2
     {
-        public static Packet GetPacket(float direction, int unknown1, int unknown2, int unknown3)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+        public static Packet GetPacket(TorpedoEnergyConversionTypes direction)
         {
             ConvertTorpedoSubPacket subpack = null;
             ShipAction2Packet pack = null;
@@ -17,7 +18,7 @@ namespace ArtemisComm.ShipAction2SubPackets
             Packet retVal = null;
             try
             {
-                subpack = new ConvertTorpedoSubPacket(direction, unknown1, unknown2, unknown3);
+                subpack = new ConvertTorpedoSubPacket(direction);
                 pack = new ShipAction2Packet(subpack);
                 pck = new Packet(pack);
                 retVal = pck;
@@ -44,28 +45,32 @@ namespace ArtemisComm.ShipAction2SubPackets
             }
             return retVal;
         }
-        public ConvertTorpedoSubPacket(float direction, int unknown1, int unknown2, int unknown3)
+
+        public ConvertTorpedoSubPacket(TorpedoEnergyConversionTypes direction)
+            : base(ShipAction2SubPacketType.ConvertTorpedoSubPacket, (int)direction, 0, 0, 0)
         {
-            Direction = direction;
-            Unknown1 = unknown1;
-            Unknown2 = unknown2;
-            Unknown3 = unknown3;
+           
         }
+      
+        
         public ConvertTorpedoSubPacket(Stream stream, int index)
             : base(stream, index)
         {
 
         }
-        public float Direction { get; set; }
-        public int Unknown1 { get; set; }
-        public int Unknown2 { get; set; }
-        public int Unknown3 { get; set; }
-
-
-
-        public override OriginType GetValidOrigin()
+        [ArtemisExcluded]
+        public TorpedoEnergyConversionTypes Direction
         {
-            return OriginType.Client;
+            get
+            {
+                return (TorpedoEnergyConversionTypes)Value1;
+            }
+            set
+            {
+                Value1 = (int)value;
+            }
+
+
         }
        
     }

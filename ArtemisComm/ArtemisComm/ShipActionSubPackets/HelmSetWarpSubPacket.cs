@@ -10,7 +10,7 @@ namespace ArtemisComm.ShipActionSubPackets
             return new Packet(new ShipActionPacket(new HelmSetWarpSubPacket(warpFactor)));
         }
 
-        public HelmSetWarpSubPacket(int warpFactor) : base(warpFactor) { }
+        public HelmSetWarpSubPacket(int warpFactor) : base(ShipActionSubPacketType.HelmSetWarpSubPacket,  warpFactor) { }
 
         public HelmSetWarpSubPacket(Stream stream, int index)
             : base(stream, index)

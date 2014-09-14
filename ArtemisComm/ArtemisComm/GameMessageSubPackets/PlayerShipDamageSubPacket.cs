@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ArtemisComm.GameMessageSubPackets
 {
-    public class PlayerShipDamageSubPacket : BasePacket
+    public class PlayerShipDamageSubPacket : ParentPacket
     {
         //Subtype 05
         public PlayerShipDamageSubPacket(Stream stream, int index)

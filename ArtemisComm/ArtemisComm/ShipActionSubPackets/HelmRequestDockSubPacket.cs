@@ -5,14 +5,15 @@ namespace ArtemisComm.ShipActionSubPackets
     public class HelmRequestDockSubPacket : ShipAction
     {
 
-     
-        
-        public static Packet GetPacket(int value)
+
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+        public static Packet GetPacket()
         {
-            return new Packet(new ShipActionPacket(new HelmRequestDockSubPacket(value)));
+            return new Packet(new ShipActionPacket(new HelmRequestDockSubPacket()));
         }
 
-        public HelmRequestDockSubPacket(int value) : base(value) { }
+        public HelmRequestDockSubPacket() : base(ShipActionSubPacketType.HelmRequestDockSubPacket, 0) { }
 
         public HelmRequestDockSubPacket(Stream stream, int index)
             : base(stream, index)

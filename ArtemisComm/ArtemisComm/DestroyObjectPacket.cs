@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ArtemisComm
 {
-    public class DestroyObjectPacket : BasePacket
+    public class DestroyObjectPacket : ParentPacket
     {
 
         public DestroyObjectPacket(Stream stream, int index) : base(stream, index) { }

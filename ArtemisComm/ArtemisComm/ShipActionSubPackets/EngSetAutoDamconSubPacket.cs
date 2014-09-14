@@ -11,7 +11,7 @@ namespace ArtemisComm.ShipActionSubPackets
             return new Packet(new ShipActionPacket(new EngSetAutoDamconSubPacket(damComIsAutonomous)));
         }
 
-        public EngSetAutoDamconSubPacket(bool damComIsAutonomous) : base(Convert.ToInt32(damComIsAutonomous)) { }
+        public EngSetAutoDamconSubPacket(bool damComIsAutonomous) : base(ShipActionSubPacketType.EngSetAutoDamconSubPacket, Convert.ToInt32(damComIsAutonomous)) { }
 
         public EngSetAutoDamconSubPacket(Stream stream, int index)
             : base(stream, index)

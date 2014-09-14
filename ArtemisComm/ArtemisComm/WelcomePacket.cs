@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ArtemisComm
 {
-    public class WelcomePacket : BasePacket
+    public class WelcomePacket : ParentPacket
     {
         //**CONFIRMED
       

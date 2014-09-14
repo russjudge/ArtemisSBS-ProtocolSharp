@@ -25,7 +25,7 @@ namespace ArtemisComm.ObjectStatusUpdateSubPackets
         /// The index of the station. zero-based
         /// </value>
         public int? StationIndex { get; set; }
-        public int? Unknown2 { get; set; }
+        public int? VesselTypeID { get; set; }  //or float?
         public float? X { get; set; }
 
         public float? Y { get; set; }

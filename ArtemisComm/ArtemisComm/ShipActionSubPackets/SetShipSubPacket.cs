@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ArtemisComm.ShipActionSubPackets
 {
-    public class SetShipSubPacket : BasePacket 
+    public class SetShipSubPacket : ShipAction 
     {
         //**CONFIRMED
         public static Packet GetPackage(int shipNumber)
@@ -21,9 +21,9 @@ namespace ArtemisComm.ShipActionSubPackets
         /// Initializes a new instance of the <see cref="SetShipSubPacket"/> class.  ship number is 1-based.
         /// </summary>
         /// <param name="shipNumber">The ship number.</param>
-        public SetShipSubPacket(int shipNumber)
+        public SetShipSubPacket(int shipNumber) : base( ShipActionSubPacketType.SetShipSubPacket, (shipNumber - 1))
         {
-            ShipNumber = shipNumber;
+           
         }
 
         public SetShipSubPacket(Stream stream, int index)
@@ -31,18 +31,19 @@ namespace ArtemisComm.ShipActionSubPackets
         {
 
         }
-        int _shipNumber;
+      
         /// <summary>
         /// Gets or sets the ship number.  For consistency, this returns 1-8 as valid values.
         /// </summary>
         /// <value>
         /// The ship number.
         /// </value>
+        [ArtemisExcluded]
         public int ShipNumber
         {
             get
             {
-                return _shipNumber + 1;
+                return Value + 1;
             }
             set
             {
@@ -54,16 +55,11 @@ namespace ArtemisComm.ShipActionSubPackets
                 {
                     throw new InvalidOperationException("Ship number must be less than 9.");
                 }
-                _shipNumber = value - 1;
+                Value = value - 1;
             }
         }
 
 
-        public override OriginType GetValidOrigin()
-        {
-            return OriginType.Client;
-        }
-        
 
 
     }

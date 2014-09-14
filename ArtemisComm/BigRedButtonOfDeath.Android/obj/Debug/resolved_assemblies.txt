@@ -1,0 +1,4 @@
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Android\bin\Debug\BigRedButtonOfDeath.Android.dll
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\ArtemisComm.Android\bin\Debug\ArtemisComm.Android.dll
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\BigRedButtonOfDeath.Library.Android\bin\Debug\BigRedButtonOfDeath.Library.Android.dll
+E:\Development Projects\GitHub\ArtemisSBS-ProtocolSharp\ArtemisComm\Logger.Android\bin\Debug\Logger.Android.dll

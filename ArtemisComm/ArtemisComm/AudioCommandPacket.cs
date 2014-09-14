@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ArtemisComm
 {
-    public class AudioCommandPacket : BasePacket
+    public class AudioCommandPacket : ParentPacket
     {
         public static Packet GetPacket(int id, int playOrDismiss)
         {
@@ -16,7 +16,13 @@ namespace ArtemisComm
         public AudioCommandPacket(int id, int playOrDismiss) : base()
         {
             ID = id;
-            PlayOrDismiss = playOrDismiss;
+            Command = (AudioCommands)playOrDismiss;
+        }
+        public AudioCommandPacket(int id, AudioCommands playOrDismiss)
+            : base()
+        {
+            ID = id;
+            Command = playOrDismiss;
         }
         public AudioCommandPacket(Stream stream, int index) : base(stream, index) { }
         
@@ -43,7 +49,7 @@ namespace ArtemisComm
         /// <value>
         ///Play (0) or dismiss (1).
         /// </value>
-        public int PlayOrDismiss { get; set; }
+        public AudioCommands Command { get; set; }
 
         //public byte[] GetBytes()
         //{

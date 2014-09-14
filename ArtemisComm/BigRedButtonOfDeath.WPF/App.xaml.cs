@@ -32,6 +32,11 @@ namespace BigRedButtonOfDeath.WPF
                 //return new System.IO.FileInfo(System.Reflection.Assembly.GetEntryAssembly().Location).DirectoryName;
             }
         }
+
+        private void OnExit(object sender, ExitEventArgs e)
+        {
+            Russ.Logger.Log.Close();
+        }
             
     }
 }

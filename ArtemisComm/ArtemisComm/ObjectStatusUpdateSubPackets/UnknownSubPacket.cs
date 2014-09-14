@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ArtemisComm.ObjectStatusUpdateSubPackets
 {
-    public class UnknownSubPacket : BasePacket
+    public class UnknownSubPacket : ParentPacket
     {
         public UnknownSubPacket(Stream stream, int index)
             : base(stream, index)

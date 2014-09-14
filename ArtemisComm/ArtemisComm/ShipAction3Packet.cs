@@ -9,7 +9,7 @@ using System.Text;
 
 namespace ArtemisComm
 {
-    public class ShipAction3Packet: BasePacket
+    public class ShipAction3Packet: ParentPacket
     {
         public ShipAction3Packet(IPackage subPacket) : base()
         {

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ArtemisComm.GameMessageSubPackets
 {
-    public class KeepAliveSubPacket : BasePacket
+    public class KeepAliveSubPacket : ParentPacket
     {
         public KeepAliveSubPacket(Stream stream, int index)
             : base(stream, index)

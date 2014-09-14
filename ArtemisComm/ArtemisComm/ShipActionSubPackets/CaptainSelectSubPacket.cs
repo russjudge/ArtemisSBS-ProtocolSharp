@@ -15,7 +15,7 @@ namespace ArtemisComm.ShipActionSubPackets
             return new Packet(new ShipActionPacket(new CaptainSelectSubPacket(targetID)));
         }
 
-        public CaptainSelectSubPacket(int targetID) : base(targetID) { }
+        public CaptainSelectSubPacket(int targetID) : base(ShipActionSubPacketType.CaptainSelectSubPacket, targetID) { }
 
         public CaptainSelectSubPacket(Stream stream, int index)
             : base(stream, index)

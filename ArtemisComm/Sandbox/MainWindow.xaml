@@ -13,9 +13,14 @@
         </RadialGradientBrush>
     </Window.Background>
     <DockPanel>
-        <TextBlock DockPanel.Dock="Top"
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" >
+        <TextBlock 
                    FontStyle="Italic"
-                   Text="The intent of this application is for reverse-engineering the TCP/IP protocol for Artemis SBS" />
+                   Text="The intent of this application is for reverse-engineering the TCP/IP protocol for Artemis SBS" /> 
+            <Button Margin="5,0,5,0" Click="OnPacketTester">
+               Packet Tester 
+            </Button>
+        </StackPanel>
         <GroupBox DockPanel.Dock="Top">
             <GroupBox.Header>
                 <TextBlock FontWeight="Bold" Text="Server Connection" />

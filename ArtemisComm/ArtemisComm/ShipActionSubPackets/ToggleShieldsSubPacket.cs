@@ -9,20 +9,26 @@ namespace ArtemisComm.ShipActionSubPackets
 {
     public class ToggleShieldsSubPacket : ShipAction
     {
-        public static Packet GetPacket(int value)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+        public static Packet GetPacket()
         {
-            return new Packet(new ShipActionPacket(new ToggleShieldsSubPacket(value)));
+            return new Packet(new ShipActionPacket(new ToggleShieldsSubPacket()));
         }
 
 
-        public ToggleShieldsSubPacket(int value) : base(value) { }
+        public ToggleShieldsSubPacket()  :base (ShipActionSubPacketType.ToggleShieldsSubPacket, 0)
+        {
+            
+        }
 
-
+       
         public ToggleShieldsSubPacket(Stream stream, int index)
             : base(stream, index)
         {
 
         }
+      
 
+        
     }
 }

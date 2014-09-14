@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ArtemisComm.ShipActionSubPackets
 {
-    public class SetStationSubPacket : BasePacket
+    public class SetStationSubPacket : ShipAction
     {
         //**CONFIRMED
         public static Packet GetPacket(StationType station, bool isSelected)
@@ -21,7 +21,7 @@ namespace ArtemisComm.ShipActionSubPackets
         }
        
 
-        public SetStationSubPacket(StationType station, bool isSelected)
+        public SetStationSubPacket(StationType station, bool isSelected) : base (ShipActionSubPacketType.SetStationSubPacket, (int)station)
         {
             IsSelected = isSelected;
             Station = station;
@@ -31,7 +31,18 @@ namespace ArtemisComm.ShipActionSubPackets
         {
 
         }
-        public StationType Station { get; set; }
+        [ArtemisExcluded]
+        public StationType Station
+        {
+            get
+            {
+                return (StationType)Value;
+            }
+            set
+            {
+                Value = (int)value;
+            }
+        }
 
 
         [ArtemisType(typeof(int))]
@@ -39,10 +50,6 @@ namespace ArtemisComm.ShipActionSubPackets
 
 
 
-        public override OriginType GetValidOrigin()
-        {
-            return OriginType.Client;
-        }
         
     }
 }

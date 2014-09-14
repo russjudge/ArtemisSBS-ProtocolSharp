@@ -46,8 +46,16 @@
     <Compile Include="ArtemisString.cs" />
     <Compile Include="ArtemisTypeAttribute.cs" />
     <Compile Include="AudioCommandPacket.cs" />
+    <Compile Include="AudioCommands.cs" />
     <Compile Include="AudioMode.cs" />
     <Compile Include="BasePacket.cs" />
+    <Compile Include="GameMasterMessagePacket.cs" />
+    <Compile Include="DifficultyPacket.cs" />
+    <Compile Include="GameMessageSubPackets\GameOverStatsSubPacket.cs" />
+    <Compile Include="GameMessageSubPackets\GameOverReasonSubPacket.cs" />
+    <Compile Include="GameMessageSubPackets\DMXMessageSubPacket.cs" />
+    <Compile Include="GameTypes.cs" />
+    <Compile Include="ParentPacket.cs" />
     <Compile Include="BridgeStationStatus.cs" />
     <Compile Include="BytesReceivedEventArgs.cs" />
     <Compile Include="CommsIncomingPacket.cs" />
@@ -64,10 +72,10 @@
     <Compile Include="GameMessageSubPackets\KeyCaptureToggleSubPacket.cs" />
     <Compile Include="GameMessageSubPackets\SoundEffectSubPacket.cs" />
     <Compile Include="GameMessageSubPackets\Unknown1SubPacket.cs" />
-    <Compile Include="GameMessageSubPackets\GameResetSubPacket.cs" />
+    <Compile Include="GameMessageSubPackets\GameOverSubPacket.cs" />
     <Compile Include="GameMessageSubPackets\GameMessageSubPacketType.cs" />
     <Compile Include="GameMessageSubPackets\GameTextMessageSubPacket.cs" />
-    <Compile Include="GameMessageSubPackets\GameTypeSubPacket.cs" />
+    <Compile Include="GameMessageSubPackets\SkyboxSubPacket.cs" />
     <Compile Include="GameMessageSubPackets\JumpCompleteSubPacket.cs" />
     <Compile Include="GameMessageSubPackets\JumpStartSubPacket.cs" />
     <Compile Include="GameMessageSubPackets\KeepAliveSubPacket.cs" />
@@ -110,26 +118,37 @@
     <Compile Include="ParseException.cs" />
     <Compile Include="PlayerShip.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="ShipAction2Packet.cs" />
     <Compile Include="ShipAction2SubPackets\ConvertTorpedoSubPacket.cs" />
     <Compile Include="ShipAction2SubPackets\EngSendDamconSubPacket.cs" />
     <Compile Include="ShipAction2SubPackets\EngSetCoolantSubPacket.cs" />
     <Compile Include="ShipAction2SubPackets\LoadTubeSubPacket.cs" />
+    <Compile Include="ShipAction2SubPackets\ShipAction2.cs" />
     <Compile Include="ShipAction2SubPackets\ShipAction2SubPacketType.cs" />
+    <Compile Include="ShipAction2SubPackets\TorpedoEnergyConversionTypes.cs" />
     <Compile Include="ShipAction3Packet.cs" />
     <Compile Include="ShipAction3SubPackets\EngSetEnergySubPacket.cs" />
     <Compile Include="ShipAction3SubPackets\HelmJumpSubPacket.cs" />
     <Compile Include="ShipAction3SubPackets\HelmSetImpulseSubPacket.cs" />
     <Compile Include="ShipAction3SubPackets\HelmSetSteeringSubPacket.cs" />
+    <Compile Include="ShipAction3SubPackets\ShipAction3.cs" />
     <Compile Include="ShipAction3SubPackets\ShipAction3SubPacketType.cs" />
     <Compile Include="ShipActionPacket.cs" />
+    <Compile Include="ShipActionSubPackets\BeamFrequencyTypes.cs" />
     <Compile Include="ShipActionSubPackets\CaptainSelectSubPacket.cs" />
+    <Compile Include="ShipActionSubPackets\KeystrokeSubPacket.cs" />
     <Compile Include="ShipActionSubPackets\DiveRiseSubPacket.cs" />
     <Compile Include="ShipActionSubPackets\EngSetAutoDamconSubPacket.cs" />
     <Compile Include="ShipActionSubPackets\FireTubeSubPacket.cs" />
     <Compile Include="ShipActionSubPackets\HelmRequestDockSubPacket.cs" />
     <Compile Include="ShipActionSubPackets\HelmSetWarpSubPacket.cs" />
     <Compile Include="ShipActionSubPackets\HelmToggleReverseSubPacket.cs" />
+    <Compile Include="ShipActionSubPackets\MainScreenViewTypes.cs" />
     <Compile Include="ShipActionSubPackets\Ready2SubPacket.cs" />
     <Compile Include="ShipActionSubPackets\ReadySubPacket.cs" />
     <Compile Include="ShipActionSubPackets\SciScanSubPacket.cs" />
@@ -157,6 +176,19 @@
     <Compile Include="VariablePackage.cs" />
     <Compile Include="VersionPacket.cs" />
     <Compile Include="WelcomePacket.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logger\Logger.csproj">
+      <Project>{e76658d1-413d-4170-84f8-84a3f35ed5e7}</Project>
+      <Name>Logger</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

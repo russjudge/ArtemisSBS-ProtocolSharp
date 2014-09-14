@@ -11,11 +11,11 @@ namespace ArtemisComm.ShipActionSubPackets
     {
         public static Packet GetPacket(int tubeIndex)
         {
-            return new Packet(new ShipActionPacket(new TogglePerspectiveSubPacket(tubeIndex)));
+            return new Packet(new ShipActionPacket(new UnloadTubeSubPacket(tubeIndex)));
         }
 
 
-        public UnloadTubeSubPacket(int tubeIndex) : base(tubeIndex) { }
+        public UnloadTubeSubPacket(int tubeIndex) : base(ShipActionSubPacketType.UnloadTubeSubPacket, tubeIndex) { }
 
         public UnloadTubeSubPacket(Stream stream, int index)
             : base(stream, index)

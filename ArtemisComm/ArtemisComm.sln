@@ -23,6 +23,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proxy.UI.SQLLogger", "Proxy
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proxy.Logger", "Proxy.Logger\Proxy.Logger.csproj", "{B8052CC5-C83B-4C9A-947B-D22E6BEF113E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger", "Logger\Logger.csproj", "{E76658D1-413D-4170-84F8-84A3F35ED5E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigRedButtonOfDeath.Android", "BigRedButtonOfDeath.Android\BigRedButtonOfDeath.Android.csproj", "{1E624A3D-7370-4BC7-9543-622815573F64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArtemisComm.Android", "ArtemisComm.Android\ArtemisComm.Android.csproj", "{2DE2030A-FCCD-4736-B0DD-892C9C0B503E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger.Android", "Logger.Android\Logger.Android.csproj", "{A1572AAE-8AD7-4EE0-8BCF-7A14A68C3342}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigRedButtonOfDeath.Library.Android", "BigRedButtonOfDeath.Library.Android\BigRedButtonOfDeath.Library.Android.csproj", "{A5FBCD23-F3AA-4881-8D77-0E71D88E53A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +71,28 @@ Global
 		{B8052CC5-C83B-4C9A-947B-D22E6BEF113E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8052CC5-C83B-4C9A-947B-D22E6BEF113E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8052CC5-C83B-4C9A-947B-D22E6BEF113E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E76658D1-413D-4170-84F8-84A3F35ED5E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E76658D1-413D-4170-84F8-84A3F35ED5E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E76658D1-413D-4170-84F8-84A3F35ED5E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E76658D1-413D-4170-84F8-84A3F35ED5E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E624A3D-7370-4BC7-9543-622815573F64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E624A3D-7370-4BC7-9543-622815573F64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E624A3D-7370-4BC7-9543-622815573F64}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{1E624A3D-7370-4BC7-9543-622815573F64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E624A3D-7370-4BC7-9543-622815573F64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E624A3D-7370-4BC7-9543-622815573F64}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{2DE2030A-FCCD-4736-B0DD-892C9C0B503E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DE2030A-FCCD-4736-B0DD-892C9C0B503E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DE2030A-FCCD-4736-B0DD-892C9C0B503E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DE2030A-FCCD-4736-B0DD-892C9C0B503E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1572AAE-8AD7-4EE0-8BCF-7A14A68C3342}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1572AAE-8AD7-4EE0-8BCF-7A14A68C3342}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1572AAE-8AD7-4EE0-8BCF-7A14A68C3342}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1572AAE-8AD7-4EE0-8BCF-7A14A68C3342}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5FBCD23-F3AA-4881-8D77-0E71D88E53A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5FBCD23-F3AA-4881-8D77-0E71D88E53A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5FBCD23-F3AA-4881-8D77-0E71D88E53A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5FBCD23-F3AA-4881-8D77-0E71D88E53A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

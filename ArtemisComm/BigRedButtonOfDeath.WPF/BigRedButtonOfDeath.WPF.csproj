@@ -113,6 +113,10 @@
       <Project>{bc09007e-11b5-4eb2-a5b1-9941386b29fc}</Project>
       <Name>BigRedButtonOfDeath.Library</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logger\Logger.csproj">
+      <Project>{e76658d1-413d-4170-84f8-84a3f35ed5e7}</Project>
+      <Name>Logger</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\alert.wav" />

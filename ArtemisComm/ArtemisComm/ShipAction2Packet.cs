@@ -10,7 +10,7 @@ using System.Text;
 
 namespace ArtemisComm
 {
-    public class ShipAction2Packet : BasePacket
+    public class ShipAction2Packet : ParentPacket
     {
         public ShipAction2Packet(IPackage subPacket) : base()
         {

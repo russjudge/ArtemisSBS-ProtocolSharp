@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace ArtemisComm
 {
-    public class ObjectStatusUpdatePacket : BasePacket
+    public class ObjectStatusUpdatePacket : ParentPacket
     {
         public ObjectStatusUpdatePacket(Stream stream, int index) : base()
         {

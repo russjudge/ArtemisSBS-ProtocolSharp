@@ -28,6 +28,7 @@ namespace ArtemisComm.Proxy.UI.SQLLogger
             if (string.IsNullOrEmpty(SQLConnection))
             {
                 SQLConnection = ArtemisComm.Proxy.UI.SQLLogger.Properties.Settings.Default.ArtemisProxyLoggingConnectionString;
+                SQLConnection = "Data Source=.\\SQLEXPRESS;Initial Catalog=ArtemisProxyLogging;Integrated Security=True";
             }
             InitializeComponent();
         }
